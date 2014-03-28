@@ -45,9 +45,10 @@ class GameScreen:
             timer.tick(100)
 
             for e in pygame.event.get():
-                if e.type == QUIT: raise SystemExit, "QUIT"
+                if e.type == QUIT:
+                    raise SystemExit
                 if e.type == KEYDOWN and e.key == K_ESCAPE:
-                    raise SystemExit, "ESCAPE"
+                    raise SystemExit
 
             #TODO: put key presses and associated values here, unless this is handled by another class.
 

@@ -2,7 +2,7 @@
 options to start the game, open the map editor, etc.
 """
 
-from pygame import *
+#from pygame import *
 from gamescreen import *
 
 # these are constants used by pygame. We may want to change where these are stored, or change their values.

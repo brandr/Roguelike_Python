@@ -59,7 +59,7 @@ class GameScreen:
         # draw background
             #for y in range(32):
             #    for x in range(32):
-            map_pane.level_update()
+            map_pane.level_update(player_1)
             screen.blit(map_pane.draw_pane_image(), (map_pane.x_off, map_pane.y_off))
             pygame.display.update()
                     #screen.blit(bg, (x * 32, y * 32))

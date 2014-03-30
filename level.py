@@ -51,17 +51,13 @@ class Level:
 			being.current_level = self
 			self.tiles[y][x].set_being(being)
 
-		#TODO: draw the level map only once, and just blit subsurfaces of it
-		# as the player moves around.
-		#TODO: return type should be an image of some kind
 	def level_map_section(self, x1, y1, x2, y2):
-		#self.update_map()
 		map_width, map_height = TILE_WIDTH * (x2 - x1), TILE_HEIGHT * (y2 - y1)
 		l_map = Surface((map_width, map_height))
 		x_start, y_start = x1 * TILE_WIDTH, y1 * TILE_HEIGHT
 		x_end, y_end = x2 * TILE_WIDTH, y2 * TILE_HEIGHT
-		section_x1, section_y1 = max(0, x_start), max(0, y_start)
-		section_x2, section_y2 = min(TILE_WIDTH * self.width, x_end), min(TILE_HEIGHT * self.height, y_end)
+		section_x1, section_y1 = max(1, x_start), max(1, y_start)
+		section_x2, section_y2 = min(self.level_map.get_width() - section_x1, x_end), min(self.level_map.get_height() - section_y1, y_end)
 		section = self.level_map.subsurface(section_x1, section_y1, section_x2, section_y2)
 		blit_off_x, blit_off_y = TILE_WIDTH + max(0, -1 * x_start), TILE_HEIGHT + max(0, -1 * y_start)
 		l_map.blit(section, (blit_off_x, blit_off_y))

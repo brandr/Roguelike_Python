@@ -28,7 +28,12 @@ class MapPane(Pane):
 		Pane.__init__(self, MAP_PANE_X, MAP_PANE_Y, MAP_PANE_WIDTH, MAP_PANE_HEIGHT)
 		self.current_level = level
 		
-	def level_update(self): #TODO: args
-		x1, x2, y1, y2 = 0, 0, 35, 35 #temporary values for testing. TODO: might want to take these as args, or derive them from current_level.
-		level_map = self.current_level.level_map_section(x1, x2, y1, y2)
+	def level_update(self, player): #TODO: args
+		coords = player.coordinates()
+		center_x, center_y = coords[0], coords[1]
+		half_width, half_height = MAP_PANE_WIDTH/(2 * TILE_WIDTH), MAP_PANE_HEIGHT/(2 * TILE_HEIGHT)
+		x1, y1 = center_x - half_width, center_y - half_height
+		x2, y2 = center_x + half_width, center_y + half_height
+		#x1, y1, x2, y2 = 0, 0, 20, 20
+		level_map = self.current_level.level_map_section(x1, y1, x2, y2)
 		self.update(level_map)

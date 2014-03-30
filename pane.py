@@ -1,8 +1,7 @@
 """ An abstract pane class representing a visual, immobile pane of the game screen.
 """
 
-import pygame 
-from pygame import *
+from tile import *
 from numpy import *
 
 WHITE = Color("#FFFFFF")
@@ -16,17 +15,27 @@ class Pane:
 	"""
 
 	def __init__(self, x, y, width, height):
-		self.x_off = x
-		self.y_off = y
-		self.contents = Surface((width, height))
-		self.draw_borders(width - 2, height - 2)
+		self.x_off, self.y_off = x, y
+		self.width, self.height = width, height
+		self.contents = Surface((self.width, self.height))
+		self.pane_image = Surface((self.width + 4, self. height + 4)) # add 2 * 2 for the borders.
+		self.draw_borders(width + 2, height + 2)
 
 	def draw_borders(self, width, height):
-		pygame.draw.line(self.contents, WHITE, (0, 0), (width, 0), 2)
-		pygame.draw.line(self.contents, WHITE, (width, 0), (width, height), 2)
-		pygame.draw.line(self.contents, WHITE, (width, height), (0, height), 2)
-		pygame.draw.line(self.contents, WHITE, (0, height), (0, 0), 2)
-		#self.contents.fill(WHITE)
-		#self.rect = Rect(x, y, width, height)
+		pygame.draw.line(self.pane_image, WHITE, (0, 0), (width, 0), 2)
+		pygame.draw.line(self.pane_image, WHITE, (width, 0), (width, height), 2)
+		pygame.draw.line(self.pane_image, WHITE, (width, height), (0, height), 2)
+		pygame.draw.line(self.pane_image, WHITE, (0, height), (0, 0), 2)
 
+	def update(self, contents = None):
+		self.clear()
+		if(contents != None):
+			self.contents.blit(contents, (0, 0))
+
+	def clear(self):
+		self.contents = Surface((self.width, self.height))
+
+	def draw_pane_image(self):
+		self.pane_image.blit(self.contents, (2, 2))
+		return self.pane_image
 		# TODO: add more pane attributes if necessary.

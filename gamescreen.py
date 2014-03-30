@@ -1,6 +1,7 @@
 """This is the screen used to play the game."""
 
-from pane import *
+from mappane import *
+from controls import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
 WIN_WIDTH = 800
@@ -30,30 +31,36 @@ class GameScreen:
         pygame.display.set_caption("DIS A ROGUELIKE")
         timer = pygame.time.Clock()
 
-        #bg = Surface((32, 32))
-        #bg.convert()
-        #bg.fill(BACKGROUND_COLOR)
+        #temp for testing
 
-        map_pane = Pane(20, 20, 200, 200)
+        test_level = Level(25, 25, 1) 
+        map_pane = MapPane(test_level)
+        player_1 = Player() #TODO: args
+        test_level.add_player(player_1, 4, 4)
+
+        game_controls = Controls(player_1)
+        #temp for testing
 
         #start_level = dungeon.start_level() havent made dungeon or levels yet.
-        #player = Player(...) #havent made player yet
+
         #start_level.addPlayer(player)
 
         while 1:
             timer.tick(100)
 
             for e in pygame.event.get():
-                if e.type == QUIT: raise(SystemExit)
-                if e.type == KEYDOWN and e.key == K_ESCAPE:
-                    raise (SystemExit)
+                game_controls.process_event(e)
+                #if e.type == QUIT: raise(SystemExit)
+                #if e.type == KEYDOWN and e.key == K_ESCAPE:
+                #    raise (SystemExit)
 
             #TODO: put key presses and associated values here, unless this is handled by another class.
 
         # draw background
             #for y in range(32):
             #    for x in range(32):
-            screen.blit(map_pane.contents, (map_pane.x_off, map_pane.y_off))
+            map_pane.level_update()
+            screen.blit(map_pane.draw_pane_image(), (map_pane.x_off, map_pane.y_off))
             pygame.display.update()
                     #screen.blit(bg, (x * 32, y * 32))
            #TODO: perform proper updates based on keyboard input here.

@@ -21,13 +21,18 @@ class Tile:
 	TODO
 	"""
 
-	def __init__(self, x, y): #TODO: args
+	def __init__(self, level, x, y): #TODO: args
 		self.empty_symbol = EMPTY_TILE_FLOOR_SYMBOL
 		self.empty_color = WHITE
 		self.current_being = None
 		self.x, self.y = x, y
+		self.level = level
 		# TODO: figure out how to handle a tile's contents, their order, and which symbol should appear on top,
 		# along with how to udpade the current symbol properly.
+
+	def update(self):
+		symbol = self.symbol_image()
+		self.level.level_map.blit(symbol, (self.x * TILE_WIDTH, self.y * TILE_HEIGHT))
 
 	def current_symbol(self):
 		if(self.current_being != None):
@@ -37,16 +42,20 @@ class Tile:
 	def symbol_image(self):
 		symbol_char = self.current_symbol()
 		font = pygame.font.Font(None, 12) 	#TODO: consider making this a constant somewhere, or an arg.
-		symbol_image = font.render(symbol_char, 0, WHITE)
+		symbol_text = font.render(symbol_char, 0, WHITE)
+		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
+		symbol_image.blit(symbol_text, (0, 0))
 		return symbol_image
 
 	def set_being(self, being):
 		self.current_being = being
 		being.current_tile = self
+		self.update()
 
 	def remove_being(self):
 		self.current_being.current_tile = None
 		self.current_being = None
+		self.update()
 
 	def coordinates(self):
 		return (self.x, self.y)

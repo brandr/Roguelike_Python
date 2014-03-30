@@ -18,25 +18,26 @@ class Level:
 	def __init__(self, width, height, depth): #TODO: other args if necessary
 		self.width, self.height = width, height
 		self.depth = depth
+		self.level_map = Surface((width * TILE_WIDTH, height * TILE_HEIGHT))
 		self.tiles = []
 		self.init_tiles()
-		self.level_map = Surface((width * TILE_WIDTH, height * TILE_HEIGHT))
 		self.player = None
 
 	def init_tiles(self):
 		for y in range(self.height):
 			self.tiles.append([])
 			for x in range(self.width):
-				next_tile = Tile(x, y) #TODO: change if tiles get args
+				next_tile = Tile(self, x, y) #TODO: change if tiles get args
 				self.tiles[y].append(next_tile)
+				next_tile.update()
 
-	def update_map(self):
-		self.clear_map()
-		for y in range(self.height):
-			for x in range(self.width):
-				next_tile = self.tile_at(x, y)
-				next_symbol = next_tile.symbol_image()
-				self.level_map.blit(next_symbol, (x * TILE_WIDTH, y * TILE_HEIGHT))
+	#def update_map(self):
+		#self.clear_map()
+		#for y in range(self.height):
+		#	for x in range(self.width):
+		#		next_tile = self.tile_at(x, y)
+		#		next_symbol = next_tile.symbol_image()
+		#		self.level_map.blit(next_symbol, (x * TILE_WIDTH, y * TILE_HEIGHT))
 
 	def clear_map(self):
 		self.level_map =  Surface((self.width * TILE_WIDTH, self.height * TILE_HEIGHT))
@@ -47,14 +48,14 @@ class Level:
 
 	def add_being(self, being, x, y):
 		if(self.valid_tile(x, y)):
-			self.tiles[y][x].set_being(being)
 			being.current_level = self
+			self.tiles[y][x].set_being(being)
 
 		#TODO: draw the level map only once, and just blit subsurfaces of it
 		# as the player moves around.
 		#TODO: return type should be an image of some kind
 	def level_map_section(self, x1, y1, x2, y2):
-		self.update_map()
+		#self.update_map()
 		map_width, map_height = TILE_WIDTH * (x2 - x1), TILE_HEIGHT * (y2 - y1)
 		l_map = Surface((map_width, map_height))
 		x_start, y_start = x1 * TILE_WIDTH, y1 * TILE_HEIGHT

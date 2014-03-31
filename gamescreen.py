@@ -1,6 +1,7 @@
 """This is the screen used to play the game."""
 
 from mappane import *
+from characterpane import *
 from controls import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
@@ -32,12 +33,14 @@ class GameScreen:
         timer = pygame.time.Clock()
 
         #temp for testing
-
+        player_1 = Player() #TODO: args
         test_level = Level(25, 25, 1) 
         map_pane = MapPane(test_level)
-        player_1 = Player() #TODO: args
-        test_level.add_player(player_1, 4, 4)
+        character_pane = CharacterPane(player_1)
+        main_screen_panes = [character_pane, map_pane]
 
+        
+        test_level.add_player(player_1, 4, 4)
         game_controls = Controls(player_1)
         #temp for testing
 
@@ -52,8 +55,16 @@ class GameScreen:
                 game_controls.process_event(e)
 
             map_pane.level_update(player_1)
-            screen.blit(map_pane.draw_pane_image(), (map_pane.x_off, map_pane.y_off))
+            character_pane.player_update()
+            self.draw_panes(screen, main_screen_panes)
+            
             pygame.display.update()
+
+    def draw_panes(self, screen, panes):
+        for p in panes:
+            screen.blit(p.draw_pane_image(), (p.x_off, p.y_off))
+    
+
                     #screen.blit(bg, (x * 32, y * 32))
            #TODO: perform proper updates based on keyboard input here.
            #player.current_level.update(screen, up, down, left, right, running)

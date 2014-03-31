@@ -8,7 +8,7 @@ from level import *
 # (i.e., total screen size and whatnot.)
 
 MAP_PANE_X = 40
-MAP_PANE_Y = 40
+MAP_PANE_Y = 80
 
 MAP_PANE_WIDTH = 450
 MAP_PANE_HEIGHT = 450

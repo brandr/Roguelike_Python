@@ -37,7 +37,7 @@ class CharacterPane(Pane):
 
 		columns = [column_1]
 
-		for j in range len(columns):
+		for j in range(len(columns)):
 			c = columns[j]
 			for i in range(len(c)):
 				rendered_text = font.render(c[i], 0, WHITE)

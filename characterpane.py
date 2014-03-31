@@ -35,7 +35,11 @@ class CharacterPane(Pane):
 
 		column_1 = [player_name_text, player_hp_text, player_mp_text]
 
-		for i in range(len(column_1)):
-			rendered_text = font.render(column_1[i], 0, WHITE)
-			player_info.blit(rendered_text, (8, 8 + 16*i))
+		columns = [column_1]
+
+		for j in range len(columns):
+			c = columns[j]
+			for i in range(len(c)):
+				rendered_text = font.render(c[i], 0, WHITE)
+				player_info.blit(rendered_text, (8 + 24*j, 8 + 16*i))
 		self.update(player_info)

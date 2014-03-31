@@ -3,21 +3,19 @@
 """
 
 from level import *
-
+import pygame
 class Controls:
 	""" Controls( ... ) -> Controls
 
 		TODO: docstring
 
 	"""
-
-	
-
 	def __init__(self, player):
 		self.player = player
 
 	def process_event(self, e):
-		if e.type == QUIT: raise(SystemExit)
+		if e.type == QUIT:
+                        pygame.quit()
 		#if e.type != KEYDOWN and e.type != KEYUP:
 		#	return
 		if e.type == KEYDOWN:

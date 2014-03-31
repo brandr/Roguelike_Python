@@ -35,11 +35,15 @@ class CharacterPane(Pane):
 
 		column_1 = [player_name_text, player_hp_text, player_mp_text]
 
-		columns = [column_1]
+		turn_count_text = "Turn count: " + str(self.player.current_level.turn_count)
+
+		column_2 = [turn_count_text]
+
+		columns = [column_1, column_2]
 
 		for j in range(len(columns)):
 			c = columns[j]
 			for i in range(len(c)):
 				rendered_text = font.render(c[i], 0, WHITE)
-				player_info.blit(rendered_text, (8 + 24*j, 8 + 16*i))
+				player_info.blit(rendered_text, (8 + 72*j, 8 + 16*i))
 		self.update(player_info)

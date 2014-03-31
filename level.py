@@ -17,7 +17,7 @@ class Level:
 	depth is how far "underground" the level is, where 0 means it's on the surface.
 	A higher depth means a lower (and usually harder) level.
 	Multiple levels may be on different branches, but have the same depth.
-	
+
 	"""
 
 	def __init__(self, width, height, depth): #TODO: other args if necessary
@@ -27,6 +27,7 @@ class Level:
 		self.tiles = []
 		self.init_tiles()
 		self.player = None
+		self.turn_count = 0
 
 	def init_tiles(self):
 		for y in range(self.height):

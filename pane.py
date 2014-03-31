@@ -4,8 +4,8 @@
 from tile import *
 from numpy import *
 
-WHITE = Color("#FFFFFF")
-BLACK = Color("#000000")
+#WHITE = Color("#FFFFFF")
+#BLACK = Color("#000000")
 
 class Pane:
 	""" Pane ( int, int ) -> Pane

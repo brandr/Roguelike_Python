@@ -18,8 +18,8 @@ class TurnCounter:
 		self.action_queue = []
 		self.player_action = None
 
-	def enqueue_action(self, being, action, arg, delay):
-		queue_action = Action(being, action, arg, delay)
+	def enqueue_action(self, actor, action, arg, delay):
+		queue_action = Action(actor, action, arg, delay)
 		self.action_queue.append(queue_action)
 
 	def enqueue_player_action(self, player, action, arg, delay):
@@ -27,7 +27,7 @@ class TurnCounter:
 	
 	def process_turns(self):
 		lowest_action = self.player_action
-		lowest_index = -1 # represents player index
+		lowest_index = -1 	   # represents player index
 		for i in range (len(self.action_queue)):
 			a = self.action_queue[i]
 			if a.delay < lowest_action.delay:
@@ -57,4 +57,4 @@ class TurnCounter:
 	def process_turn(self, action):
 		self.turn_count += action.delay
 		action.execute()
-		action.being.decide_next_turn() #decide 
+		action.actor.decide_next_turn() #decide 

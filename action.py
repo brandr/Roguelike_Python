@@ -2,8 +2,8 @@
 
 class Action:
 
-	def __init__(self, being, method, arg, delay):
-		self.being, self.method, self.arg, self.delay = being, method, arg, delay
+	def __init__(self, actor, method, arg, delay):
+		self.actor, self.method, self.arg, self.delay = actor, method, arg, delay
 
 	def execute(self):
-		self.being.execute_action(self.method, self.arg)
+		self.actor.execute_action(self.method, self.arg)

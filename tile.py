@@ -11,6 +11,9 @@ TILE_WIDTH = 14		#TEMP, might use font getters instead
 TILE_HEIGHT = 16
 WHITE = Color("#FFFFFF")
 BLACK = Color("#000000")
+RED = Color("#FF0000")
+GREEN = Color("#00FF00")
+BLUE = Color("#0000FF")
 
 class Tile:
 	""" Tile( ... ) -> Tile

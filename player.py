@@ -17,6 +17,7 @@ class Player(Being):
 	def __init__(self, name): #TODO: args and inheritance
 		Being.__init__(self, name)
 		self.hit_points = (10, 10)
+		self.magic_points = (8, 8)
 		self.move_delay = 4
 
 	def current_symbol(self):
@@ -24,6 +25,12 @@ class Player(Being):
 
 	def color(self):
 		return PLAYER_COLOR
+
+	def hp_display(self):
+		return str(self.hit_points[0]) + "/" + str(self.hit_points[1])
+
+	def mp_display(self):
+		return str(self.magic_points[0]) + "/" + str(self.magic_points[1])
 
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.

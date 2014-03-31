@@ -2,23 +2,22 @@
 dungeons deserve.
 """
 
-from tile import *
+from being import *
 
 PLAYER_SYMBOL = '@'
 PLAYER_COLOR = Color("#FF0000")
 
 
-class Player: #TODO: inheritance
+class Player(Being): 
 	""" Player ( ... ) -> Player
 
 	TODO: docstring
 	"""
 
-	def __init__(self): #TODO: args and inheritance
-		self.name = "Link"
+	def __init__(self, name): #TODO: args and inheritance
+		Being.__init__(self, name)
 		self.hit_points = (10, 10)
-		self.current_level = None
-		self.current_tile = None
+		self.move_delay = 4
 
 	def current_symbol(self):
 		return PLAYER_SYMBOL
@@ -26,15 +25,14 @@ class Player: #TODO: inheritance
 	def color(self):
 		return PLAYER_COLOR
 
-	def coordinates(self):
-		return self.current_tile.coordinates()
-
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.
 		coords = self.coordinates()
 		dest_coords = (coords[0] + direction[0], coords[1] + direction[1])
 		if(self.current_level.valid_tile(dest_coords[0], dest_coords[1])):
-			self.current_tile.remove_being()
-			self.current_level.temp_place_being(self, dest_coords[0], dest_coords[1]) #TEMP method
+			self.begin_player_action(self.move_to, dest_coords ,self.move_delay) #consider an Action class.
+		self.end_turn()
 
-	#TODO: first thing to do is make sure the player can move around on the map and have the camera follow him.
+	def begin_player_action(self, action, arg, delay):
+		#TODO: don't execute right away
+		self.current_level.enqueue_player_action(action, arg, delay)

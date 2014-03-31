@@ -2,8 +2,8 @@
 """
 
 #TODO: import as necessary.
-from tile import *
-from player import * #TEMP. player should inherit from something else.
+from turncounter import *
+
 class Level:
 	""" Level( int, int, int ) -> Level
 
@@ -26,8 +26,9 @@ class Level:
 		self.level_map = Surface((width * TILE_WIDTH, height * TILE_HEIGHT))
 		self.tiles = []
 		self.init_tiles()
+		self.beings = []
 		self.player = None
-		self.turn_count = 0
+		self.turn_counter = TurnCounter()
 
 	def init_tiles(self):
 		for y in range(self.height):
@@ -37,6 +38,15 @@ class Level:
 				self.tiles[y].append(next_tile)
 				next_tile.update()
 
+	def process_turns(self):
+		self.turn_counter.process_turns() #TODO
+
+	def enqueue_action(self, being, action, arg, delay):
+		self.turn_counter.enqueue_action(being, action, arg, delay)
+
+	def enqueue_player_action(self, action, arg, delay):
+		self.turn_counter.enqueue_player_action(self.player, action, arg, delay)
+
 	def clear_map(self):
 		self.level_map =  Surface((self.width * TILE_WIDTH, self.height * TILE_HEIGHT))
 
@@ -45,6 +55,7 @@ class Level:
 		self.add_being(player, x, y)
 
 	def add_being(self, being, x, y):
+		self.beings.append(being)
 		if(self.valid_tile(x, y)):
 			being.current_level = self
 			self.tiles[y][x].set_being(being)
@@ -71,3 +82,6 @@ class Level:
 	def temp_place_being(self, being, x, y): #used for movement. TEMPORARY.
 		if(self.valid_tile(x, y)):
 			self.tiles[y][x].set_being(being)
+
+	def turn_count(self):
+		return self.turn_counter.turn_count

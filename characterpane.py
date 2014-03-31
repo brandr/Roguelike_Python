@@ -35,7 +35,7 @@ class CharacterPane(Pane):
 
 		column_1 = [player_name_text, player_hp_text, player_mp_text]
 
-		turn_count_text = "Turn count: " + str(self.player.current_level.turn_count)
+		turn_count_text = "Turn count: " + str(self.player.current_level.turn_count())
 
 		column_2 = [turn_count_text]
 

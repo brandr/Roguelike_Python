@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ A single space on a level in the dungeon.
 """
 
@@ -5,7 +6,7 @@ import pygame
 from pygame import *
 
 BLANK_SYMBOL = ' '
-EMPTY_TILE_FLOOR_SYMBOL = '·'
+EMPTY_TILE_FLOOR_SYMBOL = u'·'
 TILE_WIDTH = 14		#TEMP, might use font getters instead
 TILE_HEIGHT = 16
 WHITE = Color("#FFFFFF")

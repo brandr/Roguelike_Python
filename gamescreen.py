@@ -33,7 +33,7 @@ class GameScreen:
         timer = pygame.time.Clock()
 
         #temp for testing
-        player_1 = Player() #TODO: args
+        player_1 = Player("Link") #TODO: args
         test_level = Level(25, 25, 1) 
         map_pane = MapPane(test_level)
         character_pane = CharacterPane(player_1)
@@ -43,10 +43,6 @@ class GameScreen:
         test_level.add_player(player_1, 4, 4)
         game_controls = Controls(player_1)
         #temp for testing
-
-        #start_level = dungeon.start_level() havent made dungeon or levels yet.
-
-        #start_level.addPlayer(player)
 
         while 1:
             timer.tick(100)

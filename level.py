@@ -3,6 +3,7 @@
 
 #TODO: import as necessary.
 from turncounter import *
+from wall import *
 
 class Level:
 	""" Level( int, int, int ) -> Level
@@ -39,6 +40,26 @@ class Level:
 				self.tiles[y].append(next_tile)
 				next_tile.update()
 
+	def level_map_section(self, x1, y1, x2, y2):
+		map_width, map_height = TILE_WIDTH * (x2 - x1), TILE_HEIGHT * (y2 - y1)
+		l_map = Surface((map_width, map_height))
+		x_start, y_start = x1 * TILE_WIDTH, y1 * TILE_HEIGHT
+		x_end, y_end = x2 * TILE_WIDTH, y2 * TILE_HEIGHT
+		section_x1, section_y1 = max(0, x_start), max(0, y_start)
+		section_x2, section_y2 = min(self.level_map.get_width() - section_x1, x_end), min(self.level_map.get_height() - section_y1, y_end)
+		section = self.level_map.subsurface(section_x1, section_y1, section_x2, section_y2)
+		blit_off_x, blit_off_y = TILE_WIDTH + max(0, -1 * x_start), TILE_HEIGHT + max(0, -1 * y_start)
+		l_map.blit(section, (blit_off_x, blit_off_y))
+		return l_map
+
+	def add_tile(self, tile, x, y): # not to be used aside from building the level (at least for now)
+		self.tiles[y][x] = tile
+
+	def add_wall(self, x, y):
+		wall = Wall(self, x, y)
+		self.add_tile(wall, x, y)
+		wall.update()
+
 	def plan_monster_turns(self):
 		for m in self.monsters:
 			m.decide_next_turn()
@@ -68,18 +89,6 @@ class Level:
 		if(self.valid_tile(x, y)):
 			being.current_level = self
 			self.tiles[y][x].set_being(being)
-
-	def level_map_section(self, x1, y1, x2, y2):
-		map_width, map_height = TILE_WIDTH * (x2 - x1), TILE_HEIGHT * (y2 - y1)
-		l_map = Surface((map_width, map_height))
-		x_start, y_start = x1 * TILE_WIDTH, y1 * TILE_HEIGHT
-		x_end, y_end = x2 * TILE_WIDTH, y2 * TILE_HEIGHT
-		section_x1, section_y1 = max(0, x_start), max(0, y_start)
-		section_x2, section_y2 = min(self.level_map.get_width() - section_x1, x_end), min(self.level_map.get_height() - section_y1, y_end)
-		section = self.level_map.subsurface(section_x1, section_y1, section_x2, section_y2)
-		blit_off_x, blit_off_y = TILE_WIDTH + max(0, -1 * x_start), TILE_HEIGHT + max(0, -1 * y_start)
-		l_map.blit(section, (blit_off_x, blit_off_y))
-		return l_map
 
 	def tile_at(self, x, y):
 		#TODO: error checking? (might want it before this method is called in many cases.)

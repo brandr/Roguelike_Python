@@ -14,7 +14,7 @@ class Player(Being):
 	TODO: docstring
 	"""
 
-	def __init__(self, name): #TODO: args and inheritance
+	def __init__(self, name): #TODO: figure out how player should actually be created
 		Being.__init__(self, name)
 		self.hit_points = (10, 10)
 		self.magic_points = (8, 8)
@@ -40,5 +40,4 @@ class Player(Being):
 			self.end_turn()
 
 	def begin_player_action(self, action, arg, delay):
-		#TODO: don't execute right away
 		self.current_level.enqueue_player_action(action, arg, delay)

@@ -7,6 +7,8 @@ from pygame import *
 
 BLANK_SYMBOL = ' '
 EMPTY_TILE_FLOOR_SYMBOL = u'·'
+DEFAULT_WALL_SYMBOL = 'X'
+
 TILE_WIDTH = 14		#TEMP, might use font getters instead
 TILE_HEIGHT = 16
 WHITE = Color("#FFFFFF")

@@ -34,6 +34,7 @@ class GameScreen:
 
         #temp for testing
         player_1 = Player("Link") #TODO: args
+        monster_1 = Monster("Moblin")
         test_level = Level(25, 25, 1) 
         map_pane = MapPane(test_level)
         character_pane = CharacterPane(player_1)
@@ -41,7 +42,10 @@ class GameScreen:
 
         
         test_level.add_player(player_1, 4, 4)
+        test_level.add_monster(monster_1, 8, 8)
+        test_level.plan_monster_turns()
         game_controls = Controls(player_1)
+
         #temp for testing
 
         while 1:

@@ -27,6 +27,7 @@ class Level:
 		self.tiles = []
 		self.init_tiles()
 		self.beings = []
+		self.monsters = []
 		self.player = None
 		self.turn_counter = TurnCounter()
 
@@ -37,6 +38,10 @@ class Level:
 				next_tile = Tile(self, x, y) #TODO: change if tiles get args
 				self.tiles[y].append(next_tile)
 				next_tile.update()
+
+	def plan_monster_turns(self):
+		for m in self.monsters:
+			m.decide_next_turn()
 
 	def process_turns(self):
 		self.turn_counter.process_turns() #TODO
@@ -53,6 +58,10 @@ class Level:
 	def add_player(self, player, x, y):
 		self.player = player
 		self.add_being(player, x, y)
+
+	def add_monster(self, monster, x, y):
+		self.monsters.append(monster)
+		self.add_being(monster, x, y)
 
 	def add_being(self, being, x, y):
 		self.beings.append(being)
@@ -75,6 +84,9 @@ class Level:
 	def tile_at(self, x, y):
 		#TODO: error checking? (might want it before this method is called in many cases.)
 		return self.tiles[y][x]
+
+	def open_tile(self, x, y):
+		return self.valid_tile(x, y) and self.tile_at(x, y).passable()
 
 	def valid_tile(self, x, y):
 		return x >= 0 and y >= 0 and x < self.width and y < self.height

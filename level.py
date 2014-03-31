@@ -31,14 +31,6 @@ class Level:
 				self.tiles[y].append(next_tile)
 				next_tile.update()
 
-	#def update_map(self):
-		#self.clear_map()
-		#for y in range(self.height):
-		#	for x in range(self.width):
-		#		next_tile = self.tile_at(x, y)
-		#		next_symbol = next_tile.symbol_image()
-		#		self.level_map.blit(next_symbol, (x * TILE_WIDTH, y * TILE_HEIGHT))
-
 	def clear_map(self):
 		self.level_map =  Surface((self.width * TILE_WIDTH, self.height * TILE_HEIGHT))
 
@@ -56,7 +48,7 @@ class Level:
 		l_map = Surface((map_width, map_height))
 		x_start, y_start = x1 * TILE_WIDTH, y1 * TILE_HEIGHT
 		x_end, y_end = x2 * TILE_WIDTH, y2 * TILE_HEIGHT
-		section_x1, section_y1 = max(1, x_start), max(1, y_start)
+		section_x1, section_y1 = max(0, x_start), max(0, y_start)
 		section_x2, section_y2 = min(self.level_map.get_width() - section_x1, x_end), min(self.level_map.get_height() - section_y1, y_end)
 		section = self.level_map.subsurface(section_x1, section_y1, section_x2, section_y2)
 		blit_off_x, blit_off_y = TILE_WIDTH + max(0, -1 * x_start), TILE_HEIGHT + max(0, -1 * y_start)

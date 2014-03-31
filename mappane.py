@@ -14,7 +14,7 @@ MAP_PANE_WIDTH = 450
 MAP_PANE_HEIGHT = 450
 
 class MapPane(Pane):
-	""" MapPane ( ) -> MapPane
+	""" MapPane ( ... ) -> MapPane
 
 	TODO: describe a MapPane and what it does
 
@@ -34,6 +34,5 @@ class MapPane(Pane):
 		half_width, half_height = MAP_PANE_WIDTH/(2 * TILE_WIDTH), MAP_PANE_HEIGHT/(2 * TILE_HEIGHT)
 		x1, y1 = center_x - half_width, center_y - half_height
 		x2, y2 = center_x + half_width, center_y + half_height
-		#x1, y1, x2, y2 = 0, 0, 20, 20
 		level_map = self.current_level.level_map_section(x1, y1, x2, y2)
 		self.update(level_map)

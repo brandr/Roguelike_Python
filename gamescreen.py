@@ -50,15 +50,7 @@ class GameScreen:
 
             for e in pygame.event.get():
                 game_controls.process_event(e)
-                #if e.type == QUIT: raise(SystemExit)
-                #if e.type == KEYDOWN and e.key == K_ESCAPE:
-                #    raise (SystemExit)
 
-            #TODO: put key presses and associated values here, unless this is handled by another class.
-
-        # draw background
-            #for y in range(32):
-            #    for x in range(32):
             map_pane.level_update(player_1)
             screen.blit(map_pane.draw_pane_image(), (map_pane.x_off, map_pane.y_off))
             pygame.display.update()

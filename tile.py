@@ -39,10 +39,16 @@ class Tile:
 			return self.current_being.current_symbol()
 		return self.empty_symbol
 
+	def current_color(self):
+		if(self.current_being != None):
+			return self.current_being.color()
+		return WHITE
+
 	def symbol_image(self):
 		symbol_char = self.current_symbol()
+		symbol_color = self.current_color()
 		font = pygame.font.Font(None, 12) 	#TODO: consider making this a constant somewhere, or an arg.
-		symbol_text = font.render(symbol_char, 0, WHITE)
+		symbol_text = font.render(symbol_char, 0, symbol_color)
 		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
 		symbol_image.blit(symbol_text, (0, 0))
 		return symbol_image

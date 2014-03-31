@@ -2,9 +2,11 @@
 dungeons deserve.
 """
 
-# TODO: imports
+from tile import *
 
 PLAYER_SYMBOL = '@'
+PLAYER_COLOR = Color("#FF0000")
+
 
 class Player: #TODO: inheritance
 	""" Player ( ... ) -> Player
@@ -20,6 +22,9 @@ class Player: #TODO: inheritance
 
 	def current_symbol(self):
 		return PLAYER_SYMBOL
+
+	def color(self):
+		return PLAYER_COLOR
 
 	def coordinates(self):
 		return self.current_tile.coordinates()

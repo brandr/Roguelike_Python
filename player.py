@@ -56,5 +56,3 @@ class Player(Being):
 	def begin_player_action(self, action, arg, delay):
 		self.current_level.enqueue_player_action(action, arg, delay)
 		self.end_turn()
-
-

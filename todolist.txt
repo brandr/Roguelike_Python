@@ -1,18 +1,39 @@
+CURRENT MAIN GOALS:
+
+ROBERT:
+
+* Figure out a satisfactory turn management system. 
+	-For one thing, it probably shouldn't be possible for the player to have a move cancelled because a monster 
+		moves into that space.
+	-IDEA: instead of decide action -> delay -> execute action, try decide action -> execute action -> delay.
+		This should fix the problem of the player sometimes being blocked from a space,
+		because any one-"turn" action (regardless of delay) will try to execute immediately after the player attempts it.
+* Keep working out combat system, though don't need to worry about HP and death until later.
+* Let the player pick up items 
+	-(remember that doing so takes time, and the player should not autopickup when monsters are near)
+
+NICK:
+
+*
+
+
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
 
 STAGE 1 
-        Basic structure of combat
-        Systems for attack speed, hp, death, etc. (death might close the screen for now, or notify and prompt revive.)
-        Basic item systems (start with Equipment. Monsters should be able to hold and drop items from the start.)
-
+		Fine-tune turn management system.
+        Basic structure of combat (Robert)
+        
 STAGE 2
-		Fully implement equipment system (plan ahead)
+		Basic item systems (start with Equipment. Monsters should be able to hold and drop items from the start.)
+		Implement wielding basics (remember that anything can be wielded, not just proper weapons)
 		More controls, like waiting by pressing, equipping, etc. Will have to flesh out control system a lot.
 		Basic control contexts (trying to equip over already-equipped item, etc.)
 
 STAGE 3
-		More advanced combat (how does equipment change combat? What values should we abstract until later?)
-		Event pane to show what is happening (make it scrollable)
+		Systems for attack speed, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
+		Fully implement general equipment system (plan ahead)
+		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
+		Make event pane scrollable
 		Ability to open other screens (try inventory screen, maybe)
 
 STAGE 4
@@ -21,10 +42,11 @@ STAGE 4
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 
 STAGE 5
-		Ammo and ranged weapons (this will change the combat system)
+		Throwing, Ammo and ranged weapons (this will change the combat system somewha)
 		Graphics system (like arrow moving across screen)
 
 STAGE 6
+		Typed damage like fire, ice, poison (may want to implement sooner)
 		Player attributes (STR, DEX, etc.) (this will change combat system a little.)
 		Consider factors which might alter player move/attack speed, like burdening (need to implement item weight for this)
 		Basic spell system (only need to make like 1 spell)

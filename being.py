@@ -18,9 +18,26 @@ class Being:
 		self.current_tile = None
 		self.melee_range = 1 #TEMP
 
+	def move_towards(self, target):
+		direction = self.direction_towards(target) #TODO: pathing
+		dest_coords = self.coords_in_direction(direction)
+		if(self.enemy_in_tile(dest_coords[0], dest_coords[1])):
+			self.melee_attack(self.current_level.being_in_tile(dest_coords[0], dest_coords[1]))
+		elif(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
+			self.move_to(dest_coords)
+		#TODO: case for destination blocked
+
+	def move_to(self, dest_coords):
+		if(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
+			self.current_tile.remove_being()
+			self.current_level.temp_place_being(self, dest_coords[0], dest_coords[1]) #TEMP method	
+
 	def melee_attack(self, being):
 		if(self.in_range(being, self.melee_range)):
-			self.current_level.send_event("Attack!") #TEMPORARY
+			self.current_level.send_event(self.name + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
+		#else:
+		#	self.move_towards(being) #TEMP
+		#TODO: case for missing because the target moved out of the way.
 
 	def in_range(self, being, check_range):
 		offset = self.offset_from(being)
@@ -42,10 +59,6 @@ class Being:
 		return (coords[0] + direction[0], coords[1] + direction[1])
 
 	def direction_towards(self, target):
-		#current_coords = self.coordinates()
-		#target_coords = target.coordinates()
-		#x_diff = int(target_coords[0] - current_coords[0])
-		#y_diff = int(target_coords[1] - current_coords[1])
 		offset = self.offset_from(target)
 		x_dir = Being.direction_from_diff(offset[0])
 		y_dir = Being.direction_from_diff(offset[1])
@@ -68,12 +81,7 @@ class Being:
 		self.current_level.enqueue_action(self, action, arg, delay)
 
 	def execute_action(self, action, arg):
-		action(arg)
-
-	def move_to(self, dest_coords):
-		if(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
-			self.current_tile.remove_being()
-			self.current_level.temp_place_being(self, dest_coords[0], dest_coords[1]) #TEMP method		
+		action(arg)	
 
 	def end_turn(self):
 		self.current_level.process_turns()

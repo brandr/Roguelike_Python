@@ -52,14 +52,6 @@ class Level:
 		l_map.blit(section, (blit_off_x, blit_off_y))
 		return l_map
 
-	def add_tile(self, tile, x, y): # not to be used aside from building the level (at least for now)
-		self.tiles[y][x] = tile
-
-	def add_wall(self, x, y):
-		wall = Wall(self, x, y)
-		self.add_tile(wall, x, y)
-		wall.update()
-
 	def plan_monster_turns(self):
 		for m in self.monsters:
 			m.decide_next_turn()
@@ -75,6 +67,18 @@ class Level:
 
 	def clear_map(self):
 		self.level_map =  Surface((self.width * TILE_WIDTH, self.height * TILE_HEIGHT))
+
+	def add_tile(self, tile, x, y): # not to be used aside from building the level (at least for now)
+		self.tiles[y][x] = tile
+
+	def add_wall(self, x, y):
+		wall = Wall(self, x, y)
+		self.add_tile(wall, x, y)
+		wall.update()
+
+	def add_item(self, item, x, y):
+		if(self.valid_tile(x, y)):
+			self.tile_at(x, y).add_item(item)
 
 	def add_player(self, player, x, y):
 		self.player = player

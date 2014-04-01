@@ -33,8 +33,10 @@ class GameScreen:
         timer = pygame.time.Clock()
 
         #temp for testing
-        player_1 = Player("Link") #TODO: args
+        player_1 = Player("Link") 
         monster_1 = Monster("Moblin")
+        sword_1 = Weapon()
+
         test_level = Level(25, 25, 1) 
         test_level.add_wall(15, 15)
         test_level.add_wall(16, 15)
@@ -44,8 +46,10 @@ class GameScreen:
 
         test_level.add_player(player_1, 4, 4)
         test_level.add_monster(monster_1, 8, 8)
-        test_level.plan_monster_turns()
+        test_level.add_item(sword_1, 8, 10)   
+
         game_controls = Controls(player_1)
+        test_level.plan_monster_turns()
         #temp for testing
 
         while 1:

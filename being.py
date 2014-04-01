@@ -33,6 +33,9 @@ class Being:
 		y_dir = Being.direction_from_diff(y_diff)
 		return (x_dir, y_dir)
 
+	def current_symbol(self):
+		return None
+
 	def color(self):
 		return DEFAULT_COLOR
 

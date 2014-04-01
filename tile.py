@@ -4,6 +4,7 @@
 
 import pygame
 from pygame import *
+from inventory import *
 
 BLANK_SYMBOL = ' '
 EMPTY_TILE_FLOOR_SYMBOL = u'·'
@@ -24,7 +25,9 @@ class Tile:
 
 	Attributes:
 
-	TODO
+	level: the level on which the tile is found
+	
+	x, y: the coordinates of the tile on that level
 	"""
 
 	def __init__(self, level, x, y): #TODO: args
@@ -33,6 +36,8 @@ class Tile:
 		self.current_being = None
 		self.x, self.y = x, y
 		self.level = level
+		self.tile_items = Inventory() #TODO: implement tile items
+
 		# TODO: figure out how to handle a tile's contents, their order, and which symbol should appear on top,
 		# along with how to udpade the current symbol properly.
 
@@ -46,6 +51,8 @@ class Tile:
 	def current_symbol(self):
 		if(self.current_being != None):
 			return self.current_being.current_symbol()
+		if(not self.tile_items.empty()):
+			return self.tile_items.top_item().current_symbol()
 		return self.empty_symbol
 
 	def current_color(self):
@@ -61,6 +68,10 @@ class Tile:
 		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
 		symbol_image.blit(symbol_text, (0, 0))
 		return symbol_image
+
+	def add_item(self, item):
+		self.tile_items.add_item(item) #TODO: consider how this will affect the tile's appearance
+		self.update()
 
 	def set_being(self, being):
 		self.current_being = being

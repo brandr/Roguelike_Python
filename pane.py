@@ -4,9 +4,6 @@
 from tile import *
 from numpy import *
 
-#WHITE = Color("#FFFFFF")
-#BLACK = Color("#000000")
-
 class Pane:
 	""" Pane ( int, int ) -> Pane
 
@@ -20,6 +17,7 @@ class Pane:
 		self.contents = Surface((self.width, self.height))
 		self.pane_image = Surface((self.width + 4, self. height + 4)) # add 2 * 2 for the borders.
 		self.draw_borders(width + 2, height + 2)
+		self.font = pygame.font.Font(None, 14) 
 
 	def draw_borders(self, width, height):
 		pygame.draw.line(self.pane_image, WHITE, (0, 0), (width, 0), 2)
@@ -38,4 +36,7 @@ class Pane:
 	def draw_pane_image(self):
 		self.pane_image.blit(self.contents, (2, 2))
 		return self.pane_image
+
+	def rendered_text(self, text):
+		return self.font.render(text, 0, WHITE)
 		# TODO: add more pane attributes if necessary.

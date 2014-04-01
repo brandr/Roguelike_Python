@@ -19,6 +19,15 @@ class Player(Being):
 		self.hit_points = (10, 10)
 		self.magic_points = (8, 8)
 		self.move_delay = 4
+		self.attack_delay = 3
+		self.event_pane = None
+		self.melee_range = 1 #TEMP
+
+	def start_game(self):
+		self.send_event("Welcome to the dungeon!") #TEMP
+
+	def send_event(self, message):
+		self.event_pane.display(message)
 
 	def current_symbol(self):
 		return PLAYER_SYMBOL
@@ -35,9 +44,17 @@ class Player(Being):
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.
 		dest_coords = self.coords_in_direction(direction)
-		if(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
-			self.begin_player_action(self.move_to, dest_coords ,self.move_delay) #consider an Action class.
-			self.end_turn()
+		if(self.enemy_in_tile(dest_coords[0], dest_coords[1])):
+			self.temp_attempt_melee_attack(self.current_level.being_in_tile(dest_coords[0], dest_coords[1]))
+		elif(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
+			self.begin_player_action(self.move_to, dest_coords, self.move_delay)
+			#self.end_turn()
+
+	def temp_attempt_melee_attack(self, being):
+		self.begin_player_action(self.melee_attack, being, self.attack_delay)
 
 	def begin_player_action(self, action, arg, delay):
 		self.current_level.enqueue_player_action(action, arg, delay)
+		self.end_turn()
+
+

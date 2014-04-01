@@ -52,12 +52,16 @@ class Level:
 		l_map.blit(section, (blit_off_x, blit_off_y))
 		return l_map
 
-	def plan_monster_turns(self):
+	def send_event(self, message): #TEMP. might not always send message right away.
+		if(self.player != None):
+			self.player.send_event(message)
+
+	def plan_monster_turns(self): #NOTE: might need to do more than this
 		for m in self.monsters:
 			m.decide_next_turn()
 
 	def process_turns(self):
-		self.turn_counter.process_turns() #TODO
+		self.turn_counter.process_turns()
 
 	def enqueue_action(self, being, action, arg, delay):
 		self.turn_counter.enqueue_action(being, action, arg, delay)
@@ -93,6 +97,11 @@ class Level:
 		if(self.valid_tile(x, y)):
 			being.current_level = self
 			self.tiles[y][x].set_being(being)
+
+	def being_in_tile(self, x, y):
+		if(self.valid_tile(x, y)):
+			return self.tile_at(x, y).current_being
+		return None
 
 	def tile_at(self, x, y):
 		#TODO: error checking? (might want it before this method is called in many cases.)

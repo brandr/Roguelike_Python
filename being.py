@@ -16,6 +16,23 @@ class Being:
 		self.name = name
 		self.current_level = None
 		self.current_tile = None
+		self.melee_range = 1 #TEMP
+
+	def melee_attack(self, being):
+		if(self.in_range(being, self.melee_range)):
+			self.current_level.send_event("Attack!") #TEMPORARY
+
+	def in_range(self, being, check_range):
+		offset = self.offset_from(being)
+		distance = (int)(sqrt(pow(offset[0], 2) + pow(offset[1], 2)))
+		return check_range >= distance
+
+	def enemy_in_tile(self, x, y):
+		target_being = self.current_level.being_in_tile(x, y)
+		return target_being != None and self.is_enemy(target_being)
+
+	def is_enemy(self, being):
+		return True #TODO: figure out whether the being is actually an enemy
 
 	def coordinates(self):
 		return self.current_tile.coordinates()
@@ -25,13 +42,21 @@ class Being:
 		return (coords[0] + direction[0], coords[1] + direction[1])
 
 	def direction_towards(self, target):
+		#current_coords = self.coordinates()
+		#target_coords = target.coordinates()
+		#x_diff = int(target_coords[0] - current_coords[0])
+		#y_diff = int(target_coords[1] - current_coords[1])
+		offset = self.offset_from(target)
+		x_dir = Being.direction_from_diff(offset[0])
+		y_dir = Being.direction_from_diff(offset[1])
+		return (x_dir, y_dir)
+
+	def offset_from(self, target): #signed offset from target being
 		current_coords = self.coordinates()
 		target_coords = target.coordinates()
 		x_diff = int(target_coords[0] - current_coords[0])
 		y_diff = int(target_coords[1] - current_coords[1])
-		x_dir = Being.direction_from_diff(x_diff)
-		y_dir = Being.direction_from_diff(y_diff)
-		return (x_dir, y_dir)
+		return (x_diff, y_diff)
 
 	def current_symbol(self):
 		return None

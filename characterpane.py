@@ -27,7 +27,7 @@ class CharacterPane(Pane):
 	def player_update(self): 	#TODO: as this gets more complex, consider creating GUI methods in the Pane class to make text components easier to place.
 		player_info = Surface((CHARACTER_PANE_WIDTH, CHARACTER_PANE_HEIGHT))
 		
-		font = pygame.font.Font(None, 14) 
+		#font = pygame.font.Font(None, 14) 
 
 		player_name_text = "Player: " + self.player.name
 		player_hp_label_text = "HP: " 
@@ -44,14 +44,14 @@ class CharacterPane(Pane):
 		for j in range(len(columns)):
 			c = columns[j]
 			for i in range(len(c)):
-				rendered_text = font.render(c[i], 0, WHITE)
+				rendered_text = self.font.render(c[i], 0, WHITE)
 				player_info.blit(rendered_text, (8 + 72*j, 8 + 16*i))
 
 		player_hp_text = self.player.hp_display()
 		player_mp_text = self.player.mp_display()
 
-		rendered_hp_text = font.render(player_hp_text, 0, RED)
-		rendered_mp_text = font.render(player_mp_text, 0, BLUE)
+		rendered_hp_text = self.font.render(player_hp_text, 0, RED)
+		rendered_mp_text = self.font.render(player_mp_text, 0, BLUE)
 
 		player_info.blit(rendered_hp_text, (28, 8 + 16))
 		player_info.blit(rendered_mp_text, (28, 8 + 32))

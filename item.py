@@ -1,6 +1,8 @@
 """ An object that can be held in an inventory (belonging to a tile or to a Being.)
 """
 
+from math import *
+
 WEAPON, ARMOR = "Weapon", "Armor"
 DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', WEAPON:')'}
 

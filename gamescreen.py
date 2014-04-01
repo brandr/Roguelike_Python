@@ -2,6 +2,7 @@
 
 from mappane import *
 from characterpane import *
+from eventpane import *
 from controls import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
@@ -32,7 +33,7 @@ class GameScreen:
         pygame.display.set_caption("DIS A ROGUELIKE")
         timer = pygame.time.Clock()
 
-        #temp for testing
+        #TEMP for testing
         player_1 = Player("Link") 
         monster_1 = Monster("Moblin")
         sword_1 = Weapon()
@@ -40,17 +41,22 @@ class GameScreen:
         test_level = Level(25, 25, 1) 
         test_level.add_wall(15, 15)
         test_level.add_wall(16, 15)
+
         map_pane = MapPane(test_level)
         character_pane = CharacterPane(player_1)
-        main_screen_panes = [character_pane, map_pane]
+        event_pane = EventPane(player_1)
+        main_screen_panes = [character_pane, map_pane, event_pane]
 
         test_level.add_player(player_1, 4, 4)
         test_level.add_monster(monster_1, 8, 8)
-        test_level.add_item(sword_1, 8, 10)   
+        test_level.add_item(sword_1, 8, 10)
 
-        game_controls = Controls(player_1)
+        player_1.start_game()   
+
         test_level.plan_monster_turns()
-        #temp for testing
+        game_controls = Controls(player_1)
+        
+        #TEMP for testing
 
         while 1:
             timer.tick(100)
@@ -60,6 +66,8 @@ class GameScreen:
 
             map_pane.level_update(player_1)
             character_pane.player_update()
+            #event_pane.update()
+
             self.draw_panes(screen, main_screen_panes)
             
             pygame.display.update()

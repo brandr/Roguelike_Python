@@ -11,7 +11,7 @@ class Monster(Being):
 	def __init__(self, name): #TODO: args (first figure out how monsters will be built)
 		Being.__init__(self, name)
 		self.hit_points = (10, 10) #TEMP
-		self.move_delay = 4
+		self.move_delay = 5
 		self.attack_delay = 3
 
 	def current_symbol(self):
@@ -31,7 +31,7 @@ class Monster(Being):
 		elif(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
 			self.begin_move_towards(target)
 		else:
-			self.begin_action(self.wait, None, 1) #TODO: case for pathing towards the player
+			self.execute_action(self.wait, None, 1)
 
 	def begin_move_towards(self, target): #I forget why I gave this its own method
 		self.temp_monster_move_towards(target)
@@ -40,9 +40,9 @@ class Monster(Being):
 		direction = self.direction_towards(target) #TODO: pathing
 		dest_coords = self.coords_in_direction(direction)
 		if(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
-			self.begin_action(self.move_towards, target, self.move_delay) #consider an Action class.
+			self.execute_action(self.move_towards, target, self.move_delay)
 		else:		
-			self.begin_action(self.wait, None, 1) #TODO: case for pathing towards player
+			self.execute_action(self.wait, None, 1)
 
 	def temp_monster_attempt_melee_attack(self, being):
-		self.begin_action(self.melee_attack, being, self.attack_delay)
+		self.execute_action(self.melee_attack, being, self.attack_delay)

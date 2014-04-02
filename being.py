@@ -77,11 +77,12 @@ class Being:
 	def color(self):
 		return DEFAULT_COLOR
 
-	def begin_action(self, action, arg, delay):
-		self.current_level.enqueue_action(self, action, arg, delay)
+	#def begin_action(self, action, arg, delay):
+	#	self.current_level.enqueue_action(self, action, arg, delay)
 
-	def execute_action(self, action, arg):
+	def execute_action(self, action, arg, delay):
 		action(arg)	
+		self.current_level.enqueue_delay(self, action, arg, delay)		
 
 	def end_turn(self):
 		self.current_level.process_turns()

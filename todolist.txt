@@ -3,7 +3,7 @@ CURRENT MAIN GOALS:
 ROBERT:
 
 * Figure out a satisfactory turn management system. 
-	-For one thing, it probably shouldn't be possible for the player to have a move cancelled because a monster 
+	-For one thing, it probably shouldn't be possible for the player to have a move action cancelled because a monster 
 		moves into that space.
 	-IDEA: instead of decide action -> delay -> execute action, try decide action -> execute action -> delay.
 		This should fix the problem of the player sometimes being blocked from a space,

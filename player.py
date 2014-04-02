@@ -47,12 +47,12 @@ class Player(Being):
 		if(self.enemy_in_tile(dest_coords[0], dest_coords[1])):
 			self.temp_attempt_melee_attack(self.current_level.being_in_tile(dest_coords[0], dest_coords[1]))
 		elif(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
-			self.begin_player_action(self.move_to, dest_coords, self.move_delay)
-			#self.end_turn()
+			self.execute_player_action(self.move_to, dest_coords, self.move_delay)
 
 	def temp_attempt_melee_attack(self, being):
-		self.begin_player_action(self.melee_attack, being, self.attack_delay)
+		self.execute_player_action(self.melee_attack, being, self.attack_delay)
 
-	def begin_player_action(self, action, arg, delay):
-		self.current_level.enqueue_player_action(action, arg, delay)
+	def execute_player_action(self, action, arg, delay):
+		action(arg)
+		self.current_level.enqueue_player_delay(self, delay)
 		self.end_turn()

@@ -63,11 +63,11 @@ class Level:
 	def process_turns(self):
 		self.turn_counter.process_turns()
 
-	def enqueue_action(self, being, action, arg, delay):
-		self.turn_counter.enqueue_action(being, action, arg, delay)
+	def enqueue_delay(self, being, action, arg, delay):
+		self.turn_counter.enqueue_delay(being, delay)
 
-	def enqueue_player_action(self, action, arg, delay):
-		self.turn_counter.enqueue_player_action(self.player, action, arg, delay)
+	def enqueue_player_delay(self, player, delay):
+		self.turn_counter.enqueue_player_delay(player, delay)
 
 	def clear_map(self):
 		self.level_map =  Surface((self.width * TILE_WIDTH, self.height * TILE_HEIGHT))

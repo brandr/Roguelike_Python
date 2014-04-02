@@ -35,9 +35,9 @@ class EventPane(Pane):
 
 	def display_line(self, line):
 		self.lines.append(line)
-		self.update_display()
+		self.update()
 
-	def update_display(self):
+	def update(self):
 		self.clear()
 		height = self.contents.get_height()
 		bottom_y = height - 16 #temp

@@ -7,7 +7,11 @@ from level import *
 class Controls:
 	""" Controls( ... ) -> Controls
 
-		TODO: docstring
+		An abstract class for translating key presses into actions.
+
+		Attributes:
+
+		control_map: a dict of key inputs to methods.
 
 	"""
 

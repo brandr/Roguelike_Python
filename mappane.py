@@ -24,15 +24,15 @@ class MapPane(Pane):
 
 	"""
 
-	def __init__(self, level):
+	def __init__(self, player):
 		Pane.__init__(self, MAP_PANE_X, MAP_PANE_Y, MAP_PANE_WIDTH, MAP_PANE_HEIGHT)
-		self.current_level = level
+		self.player = player
 		
-	def level_update(self, player): #TODO: args
-		coords = player.coordinates()
+	def update(self): 
+		coords = self.player.coordinates()
 		center_x, center_y = coords[0], coords[1]
 		half_width, half_height = MAP_PANE_WIDTH/(2 * TILE_WIDTH), MAP_PANE_HEIGHT/(2 * TILE_HEIGHT)
 		x1, y1 = center_x - half_width, center_y - half_height
 		x2, y2 = center_x + half_width, center_y + half_height
-		level_map = self.current_level.level_map_section(x1, y1, x2, y2)
-		self.update(level_map)
+		level_map = self.player.current_level.level_map_section(x1, y1, x2, y2)
+		Pane.update(self, level_map)

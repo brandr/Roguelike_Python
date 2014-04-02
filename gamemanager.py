@@ -3,7 +3,7 @@
 from mappane import *
 from characterpane import *
 from eventpane import *
-from controlmanager import *
+from screenmanager import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
 WIN_WIDTH = 800
@@ -12,8 +12,8 @@ DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 32
 FLAGS = 0
 
-class GameScreen:
-    """GameScreen () -> GameScreen
+class GameManager:
+    """GameManager () -> GameManager
 
     This is the screen used to play the game.
     (Will add more description as more stuff is implemented.)
@@ -23,7 +23,7 @@ class GameScreen:
     def __init__(self):
         pass
 
-    def runGame(self, screen):
+    def runGame(self, master_screen):
         """GS.runGame (...) -> None
 
         Run the game using a pygame screen.
@@ -42,20 +42,22 @@ class GameScreen:
         test_level.add_wall(15, 15)
         test_level.add_wall(16, 15)
 
-        map_pane = MapPane(test_level)
-        character_pane = CharacterPane(player_1)
-        event_pane = EventPane(player_1)
-        main_screen_panes = [character_pane, map_pane, event_pane]
-
         test_level.add_player(player_1, 4, 4)
         test_level.add_monster(monster_1, 8, 8)
-        test_level.add_item(sword_1, 8, 10)
+        test_level.add_item(sword_1, 8, 10)      
 
-        player_1.start_game()   
+        map_pane = MapPane(player_1)
+        character_pane = CharacterPane(player_1)
+        event_pane = EventPane(player_1)
+        main_screen_panes = [character_pane, map_pane, event_pane] 
 
         test_level.plan_monster_turns()
         game_controls = MainGameControls(player_1) #TODO: consider how controls may parse buttons differently for different screens.
         control_manager = ControlManager(game_controls)
+        main_screen = GuiScreen(control_manager, main_screen_panes)
+        screen_manager = ScreenManager(master_screen, main_screen)
+
+        player_1.start_game() 
         
         #TEMP for testing
 
@@ -63,21 +65,10 @@ class GameScreen:
             timer.tick(100)
 
             for e in pygame.event.get():
-                control_manager.process_event(e)
-
-            map_pane.level_update(player_1)
-            character_pane.player_update()
-            #event_pane.update()
-
-            self.draw_panes(screen, main_screen_panes)
-            
+                screen_manager.process_event(e)
+            screen_manager.update_current_screen()
+            self.draw_panes(screen_manager)
             pygame.display.update()
 
-    def draw_panes(self, screen, panes):
-        for p in panes:
-            screen.blit(p.draw_pane_image(), (p.x_off, p.y_off))
-    
-
-                    #screen.blit(bg, (x * 32, y * 32))
-           #TODO: perform proper updates based on keyboard input here.
-           #player.current_level.update(screen, up, down, left, right, running)
+    def draw_panes(self, screen_manager):
+        screen_manager.draw_panes()

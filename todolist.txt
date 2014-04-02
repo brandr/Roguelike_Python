@@ -1,9 +1,13 @@
+
 CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Implement player inventory and item pickup.
 * Implement a way to open the inventory screen.
+* Implement system for item pickup when there are multiple items in a tile.
+	-how is the player prompted on which item to pick up?
+	-does another screen open up? How does the control context change? How to structure?
+* Implement item dropping.
 * Keep working out combat system, though don't need to worry about damage, HP, or death until later.
 	-let nick play the current version and figure out what he wants for the fundamentals.
 	-mention important cases like player and monster attempting to move into a space at the same time,

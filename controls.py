@@ -26,12 +26,12 @@ class Controls:
 			direction = DIRECTION_MAP[key]
 			self.player.temp_move(direction) #TEMP METHOD
 
-	def wait(self, key): #the key arg not necessary for this method, but just for compilation.
+	def wait(self, key): #the key arg not necessary for this method, but just for program compilation.
 		wait_time = self.player.lowest_non_player_delay() + 1
 		self.player.begin_wait(wait_time)
 
 	def pick_up(self, key):
-		pass #TODO
+		self.player.attempt_pick_up()
 
 move = Controls.move_input
 wait = Controls.wait

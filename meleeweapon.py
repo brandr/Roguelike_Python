@@ -13,5 +13,5 @@ class MeleeWeapon(Weapon):
 	TODO
 	"""
 
-	def __init__(self):
-		Weapon.__init__(self)
+	def __init__(self, name):
+		Weapon.__init__(self, name)

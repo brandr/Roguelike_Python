@@ -2,7 +2,9 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Keep working out combat system, though don't need to worry about death until later.
+* Implement player inventory and item pickup.
+* Implement a way to open the inventory screen.
+* Keep working out combat system, though don't need to worry about damage, HP, or death until later.
 	-let nick play the current version and figure out what he wants for the fundamentals.
 	-mention important cases like player and monster attempting to move into a space at the same time,
 		player moving out of the way before a monster attacks, etc.

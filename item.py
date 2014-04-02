@@ -3,16 +3,16 @@
 
 from math import *
 
-WEAPON, ARMOR = "Weapon", "Armor"
-DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', WEAPON:')'}
+MELEE_WEAPON, ARMOR = "MeleeWeapon", "Armor"
+DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', MELEE_WEAPON:')'}
 
 class Item:
 	""" Item( ... ) -> Item
 
 	TODO: docstring
 	"""
-	def __init__(self):
-		pass #TODO
+	def __init__(self, name):
+		self.name = name #TODO: set name somehow
 
 	def current_symbol(self):
 		class_name = self.__class__.__name__

@@ -29,7 +29,7 @@ class EventPane(Pane):
 		self.player = player
 		self.lines = []
 
-	def display(self, message): #TODO: case for messages that have multiple lines (should be  handled here)
+	def display(self, message): #TODO: case for messages that have multiple lines (should be handled here)
 		rendered_message = self.rendered_text(message)
 		self.display_line(rendered_message)
 

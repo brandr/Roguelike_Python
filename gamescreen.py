@@ -36,7 +36,7 @@ class GameScreen:
         #TEMP for testing
         player_1 = Player("Link") 
         monster_1 = Monster("Moblin")
-        sword_1 = Weapon()
+        sword_1 = MeleeWeapon("Master Sword")
 
         test_level = Level(25, 25, 1) 
         test_level.add_wall(15, 15)

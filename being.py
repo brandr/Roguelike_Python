@@ -17,6 +17,13 @@ class Being:
 		self.current_level = None
 		self.current_tile = None
 		self.melee_range = 1 #TEMP
+		self.inventory = Inventory()
+
+	def send_event(self, message):
+		self.current_level.send_event(message)
+
+	def obtain_item(self, item):
+		self.inventory.add_item(item) #TODO: checks for stuff like full inventory? (might take place before here)
 
 	def move_towards(self, target):
 		direction = self.direction_towards(target) #TODO: pathing
@@ -34,7 +41,7 @@ class Being:
 
 	def melee_attack(self, being):
 		if(self.in_range(being, self.melee_range)):
-			self.current_level.send_event(self.name + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
+			self.send_event(self.name + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
 		#else:
 		#	self.move_towards(being) #TEMP
 		#TODO: case for missing because the target moved out of the way.

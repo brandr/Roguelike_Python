@@ -51,7 +51,7 @@ class Tile:
 	def current_symbol(self):
 		if(self.current_being != None):
 			return self.current_being.current_symbol()
-		if(not self.tile_items.empty()):
+		if(self.contains_items()):
 			return self.tile_items.top_item().current_symbol()
 		return self.empty_symbol
 
@@ -72,6 +72,16 @@ class Tile:
 	def add_item(self, item):
 		self.tile_items.add_item(item) #TODO: consider how this will affect the tile's appearance
 		self.update()
+
+	def remove_item(self, item):
+		self.tile_items.remove_item(item)
+		self.update()
+
+	def contains_items(self):
+		return not self.tile_items.empty()
+
+	def top_item(self):
+		return self.tile_items.top_item()
 
 	def set_being(self, being):
 		self.current_being = being

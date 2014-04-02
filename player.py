@@ -47,6 +47,19 @@ class Player(Being):
 	def wait(self, arg): #even though this method does nothing, it still seems to be necessary.
 		pass
 
+	def attempt_pick_up(self):
+		if(self.current_tile.contains_items()):
+			pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
+			self.execute_player_action(self.temp_pick_up_item, None, pick_up_delay)
+		else:
+			self.send_event("Nothing to pick up.")
+
+	def temp_pick_up_item(self, arg):
+		item = self.current_tile.top_item()
+		self.current_tile.remove_item(item)
+		self.obtain_item(item)
+		self.send_event("Picked up " + item.name + ".")
+
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.
 		dest_coords = self.coords_in_direction(direction)

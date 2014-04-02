@@ -11,8 +11,8 @@ class Weapon(Item):
 	MeleeWeapon, RangedWeapon, ThrowWeapon, etc.
 
 	Attributes:
-	TODO
+	name: a temporary value for the weapon's name. (this is subject to change once identification is implemented.)
 	"""
 
-	def __init__(self):
-		Item.__init__(self)
+	def __init__(self, name):
+		Item.__init__(self, name)

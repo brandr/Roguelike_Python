@@ -62,3 +62,6 @@ class Player(Being):
 		action(arg)
 		self.current_level.enqueue_player_delay(self, delay)
 		self.end_turn()
+
+	def lowest_non_player_delay(self):
+		return self.current_level.turn_counter.lowest_non_player_delay()

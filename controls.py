@@ -16,8 +16,6 @@ class Controls:
 
 	def process_event(self, e):
 		if e.type == QUIT: raise(SystemExit)
-		#if e.type != KEYDOWN and e.type != KEYUP:
-		#	return
 		if e.type == KEYDOWN:
 			if e.key in(CONTROL_MAP):
 				action = CONTROL_MAP[e.key]
@@ -29,7 +27,8 @@ class Controls:
 			self.player.temp_move(direction) #TEMP METHOD
 
 	def wait(self, key): #the key arg not necessary for this method, but just for compilation.
-		self.player.begin_wait(1) #TODO: consider waiting until something happens. (it may be tricky to figure out how long this will take.)
+		wait_time = self.player.lowest_non_player_delay() + 1
+		self.player.begin_wait(wait_time)
 
 	def pick_up(self, key):
 		pass #TODO

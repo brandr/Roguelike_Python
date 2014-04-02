@@ -19,20 +19,22 @@ NICK:
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
 
 STAGE 1 
-        Basic structure of combat (Robert)
+        Basic structure of combat (Robert) (possibly done with this for now)
         
 STAGE 2
-		Basic item systems (start with Equipment. Monsters should be able to hold and drop items from the start.)
+		Basic item systems (start with Weapons and Equipment. Monsters should be able to hold and drop items from the start.)
+		Ability to open other screens (try inventory screen)
 		Implement wielding basics (remember that anything can be wielded, not just proper weapons)
 		More controls, like waiting by pressing, equipping, etc. Will have to flesh out control system a lot.
 		Basic control contexts (trying to equip over already-equipped item, etc.)
 
 STAGE 3
 		Systems for attack speed, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
-		Fully implement general equipment system (plan ahead. Focus on armor, but allow for amulets/rings/etc)
+		General equipment system (plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
+		Dodging/blocking/armor mechanics
 		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
 		Make event pane scrollable
-		Ability to open other screens (try inventory screen, maybe)
+		Item identification
 
 STAGE 4
 		Status effects (make sure they work with current turn system) (could make temporary potions)
@@ -40,13 +42,16 @@ STAGE 4
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 
 STAGE 5
-		Throwing, Ammo and ranged weapons (this will change the combat system somewha)
+		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
 		Graphics system (like arrow moving across screen)
 
 STAGE 6
 		Typed damage like fire, ice, poison (may want to implement sooner)
 		Player attributes (STR, DEX, etc.) (this will change combat system a little.)
+		HP and MP regeneration
 		Consider factors which might alter player move/attack speed, like burdening (need to implement item weight for this)
+		Item enchantments
+		Item brands
 		Basic spell system (only need to make like 1 spell)
 		Expand graphics to accomodate spell; try to plan ahead and be extensible
 
@@ -56,7 +61,7 @@ STAGE 7
 		Signs that the player can read
 
 STAGE 8
-		Stairs, multiple levels, have to create a dungeon class
+		Stairs, multiple levels, have to create a dungeon class (might create the dungeon class before this)
 		Consider more tile types, like doors
 		Make it easier to create monsters for testing (maybe focus on an editor context)
 		Map editor (may benefit from some gui library)
@@ -64,7 +69,7 @@ STAGE 8
 
 STAGE M - 2
 		Beatitude
-		Food (expand upon monster corpses)
+		Food and hunger (expand upon monster corpses)
 		Wands
 		Gold
 		Branches
@@ -78,7 +83,11 @@ STAGE M - 1
 
 STAGE M
 		Spellbooks (expand magic system a bit)
+		Player experience and leveling
+		Special abilities
 		Basic skill system (don't develop full tree yet, but figure out what a skill is and how it will be stored/processed)
+		Player races/classes
+		Monster classification (AI type, specices, etc.)
 		Artifact items
 		Unique monsters (how to store/create them? How might their values vary?)
 ...
@@ -93,8 +102,9 @@ STAGE N - 2
         Tertiary environmental attributes, like steam, wells, 
 
 STAGE N - 1
-		Player and Monster FOV
-        Advanced monster AI (based on all facets of the game that will be available for monsters to interact with)
+		Sounds and monster awareness
+		Complete Player and Monster FOV
+        Fully flesh out monster AI (based on all facets of the game that will be available for monsters to interact with)
      	Highly independent systems, like gods, skill trees, some unique artifact systems, etc.
      	Ability to save the game to a file, and load a game from that file.
 

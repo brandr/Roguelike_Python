@@ -28,13 +28,25 @@ class Controls:
 			direction = DIRECTION_MAP[key]
 			self.player.temp_move(direction) #TEMP METHOD
 
+	def wait(self, key): #the key arg not necessary for this method, but just for compilation.
+		self.player.begin_wait(1) #TODO: consider waiting until something happens. (it may be tricky to figure out how long this will take.)
+
+	def pick_up(self, key):
+		pass #TODO
+
 move = Controls.move_input
+wait = Controls.wait
+pick_up = Controls.pick_up
 
 CONTROL_MAP = { 
-	K_UP:move, K_DOWN:move, K_LEFT:move, K_RIGHT:move,
+	K_UP:move, K_DOWN:move, K_LEFT:move, K_RIGHT:move,			# arrow keys
 
-	K_KP1:move, K_KP2:move, K_KP3:move, K_KP4:move, K_KP5:move,
-	K_KP6:move, K_KP7:move, K_KP8:move, K_KP9:move #TODO
+	K_KP1:move, K_KP2:move, K_KP3:move, K_KP4:move, K_KP5:move,	# numpad keys (might change 5 at some point)
+	K_KP6:move, K_KP7:move, K_KP8:move, K_KP9:move,
+
+	K_PERIOD:wait,
+
+	K_COMMA:pick_up
 }
 
 DIRECTION_MAP = {

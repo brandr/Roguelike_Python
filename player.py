@@ -41,6 +41,12 @@ class Player(Being):
 	def mp_display(self):
 		return str(self.magic_points[0]) + "/" + str(self.magic_points[1])
 
+	def begin_wait(self, time):
+		self.execute_player_action(self.wait, None, time)
+
+	def wait(self, arg): #even though this method does nothing, it still seems to be necessary.
+		pass
+
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.
 		dest_coords = self.coords_in_direction(direction)

@@ -3,7 +3,7 @@
 from mappane import *
 from characterpane import *
 from eventpane import *
-from controls import *
+from controlmanager import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
 WIN_WIDTH = 800
@@ -54,7 +54,8 @@ class GameScreen:
         player_1.start_game()   
 
         test_level.plan_monster_turns()
-        game_controls = Controls(player_1)
+        game_controls = MainGameControls(player_1) #TODO: consider how controls may parse buttons differently for different screens.
+        control_manager = ControlManager(game_controls)
         
         #TEMP for testing
 
@@ -62,7 +63,7 @@ class GameScreen:
             timer.tick(100)
 
             for e in pygame.event.get():
-                game_controls.process_event(e)
+                control_manager.process_event(e)
 
             map_pane.level_update(player_1)
             character_pane.player_update()

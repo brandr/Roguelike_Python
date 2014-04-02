@@ -2,25 +2,23 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Figure out a satisfactory turn management system. 
-	-For one thing, it probably shouldn't be possible for the player to have a move action cancelled because a monster 
-		moves into that space.
-	-IDEA: instead of decide action -> delay -> execute action, try decide action -> execute action -> delay.
-		This should fix the problem of the player sometimes being blocked from a space,
-		because any one-"turn" action (regardless of delay) will try to execute immediately after the player attempts it.
-* Keep working out combat system, though don't need to worry about HP and death until later.
+* Keep working out combat system, though don't need to worry about death until later.
+	-let nick play the current version and figure out what he wants for the fundamentals.
+	-mention important cases like player and monster attempting to move into a space at the same time,
+		player moving out of the way before a monster attacks, etc.
 * Let the player pick up items 
 	-(remember that doing so takes time, and the player should not autopickup when monsters are near)
 
 NICK:
 
-*
+* Come up with a rough and tentative but very long and diverse list of actions and delay values.
+	-In other words, the list should cover many possible actions, but the delay values will be
+		very easy to change, so don't worry about making them exact.
 
 
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
 
 STAGE 1 
-		Fine-tune turn management system.
         Basic structure of combat (Robert)
         
 STAGE 2
@@ -31,7 +29,7 @@ STAGE 2
 
 STAGE 3
 		Systems for attack speed, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
-		Fully implement general equipment system (plan ahead)
+		Fully implement general equipment system (plan ahead. Focus on armor, but allow for amulets/rings/etc)
 		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
 		Make event pane scrollable
 		Ability to open other screens (try inventory screen, maybe)

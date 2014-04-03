@@ -17,6 +17,7 @@ class Controls:
 
 	def __init__(self): #, player):
 		self.control_map = None #TODO: add things to this class that aren't specific to the maingamecontrols.
+		self.control_manager = None
 
 	def process_event(self, event): #abstract method, to be inherited from by subclasses
 		if event.type == QUIT: raise(SystemExit)

@@ -1,8 +1,5 @@
 """This is the screen used to play the game."""
 
-from mappane import *
-from characterpane import *
-from eventpane import *
 from screenmanager import *
 
 BACKGROUND_COLOR = Color("#FFFFFF")
@@ -46,10 +43,12 @@ class GameManager:
         test_level.add_monster(monster_1, 8, 8)
         test_level.add_item(sword_1, 8, 10)      
 
-        map_pane = MapPane(player_1)
+        map_pane = MapPane(player_1)                # TODO: turn these 4 lines into their own method somewhere in the screen/manager mess.
         character_pane = CharacterPane(player_1)
         event_pane = EventPane(player_1)
         main_screen_panes = [character_pane, map_pane, event_pane] 
+
+        #inventory_item_pane = InventoryItemPane() #not putting args in yet, because this could apply to the player, tiles, or other stuff
 
         test_level.plan_monster_turns()
         game_controls = MainGameControls(player_1) #TODO: consider how controls may parse buttons differently for different screens.

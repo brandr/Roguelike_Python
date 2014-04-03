@@ -1,7 +1,7 @@
 """ Handles the controls used when the player is in the main game.
 """
-
-from controls import *
+from inventorycontrols import *
+from inventoryitempane import *
 
 class MainGameControls(Controls):
 	""" MainGameControls( Player ) -> MainGameControls
@@ -31,9 +31,21 @@ class MainGameControls(Controls):
 	def pick_up(self, key):
 		self.player.attempt_pick_up()
 
+	def open_player_inventory_screen(self, key):
+		inventory_screen = self.inventory_screen(self.player.inventory)
+		self.control_manager.switch_screen(inventory_screen)
+
+	def inventory_screen(self, inventory):
+		item_pane = InventoryItemPane(inventory)
+		inventory_panes = [item_pane] #TODO: other inventory panes
+		inventory_controls = InventoryControls(self.player, self.player.inventory)
+		inventory_control_manager = self.control_manager.build_control_manager(inventory_controls)
+		return self.control_manager.build_screen(inventory_control_manager, inventory_panes)
+	
 move = MainGameControls.move_input
 wait = MainGameControls.wait
 pick_up = MainGameControls.pick_up
+open_player_inventory_screen = MainGameControls.open_player_inventory_screen
 
 MAIN_GAME_CONTROL_MAP = { 
 	K_UP:move, K_DOWN:move, K_LEFT:move, K_RIGHT:move,			# arrow keys
@@ -43,7 +55,9 @@ MAIN_GAME_CONTROL_MAP = {
 
 	K_PERIOD:wait,
 
-	K_COMMA:pick_up
+	K_COMMA:pick_up,
+
+	K_i:open_player_inventory_screen
 }
 
 MAIN_GAME_DIRECTION_MAP = {

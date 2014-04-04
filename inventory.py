@@ -15,6 +15,9 @@ class Inventory:
 	def __init__(self):
 		self.items = [] #TODO: find a better way to store than a list if it proves useful.
 
+	def item_at_index(self, index):
+		return self.items[index]
+
 	def add_item(self, item):
 		self.items.append(item)
 
@@ -28,3 +31,6 @@ class Inventory:
 		if(not self.empty()):
 			return self.items[-1]
 		return None
+
+	def item_count(self):
+		return len(self.items) #TODO: change this if blank item slots must be stored.

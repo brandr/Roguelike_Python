@@ -14,6 +14,6 @@ class Equipment(Item):
 	TODO
 	"""
 
-	def __init__(self):
-		Item.__init__(self)
+	def __init__(self, name):
+		Item.__init__(self, name)
 		#TODO

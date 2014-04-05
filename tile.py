@@ -69,6 +69,9 @@ class Tile:
 		symbol_image.blit(symbol_text, (0, 0))
 		return symbol_image
 
+	def tile_item_select_list(self):
+		return self.tile_items.item_select_list()
+
 	def add_item(self, item):
 		self.tile_items.add_item(item) #TODO: consider how this will affect the tile's appearance
 		self.update()
@@ -82,6 +85,9 @@ class Tile:
 
 	def top_item(self):
 		return self.tile_items.top_item()
+
+	def item_count(self):
+		return self.tile_items.item_count()
 
 	def set_being(self, being):
 		self.current_being = being

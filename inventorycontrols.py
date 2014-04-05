@@ -19,10 +19,7 @@ class InventoryControls(Controls):
 		self.inventory = inventory
 		self.control_map = INVENTORY_SCREEN_CONTROL_MAP #TODO: differentiate between player inventory screen controls and tile inventory screen controls.
 
-	def exit_to_main_game_screen(self, key):
-		self.control_manager.exit_to_main_game_screen(self.player)
-
-exit = InventoryControls.exit_to_main_game_screen
+exit = Controls.exit_to_main_game_screen
 
 INVENTORY_SCREEN_CONTROL_MAP = {
 	K_ESCAPE:exit

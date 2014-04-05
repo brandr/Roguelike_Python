@@ -12,7 +12,10 @@ class Item:
 	TODO: docstring
 	"""
 	def __init__(self, name):
-		self.name = name #TODO: set name somehow
+		self.name = name #TODO: set name differently once identification is implemented
+
+	def display_name(self):
+		return self.name
 
 	def current_symbol(self):
 		class_name = self.__class__.__name__

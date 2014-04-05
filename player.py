@@ -3,6 +3,7 @@ dungeons deserve.
 """
 
 from being import *
+#from maingamecontrols import *
 
 PLAYER_SYMBOL = '@'
 PLAYER_COLOR = Color("#FF0000")
@@ -16,6 +17,7 @@ class Player(Being):
 
 	def __init__(self, name): #TODO: figure out how player should actually be created
 		Being.__init__(self, name)
+		self.screen_manager = None #TODO: consider giving monsters an attribute for the screen, too
 		self.hit_points = (10, 10)
 		self.magic_points = (8, 8)
 		self.move_delay = 4
@@ -47,15 +49,27 @@ class Player(Being):
 	def wait(self, arg): #even though this method does nothing, it still seems to be necessary.
 		pass
 
-	def attempt_pick_up(self):
-		if(self.current_tile.contains_items()):
-			pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
-			self.execute_player_action(self.temp_pick_up_item, None, pick_up_delay)
-		else:
+	def begin_pick_up(self):
+		if(not self.current_tile.contains_items()):
 			self.send_event("Nothing to pick up.")
+			return
+		if(self.current_tile.item_count() == 1):
+			item = self.current_tile.top_item()
+			self.pick_up_tile_item(item)
+			return
+		self.pick_up_prompt()
 
-	def temp_pick_up_item(self, arg):
-		item = self.current_tile.top_item()
+	def pick_up_prompt(self):
+		self.send_event("Pick up which item?")
+		item_list = self.current_tile.tile_item_select_list()
+		tile_items = self.current_tile.tile_items
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.pick_up_tile_item)
+		
+	def pick_up_tile_item(self, item):
+		pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
+		self.execute_player_action(self.temp_pick_up_item, item, pick_up_delay)
+
+	def temp_pick_up_item(self, item):
 		self.current_tile.remove_item(item)
 		self.obtain_item(item)
 		self.send_event("Picked up " + item.name + ".")

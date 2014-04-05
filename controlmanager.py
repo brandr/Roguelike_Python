@@ -2,6 +2,7 @@
 """
 
 from maingamecontrols import * 
+#from selectlistcontrols import *
 
 class ControlManager:
 	""" ControlManager( ... ) -> ControlManager
@@ -25,11 +26,19 @@ class ControlManager:
 	def switch_screen(self, screen):
 		self.screen.switch_screen(screen)
 
+	def switch_controls(self, controls):
+		controls.control_manager = self
+		self.current_controls = controls #not sure if this will work
+
 	def build_screen(self, control_manager, panes):
 		return self.screen.build_screen(control_manager, panes)
 
 	def build_control_manager(self, controls):
 		return ControlManager(controls)
+
+	def exit_to_main_game_controls(self, player):
+		controls = MainGameControls(player)
+		self.switch_controls(controls)
 
 	def exit_to_main_game_screen(self, player):
 		self.screen.exit_to_main_game_screen(player)

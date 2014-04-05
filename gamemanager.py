@@ -21,7 +21,7 @@ class GameManager:
         pass
 
     def runGame(self, master_screen):
-        """GS.runGame (...) -> None
+        """GM.runGame (...) -> None
 
         Run the game using a pygame screen.
 
@@ -33,7 +33,11 @@ class GameManager:
         #TEMP for testing
         player_1 = Player("Link") 
         monster_1 = Monster("Moblin")
+        monster_2 = Monster("Bokoblin")
+
         sword_1 = MeleeWeapon("Master Sword")
+        shield_1 = Armor("Hylian Shield")
+        hat_1 = Armor("Fairy Hat")
 
         test_level = Level(25, 25, 1) 
         test_level.add_wall(15, 15)
@@ -41,7 +45,10 @@ class GameManager:
 
         test_level.add_player(player_1, 4, 4)
         test_level.add_monster(monster_1, 8, 8)
-        test_level.add_item(sword_1, 8, 10)      
+        test_level.add_monster(monster_2, 18, 16)
+        test_level.add_item(sword_1, 8, 10)    
+        test_level.add_item(shield_1, 10, 8)  
+        test_level.add_item(hat_1, 10, 8)  
 
         map_pane = MapPane(player_1)                # TODO: turn these 4 lines into their own method somewhere in the screen/manager mess.
         character_pane = CharacterPane(player_1)
@@ -54,7 +61,7 @@ class GameManager:
         game_controls = MainGameControls(player_1) #TODO: consider how controls may parse buttons differently for different screens.
         control_manager = ControlManager(game_controls)
         main_screen = GuiScreen(control_manager, main_screen_panes)
-        screen_manager = ScreenManager(master_screen, main_screen)
+        screen_manager = ScreenManager(master_screen, main_screen, player_1)
 
         player_1.start_game() 
         

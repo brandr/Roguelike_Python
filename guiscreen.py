@@ -33,6 +33,9 @@ class GuiScreen:
 	def switch_screen(self, screen):
 		self.screen_manager.switch_current_screen(screen)
 
+	def switch_controls(self, controls):
+		self.control_manager.switch_controls(controls)
+
 	def build_screen(self, control_manager ,panes):
 		return GuiScreen(control_manager, panes)
 

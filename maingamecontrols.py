@@ -1,6 +1,6 @@
 """ Handles the controls used when the player is in the main game.
 """
-from inventorycontrols import *
+from selectlistcontrols import *
 from inventoryitempane import *
 
 class MainGameControls(Controls):
@@ -29,7 +29,7 @@ class MainGameControls(Controls):
 		self.player.begin_wait(wait_time)
 
 	def pick_up(self, key):
-		self.player.attempt_pick_up()
+		self.player.begin_pick_up()
 
 	def open_player_inventory_screen(self, key):
 		inventory_screen = self.inventory_screen(self.player.inventory)

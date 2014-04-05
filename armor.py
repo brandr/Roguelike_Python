@@ -13,5 +13,5 @@ class Armor(Equipment):
 
 	"""
 
-	def __init__(self):
-		Equipment.__init__(self)
+	def __init__(self, name):
+		Equipment.__init__(self, name)

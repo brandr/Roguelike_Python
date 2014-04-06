@@ -22,7 +22,10 @@ class Controls:
 	def process_event(self, event): #abstract method, to be inherited from by subclasses
 		if event.type == QUIT: raise(SystemExit)
 		if event.type == KEYDOWN:
-			if event.key in(self.control_map):
+			if event.unicode in(self.control_map):
+				action = self.control_map[event.unicode]
+				action(self, event.unicode)
+			elif event.key in(self.control_map):
 				action = self.control_map[event.key]
 				action(self, event.key)
 

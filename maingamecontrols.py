@@ -53,11 +53,11 @@ MAIN_GAME_CONTROL_MAP = {
 	K_KP1:move, K_KP2:move, K_KP3:move, K_KP4:move, K_KP5:move,	# numpad keys (might change 5 at some point)
 	K_KP6:move, K_KP7:move, K_KP8:move, K_KP9:move,
 
-	K_PERIOD:wait,
+	'.':wait,
 
-	K_COMMA:pick_up,
+	',':pick_up,
 
-	K_i:open_player_inventory_screen
+	'i':open_player_inventory_screen
 }
 
 MAIN_GAME_DIRECTION_MAP = {

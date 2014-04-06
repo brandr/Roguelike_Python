@@ -3,17 +3,15 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Implement a way to open the inventory screen.
-* Implement system for item pickup when there are multiple items in a tile.
-	-how is the player prompted on which item to pick up?
-	-does another screen open up? How does the control context change? How to structure?
-* Implement item dropping.
-* Keep working out combat system, though don't need to worry about damage, HP, or death until later.
-	-let nick play the current version and figure out what he wants for the fundamentals.
-	-mention important cases like player and monster attempting to move into a space at the same time,
-		player moving out of the way before a monster attacks, etc.
-* Let the player pick up items 
-	-(remember that doing so takes time, and the player should not autopickup when monsters are near)
+* Fix the capital letters issue for ALL keyboard input.
+	-from the internet: "Use the event.mod attribute of that key event."
+	-This should be handled whenever controls are parsed, possibly meaning controls
+		should either:
+			a) be mapped to their corresponding characters before being processed anywhere else, unless there are non-case-sensitive, (I'm leaning towards this) or
+			b) be processed alongside their mod attributes. This might be slightly easier to code, but I'm not sure.
+* Finish inventory screen.
+* Finish item pickup process.
+* Implement item dropping (similar to pickup).
 
 NICK:
 
@@ -23,18 +21,14 @@ NICK:
 
 
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
-
-STAGE 1 
-        Basic structure of combat (Robert) (possibly done with this for now)
         
-STAGE 2
+STAGE 1
 		Basic item systems (start with Weapons and Equipment. Monsters should be able to hold and drop items from the start.)
-		Ability to open other screens (try inventory screen)
 		Implement wielding basics (remember that anything can be wielded, not just proper weapons)
-		More controls, like waiting by pressing, equipping, etc. Will have to flesh out control system a lot.
-		Basic control contexts (trying to equip over already-equipped item, etc.)
+		More controls, like wielding, equipping, etc. May have to flesh out control system a lot.
+		Structure for some new control contexts (trying to equip over already-equipped item, etc.)
 
-STAGE 3
+STAGE 2
 		Systems for attack speed, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
 		General equipment system (plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
 		Dodging/blocking/armor mechanics
@@ -42,16 +36,16 @@ STAGE 3
 		Make event pane scrollable
 		Item identification
 
-STAGE 4
+STAGE 3
 		Status effects (make sure they work with current turn system) (could make temporary potions)
 		Advanced control contexts (will have to flesh out control system a lot)
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 
-STAGE 5
+STAGE 4
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
 		Graphics system (like arrow moving across screen)
 
-STAGE 6
+STAGE 5
 		Typed damage like fire, ice, poison (may want to implement sooner)
 		Player attributes (STR, DEX, etc.) (this will change combat system a little.)
 		HP and MP regeneration
@@ -61,12 +55,12 @@ STAGE 6
 		Basic spell system (only need to make like 1 spell)
 		Expand graphics to accomodate spell; try to plan ahead and be extensible
 
-STAGE 7
+STAGE 6
 		Traps
 		"Searchable" tiles (hidden doors, traps, etc.)
 		Signs that the player can read
 
-STAGE 8
+STAGE 7
 		Stairs, multiple levels, have to create a dungeon class (might create the dungeon class before this)
 		Consider more tile types, like doors
 		Make it easier to create monsters for testing (maybe focus on an editor context)

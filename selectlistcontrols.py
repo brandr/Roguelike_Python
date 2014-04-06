@@ -26,11 +26,9 @@ class SelectListControls(Controls):
 		length = self.select_list.length()
 		for i in range(self.select_list.length()):
 			letter = self.select_list.index_letter(i)	 #TODO: figure out how to handle captial letters.
-			key = LETTER_TO_KEY_MAP[letter]
-			self.control_map[key] = SelectListControls.select_object
+			self.control_map[letter] = SelectListControls.select_object
 
-	def select_object(self, key): #TODO
-		letter = KEY_TO_LETTER_MAP[key]
+	def select_object(self, letter): #TODO
 		select_object = self.select_list.select_object_from_letter(letter)
 		self.exit_to_main_game_controls() #TODO: not the case if selection should not prompt this.
 		action = self.action
@@ -59,6 +57,5 @@ open_exanded_select_list = SelectListControls.open_expanded_select_list
 
 SELECT_LIST_CONTROL_MAP = {
 	K_ESCAPE:exit,
-	K_QUESTION:open_exanded_select_list,
-	K_SLASH:open_exanded_select_list #TEMP (remove once we figure out capitals)
+	'?':open_exanded_select_list,
 }

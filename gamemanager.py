@@ -30,7 +30,9 @@ class GameManager:
         pygame.display.set_caption("DIS A ROGUELIKE")
         timer = pygame.time.Clock()
 
-        #TEMP for testing
+        #TEMP for testing vvv
+        # comment and uncomment to change what is on the level.
+
         player_1 = Player("Link") 
         monster_1 = Monster("Moblin")
         monster_2 = Monster("Bokoblin")
@@ -38,17 +40,19 @@ class GameManager:
         sword_1 = MeleeWeapon("Master Sword")
         shield_1 = Armor("Hylian Shield")
         hat_1 = Armor("Fairy Hat")
+        gloves_1 = Armor("Leather Gloves")
 
         test_level = Level(25, 25, 1) 
         test_level.add_wall(15, 15)
         test_level.add_wall(16, 15)
 
         test_level.add_player(player_1, 4, 4)
-        test_level.add_monster(monster_1, 8, 8)
-        test_level.add_monster(monster_2, 18, 16)
-        test_level.add_item(sword_1, 8, 10)    
-        test_level.add_item(shield_1, 10, 8)  
-        test_level.add_item(hat_1, 10, 8)  
+        #test_level.add_monster(monster_1, 8, 8)
+        #test_level.add_monster(monster_2, 18, 16)
+        test_level.add_item(sword_1, 6, 6)    
+        test_level.add_item(shield_1, 6, 6)  
+        test_level.add_item(hat_1, 6, 6)  
+        test_level.add_item(gloves_1, 6, 6)  
 
         map_pane = MapPane(player_1)                # TODO: turn these 4 lines into their own method somewhere in the screen/manager mess.
         character_pane = CharacterPane(player_1)
@@ -64,8 +68,8 @@ class GameManager:
         screen_manager = ScreenManager(master_screen, main_screen, player_1)
 
         player_1.start_game() 
-        
-        #TEMP for testing
+
+        #TEMP for testing ^^^
 
         while 1:
             timer.tick(100)

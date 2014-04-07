@@ -36,9 +36,9 @@ class SelectListControls(Controls):
 
 	def exit_to_main_game_controls(self, key = None):
 		if(not self.on_main_screen):
-			self.control_manager.exit_to_main_game_screen(self.player)
+			Controls.exit_to_main_game_screen(self, None)
 			return
-		self.control_manager.exit_to_main_game_controls(self.player)
+		Controls.exit_to_main_game_controls(self, None)
 
 	def open_expanded_select_list(self, key = None):
 		select_list_screen = self.select_list_screen(self.select_list)

@@ -16,3 +16,4 @@ class Weapon(Item):
 
 	def __init__(self, name):
 		Item.__init__(self, name)
+		

@@ -4,7 +4,7 @@
 
 import pygame
 from pygame import *
-from inventory import *
+from equipmentset import *
 
 BLANK_SYMBOL = ' '
 EMPTY_TILE_FLOOR_SYMBOL = u'·'

@@ -18,8 +18,9 @@ class Being:
 		self.current_tile = None
 		self.melee_range = 1 #TEMP
 		self.inventory = Inventory()
+		self.equipment_set = None
 
-	def display_name(self):
+	def display_name(self, arg = None): #not sure what arg should be for being. currently it only means something for items.
 		return self.name
 
 	def send_event(self, message):
@@ -44,8 +45,27 @@ class Being:
 
 	def melee_attack(self, being):
 		if(self.in_range(being, self.melee_range)):
-			self.send_event(self.name + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
+			self.send_event(self.display_name() + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
 		#TODO: case for missing because the target moved out of the way.
+
+	def confirm_wield_item(self, item):
+		if(self.equipment_set != None):
+			self.equipment_set.wield_item(item)
+			self.send_event(self.display_name() + " wielded " + item.display_name() + ".")
+
+	def unwield_current_item(self, arg = None):
+		if(self.wielding_item()):
+			item_name = self.wielded_item().display_name()
+			self.equipment_set.unwield_item_in_slot(RIGHT_HAND_SLOT)
+			self.send_event(self.display_name() + " unwielded " + item_name + ".")
+
+	def wielding_item(self):
+		return self.equipment_set.item_is_in_slot(RIGHT_HAND_SLOT) #TODO: may need to change this for non-humanoids
+
+	def wielded_item(self):
+		return self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)
+
+	#def equipment_in_slot(self, slot): #TODO?
 
 	def in_range(self, being, check_range):
 		offset = self.offset_from(being)

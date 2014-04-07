@@ -3,12 +3,6 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Fix the capital letters issue for ALL keyboard input.
-	-from the internet: "Use the event.mod attribute of that key event."
-	-This should be handled whenever controls are parsed, possibly meaning controls
-		should either:
-			a) be mapped to their corresponding characters before being processed anywhere else, unless there are non-case-sensitive, (I'm leaning towards this) or
-			b) be processed alongside their mod attributes. This might be slightly easier to code, but I'm not sure.
 * Finish inventory screen.
 * Finish item pickup process.
 * Implement item dropping (similar to pickup).
@@ -18,14 +12,15 @@ NICK:
 * Come up with a rough and tentative but very long and diverse list of actions and delay values.
 	-In other words, the list should cover many possible actions, but the delay values will be
 		very easy to change, so don't worry about making them exact.
+* Make more flowcharts revolving around the inventory system and dropping/picking up items.
 
 
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
         
 STAGE 1
-		Basic item systems (start with Weapons and Equipment. Monsters should be able to hold and drop items from the start.)
-		Implement wielding basics (remember that anything can be wielded, not just proper weapons)
-		More controls, like wielding, equipping, etc. May have to flesh out control system a lot.
+		Basic item systems (start with Weapons and Equipment. Monsters should be 	able to hold and drop items from the start.)
+		Implement wielding basics (remember that anything can be wielded, not just 		proper weapons)
+		More controls, like wielding, equipping, etc. May have to flesh out 		control system a lot.
 		Structure for some new control contexts (trying to equip over already-equipped item, etc.)
 
 STAGE 2

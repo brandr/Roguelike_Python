@@ -18,12 +18,16 @@ class Player(Being):
 	def __init__(self, name): #TODO: figure out how player should actually be created
 		Being.__init__(self, name)
 		self.screen_manager = None #TODO: consider giving monsters an attribute for the screen, too
+		self.equipment_set = EquipmentSet(HUMANOID) #TODO: change this if the player can be a non-humanoid.
 		self.hit_points = (10, 10)
 		self.magic_points = (8, 8)
 		self.move_delay = 4
 		self.attack_delay = 3
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
+
+	def display_name(self): #TODO: change for different cases
+		return "You"
 
 	def start_game(self):
 		self.send_event("Welcome to the dungeon!") #TEMP
@@ -69,6 +73,7 @@ class Player(Being):
 		pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
 		self.execute_player_action(self.temp_pick_up_item, item, pick_up_delay)
 
+		#might not be temp anymore
 	def temp_pick_up_item(self, item):
 		self.current_tile.remove_item(item)
 		self.obtain_item(item)
@@ -85,6 +90,50 @@ class Player(Being):
 	def temp_attempt_melee_attack(self, being):
 		self.execute_player_action(self.melee_attack, being, self.attack_delay)
 
+	def begin_player_wield_item(self):
+		if(self.inventory.empty()):
+			self.send_event("Nothing to wield.")
+			return
+		#TODO: check for current wielded item is cursed and stuff like that
+		self.wield_item_prompt()
+	
+	def wield_item_prompt(self):
+		self.send_event("Wield which item?")
+		item_list = self.inventory.item_select_list()
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.wield_item)
+
+	def wield_item(self, item):
+		if(item.wielded):
+			self.send_event("You are already wielding that!")
+			return
+		if(item.equipped):
+			self.send_event("You are wearing that.")
+			self.send_event("Use w to wield weapons and W to equip or unequip armor.")
+			return
+		if(self.wielding_item()):
+			self.unwield_item_prompt(self.wielded_item(), item)
+			return
+		# TODO: check for:
+		# attempting to wield a two-handed weapon with a shield
+		# attempting to wield known cursed item
+		# other unusual cases
+		wield_delay = 1 #TODO: if wield delay should be something else,  change this.
+		self.execute_player_action(self.confirm_wield_item, item, wield_delay)
+
+	def unwield_item_prompt(self, wielded_item, prompt_item):
+		self.send_event("Do you want to unwield " + wielded_item.display_name()
+			+ " and wield " + prompt_item.display_name() + "? (y/n/q)")
+		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_replace_wield, prompt_item, self)
+
+	def confirm_replace_wield(self, item):
+		unwield_delay = 1
+		wield_delay = 1
+		self.execute_player_action(self.unwield_current_item, None, unwield_delay)
+		self.execute_player_action(self.confirm_wield_item, item, wield_delay)
+
+	def cancel_replace_wield(self, item):
+		self.send_event("Nevermind.")
+	
 	def execute_player_action(self, action, arg, delay):
 		action(arg)
 		self.current_level.enqueue_player_delay(self, delay)

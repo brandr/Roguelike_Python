@@ -18,6 +18,7 @@ class Controls:
 	def __init__(self): #, player):
 		self.control_map = None #TODO: add things to this class that aren't specific to the maingamecontrols.
 		self.control_manager = None
+		self.player = None
 
 	def process_event(self, event): #abstract method, to be inherited from by subclasses
 		if event.type == QUIT: raise(SystemExit)
@@ -31,6 +32,10 @@ class Controls:
 
 	def exit_to_main_game_screen(self, key):
 		self.control_manager.exit_to_main_game_screen(self.player)
+
+	def exit_to_main_game_controls(self, key):
+		self.control_manager.exit_to_main_game_controls(self.player)
+
 
 LETTER_TO_KEY_MAP = {
 	'a':K_a, 'b':K_b, 'c':K_c, 'd':K_d, 'e':K_e, 'f':K_f, 'g':K_g, 'h':K_h, 'i':K_i, 'j':K_j, 'k':K_k, 'l':K_l, 'm':K_m,

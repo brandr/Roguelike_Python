@@ -14,6 +14,12 @@ class Equipment(Item):
 	TODO
 	"""
 
-	def __init__(self, name):
+	def __init__(self, name, slot):
 		Item.__init__(self, name)
-		#TODO
+		self.slot = slot
+
+	def equip(self):
+		self.equipped = True
+
+	def unequip(self):
+		self.equipped = False

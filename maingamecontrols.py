@@ -42,10 +42,14 @@ class MainGameControls(Controls):
 		inventory_control_manager = self.control_manager.build_control_manager(inventory_controls)
 		return self.control_manager.build_screen(inventory_control_manager, inventory_panes)
 	
+	def wield_item(self, key):
+		self.player.begin_player_wield_item()
+
 move = MainGameControls.move_input
-wait = MainGameControls.wait
-pick_up = MainGameControls.pick_up
 open_player_inventory_screen = MainGameControls.open_player_inventory_screen
+pick_up = MainGameControls.pick_up
+wait = MainGameControls.wait
+wield_item = MainGameControls.wield_item
 
 MAIN_GAME_CONTROL_MAP = { 
 	K_UP:move, K_DOWN:move, K_LEFT:move, K_RIGHT:move,			# arrow keys
@@ -53,11 +57,18 @@ MAIN_GAME_CONTROL_MAP = {
 	K_KP1:move, K_KP2:move, K_KP3:move, K_KP4:move, K_KP5:move,	# numpad keys (might change 5 at some point)
 	K_KP6:move, K_KP7:move, K_KP8:move, K_KP9:move,
 
+	# inputs to open other screens
+
+	'i':open_player_inventory_screen,
+
+	# wait input
+
 	'.':wait,
 
-	',':pick_up,
+	# item interaction inputs
 
-	'i':open_player_inventory_screen
+	',':pick_up,
+	'w':wield_item
 }
 
 MAIN_GAME_DIRECTION_MAP = {

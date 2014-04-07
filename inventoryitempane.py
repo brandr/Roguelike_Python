@@ -25,7 +25,7 @@ class InventoryItemPane(Pane):
 		item_info = Surface((INVENTORY_ITEM_PANE_WIDTH, INVENTORY_ITEM_PANE_HEIGHT))
 		for i in range(self.inventory.item_count()):
 			item = self.inventory.item_at_index(i)
-			item_name = item.name
+			item_name = item.display_name(True)
 			item_text = self.rendered_text(item_name)
 			item_info.blit(item_text, (8, ITEM_LINE_HEIGHT*i)) #TODO: multiple item columns
 		#TODO

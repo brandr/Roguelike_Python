@@ -18,7 +18,6 @@ class Inventory:
 
 	def item_select_list(self):
 		return SelectList(Item, self.items)
-		#TODO: a list that is general, but can be used for selection.
 
 	def item_at_index(self, index):
 		return self.items[index]

@@ -22,10 +22,14 @@ class TurnCounter:
 		self.player_delay = None
 
 	def enqueue_delay(self, actor, delay):
-		self.turn_queue[actor] = delay
+		self.turn_queue[actor] += delay
 
 	def enqueue_player_delay(self, player, delay):
-		self.player, self.player_delay = player, delay
+		if(player == self.player):
+			self.player_delay += delay
+			return
+		self.player = player
+		self.player_delay = delay
 
 	def process_turns(self):
 		lowest_actor = self.player

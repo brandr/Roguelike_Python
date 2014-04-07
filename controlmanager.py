@@ -2,7 +2,7 @@
 """
 
 from maingamecontrols import * 
-#from selectlistcontrols import *
+from ynqcontrols import *
 
 class ControlManager:
 	""" ControlManager( ... ) -> ControlManager

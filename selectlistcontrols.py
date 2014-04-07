@@ -22,17 +22,19 @@ class SelectListControls(Controls):
 		self.action = action
 		self.multiple = multiple
 		self.on_main_screen = on_main_screen
-		self.control_map = SELECT_LIST_CONTROL_MAP
+		self.control_map = {}
+		self.initialize_control_map(SELECT_LIST_CONTROL_MAP)
 		length = self.select_list.length()
-		for i in range(self.select_list.length()):
+		for i in range(length):
 			letter = self.select_list.index_letter(i)	 #TODO: figure out how to handle captial letters.
 			self.control_map[letter] = SelectListControls.select_object
-
-	def select_object(self, letter): #TODO
-		select_object = self.select_list.select_object_from_letter(letter)
-		self.exit_to_main_game_controls() #TODO: not the case if selection should not prompt this.
-		action = self.action
-		action(select_object)
+		
+	def select_object(self, letter):
+		if(letter in self.control_map):
+			select_object = self.select_list.select_object_from_letter(letter)
+			self.exit_to_main_game_controls() #TODO: not the case if selection should not prompt this.
+			action = self.action
+			action(select_object)
 
 	def exit_to_main_game_controls(self, key = None):
 		if(not self.on_main_screen):

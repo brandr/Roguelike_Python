@@ -17,7 +17,7 @@ class InventoryControls(Controls):
 		Controls.__init__(self)
 		self.player = player
 		self.inventory = inventory
-		self.control_map = INVENTORY_SCREEN_CONTROL_MAP #TODO: differentiate between player inventory screen controls and tile inventory screen controls.
+		self.initialize_control_map(INVENTORY_SCREEN_CONTROL_MAP) #TODO: differentiate between player inventory screen controls and tile inventory screen controls.
 
 exit = Controls.exit_to_main_game_screen
 

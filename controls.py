@@ -20,6 +20,11 @@ class Controls:
 		self.control_manager = None
 		self.player = None
 
+	def initialize_control_map(self, model_map):
+		self.control_map = {}
+		for key in model_map:
+			self.control_map[key] = model_map[key]
+
 	def process_event(self, event): #abstract method, to be inherited from by subclasses
 		if event.type == QUIT: raise(SystemExit)
 		if event.type == KEYDOWN:

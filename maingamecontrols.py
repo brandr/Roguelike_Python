@@ -17,7 +17,7 @@ class MainGameControls(Controls):
 	def __init__(self, player):
 		Controls.__init__(self)
 		self.player = player
-		self.control_map = MAIN_GAME_CONTROL_MAP
+		self.initialize_control_map(MAIN_GAME_CONTROL_MAP)
 
 	def move_input(self, key):
 		if(key in MAIN_GAME_DIRECTION_MAP):
@@ -28,8 +28,14 @@ class MainGameControls(Controls):
 		wait_time = self.player.lowest_non_player_delay() + 1
 		self.player.begin_wait(wait_time)
 
-	def pick_up(self, key):
-		self.player.begin_pick_up()
+	def pick_up_item(self, key):
+		self.player.begin_pick_up_item()
+
+	def drop_item(self, key):
+		self.player.begin_drop_item()
+
+	def drop_item_multiple(self, key):
+		self.player.begin_drop_item(True)
 
 	def open_player_inventory_screen(self, key):
 		inventory_screen = self.inventory_screen(self.player.inventory)
@@ -48,10 +54,12 @@ class MainGameControls(Controls):
 	def equip_item(self, key):
 		self.player.begin_player_equip_item()
 
+drop_item = MainGameControls.drop_item
+drop_item_multiple = MainGameControls.drop_item_multiple
 equip_item = MainGameControls.equip_item
 move = MainGameControls.move_input
 open_player_inventory_screen = MainGameControls.open_player_inventory_screen
-pick_up = MainGameControls.pick_up
+pick_up_item = MainGameControls.pick_up_item
 wait = MainGameControls.wait
 wield_item = MainGameControls.wield_item
 
@@ -71,7 +79,9 @@ MAIN_GAME_CONTROL_MAP = {
 
 	# item interaction inputs
 
-	',':pick_up,
+	',':pick_up_item,
+	'd':drop_item,
+	'D':drop_item_multiple,
 	'w':wield_item,
 	'W':equip_item
 }

@@ -16,7 +16,7 @@ class YNQControls(Controls):
 	def __init__(self, yes_action, no_action, quit_action, arg, player = None):
 		Controls.__init__(self)
 		self.yes_action, self.no_action, self.quit_action, self.arg = yes_action, no_action, quit_action, arg
-		self.control_map = YNQ_CONTROL_MAP
+		self.initialize_control_map(YNQ_CONTROL_MAP)
 		self.player = player
 
 	def yes_action(self, key):

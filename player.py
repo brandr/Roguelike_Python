@@ -53,7 +53,9 @@ class Player(Being):
 	def wait(self, arg): #even though this method does nothing, it still seems to be necessary.
 		pass
 
-	def begin_pick_up(self):
+		# pick up items
+
+	def begin_pick_up_item(self):
 		if(not self.current_tile.contains_items()):
 			self.send_event("Nothing to pick up.")
 			return
@@ -73,11 +75,39 @@ class Player(Being):
 		pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
 		self.execute_player_action(self.temp_pick_up_item, item, pick_up_delay)
 
-		#might not be temp anymore
+		#might not be temp anymore. Also, might want to move to Being class.
 	def temp_pick_up_item(self, item):
 		self.current_tile.remove_item(item)
 		self.obtain_item(item)
 		self.send_event("Picked up " + item.name + ".")
+
+		# drop items
+
+	def begin_drop_item(self, multiple = False):
+		if(self.inventory.empty()):
+			self.send_event("You have no items to drop.")
+			return
+		if(multiple):
+			pass #TODO: case for dropping many items
+		else:
+			self.drop_item_prompt()
+
+	def drop_item_prompt(self):
+		self.send_event("Drop which item?")
+		item_list = self.inventory.item_select_list()
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_drop_item)
+
+	def attempt_drop_item(self, item):
+		if(item.equipped):
+			self.send_event("You must unequip that before dropping it.")
+			return
+		if(item.wielded):
+			unwield_delay = 1 #TEMP
+			self.execute_player_action(self.unwield_current_item, None, unwield_delay)
+		drop_item_delay = 1 #TEMP
+		self.execute_player_action(self.drop_item, item, drop_item_delay)
+
+		# movement 
 
 	def temp_move(self, direction):
 		#TODO: once movement flowcharts are done, replace this method with better ones.
@@ -146,8 +176,8 @@ class Player(Being):
 	
 	def equip_item_prompt(self):
 		self.send_event("Equip which item?")
-		item_list = self.inventory.equippable_item_select_list() 
-		self.screen_manager.switch_to_select_list_controls(item_list, self, self.equip_item)
+		equip_list = self.inventory.equippable_item_select_list() 
+		self.screen_manager.switch_to_select_list_controls(equip_list, self, self.equip_item)
 
 	def equip_item(self, item):
 		if(item.equipped):

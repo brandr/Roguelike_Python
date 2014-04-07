@@ -48,6 +48,11 @@ class Being:
 			self.send_event(self.display_name() + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
 		#TODO: case for missing because the target moved out of the way.
 
+	def drop_item(self, item):
+		self.inventory.remove_item(item)
+		self.current_tile.add_item(item)
+		self.send_event("Dropped " + item.display_name() + ".")
+
 	def confirm_wield_item(self, item):
 		if(self.equipment_set != None):
 			self.equipment_set.wield_item(item)

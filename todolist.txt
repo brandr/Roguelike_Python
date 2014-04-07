@@ -26,13 +26,14 @@ NICK:
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
         
 STAGE 1
-		Basic item systems (start with Weapons and Equipment. Monsters should be able to hold and drop items from the start.)
-		Finish wielding basics. Remember that with the current system, equippables can also be wielded, but no item 
-			can be wielded and equipped at the same time.
-			*Be careful with some contexts (trying to equip over already-equipped item, etc.)
+		Make it possible to drop items.
+		Finish wielding basics. Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
+			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
+			* Figure out how to relate dependent equipment like cloak and chest, shield and 2H weapon, etc. (be general)
 
 STAGE 2
 		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
+		Test monster ability to hold/wield/drop items.
 		Continue setting up general equipment system, with a focus on how equipment actually protects the player. 
 			*(plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
 		Dodging/blocking/armor mechanics

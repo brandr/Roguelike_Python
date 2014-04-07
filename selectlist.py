@@ -16,9 +16,9 @@ class SelectList:
 		length = len(self.object_list)
 		for i in range(length - 1):
 			o = self.object_list[i]
-			message += self.index_letter_string(i) + o.display_name() + ", "
+			message += self.index_letter_string(i) + o.display_name(True) + ", "
 		last_object = self.object_list[length - 1]
-		message += self.index_letter_string(length - 1) + last_object.display_name() + ", (?)"
+		message += self.index_letter_string(length - 1) + last_object.display_name(True) + ", (?)"
 		return message
 
 	def select_object_at_index(self, index):

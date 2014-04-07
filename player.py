@@ -90,6 +90,8 @@ class Player(Being):
 	def temp_attempt_melee_attack(self, being):
 		self.execute_player_action(self.melee_attack, being, self.attack_delay)
 
+		# item/weapon wielding: (not equipping)
+
 	def begin_player_wield_item(self):
 		if(self.inventory.empty()):
 			self.send_event("Nothing to wield.")
@@ -123,7 +125,7 @@ class Player(Being):
 	def unwield_item_prompt(self, wielded_item, prompt_item):
 		self.send_event("Do you want to unwield " + wielded_item.display_name()
 			+ " and wield " + prompt_item.display_name() + "? (y/n/q)")
-		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_replace_wield, prompt_item, self)
+		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_replace_wield, self.cancel_replace_wield, prompt_item, self)
 
 	def confirm_replace_wield(self, item):
 		unwield_delay = 1
@@ -133,7 +135,64 @@ class Player(Being):
 
 	def cancel_replace_wield(self, item):
 		self.send_event("Nevermind.")
+
+		# item/armor equipping: (not wielding)
+
+	def begin_player_equip_item(self):
+		if(not self.inventory.contains_equippables()):
+			self.send_event("Nothing to equip.")
+			return
+		self.equip_item_prompt()
 	
+	def equip_item_prompt(self):
+		self.send_event("Equip which item?")
+		item_list = self.inventory.equippable_item_select_list() 
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.equip_item)
+
+	def equip_item(self, item):
+		if(item.equipped):
+			#TODO: check for item is cursed here.
+			self.confirm_unequip(item)
+			return
+		if(item.wielded):
+			self.send_event("You are wielding that.")
+			self.send_event("I'm not sure why you're wielding something that is supposed to be armor.")
+			self.send_event("Sorry, we haven't implemented that possibility yet.") #TODO: do so
+			return
+		slot = item.equip_slot()
+		if(self.has_equipment_in_slot(slot)):
+			self.unequip_item_prompt(self.equipment_in_slot(slot), item)
+			return
+		# TODO: check for:
+		# attempting to remove chest armor while wearing a robe
+		# attemping to remove gloves while wielding a cursed item
+		# attemping to wield a shield with a two-handed weapon
+		# other unusal cases
+
+		equip_delay = 1 #TODO: if equip delay should be something else (it probably should), change this.
+		self.execute_player_action(self.confirm_equip_item, item, equip_delay)
+
+	def unequip_item_prompt(self, equipped_item, prompt_item):
+		self.send_event("Do you want to unequip " + equipped_item.display_name()
+			+ " and equip " + prompt_item.display_name() + "? (y/n/q)")
+		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_equip, self.cancel_replace_equip, self.cancel_replace_equip, prompt_item, self)
+
+		#this and confirm_unequip might belong in the Being class.
+	def confirm_replace_equip(self, item):
+		unequip_delay = 1 	#TODO: change these to be based on the equipment itself
+		equip_delay = 1
+		slot = item.equip_slot()
+		self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+		self.execute_player_action(self.confirm_equip_item, item, equip_delay)
+
+	def confirm_unequip(self, item):
+		unequip_delay = 1 #TODO: set properly
+		slot = item.equip_slot()
+		self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+
+	def cancel_replace_equip(self, item):
+		self.send_event("Nevermind.")
+
 	def execute_player_action(self, action, arg, delay):
 		action(arg)
 		self.current_level.enqueue_player_delay(self, delay)

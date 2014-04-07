@@ -45,6 +45,10 @@ class MainGameControls(Controls):
 	def wield_item(self, key):
 		self.player.begin_player_wield_item()
 
+	def equip_item(self, key):
+		self.player.begin_player_equip_item()
+
+equip_item = MainGameControls.equip_item
 move = MainGameControls.move_input
 open_player_inventory_screen = MainGameControls.open_player_inventory_screen
 pick_up = MainGameControls.pick_up
@@ -68,7 +72,8 @@ MAIN_GAME_CONTROL_MAP = {
 	# item interaction inputs
 
 	',':pick_up,
-	'w':wield_item
+	'w':wield_item,
+	'W':equip_item
 }
 
 MAIN_GAME_DIRECTION_MAP = {

@@ -59,13 +59,28 @@ class Being:
 			self.equipment_set.unwield_item_in_slot(RIGHT_HAND_SLOT)
 			self.send_event(self.display_name() + " unwielded " + item_name + ".")
 
+	def confirm_equip_item(self, item):
+		if(self.equipment_set != None):
+			self.equipment_set.equip_item(item)
+			self.send_event(self.display_name() + " equipped " + item.display_name() + ".")
+
+	def unequip_item_in_slot(self, slot):
+		if(self.has_equipment_in_slot(slot)):
+			item_name = self.equipment_in_slot(slot).display_name()
+			self.equipment_set.unequip_item_in_slot(slot)
+			self.send_event(self.display_name() + " unequipped " + item_name + ".")
+
 	def wielding_item(self):
 		return self.equipment_set.item_is_in_slot(RIGHT_HAND_SLOT) #TODO: may need to change this for non-humanoids
 
 	def wielded_item(self):
 		return self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)
 
-	#def equipment_in_slot(self, slot): #TODO?
+	def has_equipment_in_slot(self, slot):
+		return self.equipment_set.item_is_in_slot(slot)
+
+	def equipment_in_slot(self, slot):
+		return self.equipment_set.get_item_in_slot(slot)
 
 	def in_range(self, being, check_range):
 		offset = self.offset_from(being)

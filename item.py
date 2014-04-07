@@ -30,8 +30,14 @@ class Item:
 		class_name = self.__class__.__name__
 		return DEFAULT_ITEM_SYMBOLS[class_name]
 
+	def is_equippable(self):
+		return False
+
 	def wield_slot(self): #TODO: change if necessary
 		return RIGHT_HAND_SLOT
+
+	def equip_slot(self):
+		return None
 
 	def wield(self):
 		self.wielded = True

@@ -13,9 +13,9 @@ class YNQControls(Controls):
 	no_action: the action to peform if the user says no.
 	arg: the argument to be used either way.
 	"""
-	def __init__(self, yes_action, no_action, arg, player = None):
+	def __init__(self, yes_action, no_action, quit_action, arg, player = None):
 		Controls.__init__(self)
-		self.yes_action, self.no_action, self.arg = yes_action, no_action, arg
+		self.yes_action, self.no_action, self.quit_action, self.arg = yes_action, no_action, quit_action, arg
 		self.control_map = YNQ_CONTROL_MAP
 		self.player = player
 
@@ -29,6 +29,7 @@ class YNQControls(Controls):
 
 	def quit_action(self, key):
 		self.exit_to_main_game_controls(self.player)
+		self.quit_action(self.arg)
 
 exit = Controls.exit_to_main_game_screen
 yes = YNQControls.yes_action

@@ -19,6 +19,13 @@ class Inventory:
 	def item_select_list(self):
 		return SelectList(Item, self.items)
 
+	def equippable_item_select_list(self):
+		items = []
+		for i in self.items:
+			if i.is_equippable():
+				items.append(i)
+		return SelectList(Item, items)
+
 	def item_at_index(self, index):
 		return self.items[index]
 
@@ -27,6 +34,12 @@ class Inventory:
 
 	def remove_item(self, item):
 		self.items.remove(item)
+
+	def contains_equippables(self):
+		for i in self.items:
+			if(i.is_equippable()):
+				return True
+		return False
 
 	def empty(self):
 		return(not self.items)

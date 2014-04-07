@@ -15,3 +15,5 @@ class Armor(Equipment):
 
 	def __init__(self, name, slot):
 		Equipment.__init__(self, name, slot)
+
+		

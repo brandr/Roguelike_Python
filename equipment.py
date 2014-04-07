@@ -18,6 +18,12 @@ class Equipment(Item):
 		Item.__init__(self, name)
 		self.slot = slot
 
+	def is_equippable(self):
+		return True
+
+	def equip_slot(self):
+		return self.slot
+
 	def equip(self):
 		self.equipped = True
 

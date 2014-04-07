@@ -18,6 +18,12 @@ class EquipmentSet:
 		item.wield()
 		self.slots[RIGHT_HAND_SLOT] = item #TODO: may have to change this for non-humanoids that can still wield items.
 
+	def equip_item(self, item):
+		item.equip()
+		key = item.equip_slot()
+		if key in self.slots:
+			self.slots[key] = item
+
 	def unwield_item_in_slot(self, key):
 		if key in self.slots:
 			item = self.slots[key]

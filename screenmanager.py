@@ -53,6 +53,6 @@ class ScreenManager:
 		level = player.current_level
 		level.send_event(list_message)
 
-	def switch_to_ynq_controls(self, yes_action, no_action, arg, player = None): #TODO: consider what may be necessary when there are multiple args. (tuplets maybe?)
-		controls = YNQControls(yes_action, no_action, arg, player)
+	def switch_to_ynq_controls(self, yes_action, no_action, quit_action, arg, player = None): #TODO: consider what may be necessary when there are multiple args. (tuplets maybe?)
+		controls = YNQControls(yes_action, no_action, quit_action, arg, player)
 		self.switch_controls(controls)

@@ -3,9 +3,17 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* Finish inventory screen.
-* Finish item pickup process.
-* Implement item dropping (similar to pickup).
+* Finish: 
+	-inventory screen
+	-item pickup
+	-item dropping
+	-weapon wielding
+	-equipping
+	-etc.
+* consider giving the SelectListControls a quit/cancel option.
+	-currently escape does this, but it isn't really clear to the player that this is the case.
+	-maybe always clear the event pane when pressing esc? (could do this by calling the method to exit to main screen, instead of main controls.)
+
 
 NICK:
 
@@ -18,14 +26,15 @@ NICK:
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
         
 STAGE 1
-		Basic item systems (start with Weapons and Equipment. Monsters should be 	able to hold and drop items from the start.)
-		Implement wielding basics (remember that anything can be wielded, not just 		proper weapons)
-		More controls, like wielding, equipping, etc. May have to flesh out 		control system a lot.
-		Structure for some new control contexts (trying to equip over already-equipped item, etc.)
+		Basic item systems (start with Weapons and Equipment. Monsters should be able to hold and drop items from the start.)
+		Finish wielding basics. Remember that with the current system, equippables can also be wielded, but no item 
+			can be wielded and equipped at the same time.
+			*Be careful with some contexts (trying to equip over already-equipped item, etc.)
 
 STAGE 2
-		Systems for attack speed, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
-		General equipment system (plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
+		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
+		Continue setting up general equipment system, with a focus on how equipment actually protects the player. 
+			*(plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
 		Dodging/blocking/armor mechanics
 		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
 		Make event pane scrollable
@@ -47,7 +56,7 @@ STAGE 5
 		Consider factors which might alter player move/attack speed, like burdening (need to implement item weight for this)
 		Item enchantments
 		Item brands
-		Basic spell system (only need to make like 1 spell)
+		Basic spell system (only need to make like 1 spell for testing purposes)
 		Expand graphics to accomodate spell; try to plan ahead and be extensible
 
 STAGE 6

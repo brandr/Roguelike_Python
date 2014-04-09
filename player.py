@@ -47,10 +47,30 @@ class Player(Being):
 	def mp_display(self):
 		return str(self.magic_points[0]) + "/" + str(self.magic_points[1])
 
+	def decide_next_turn(self):
+		empty = self.action_queue.empty()
+		if(empty):
+			return
+		else:
+			action = self.action_queue.dequeue_action()
+			action.method(action.arg)
+
+	def enqueue_player_action(self, method, arg, delay):
+		action = Action(self, method, arg, delay)
+		self.action_queue.enqueue_action(action)
+
+	def execute_player_action(self, method, arg, delay):
+		method(arg)
+		self.current_level.enqueue_player_delay(self, delay)
+		self.end_turn()
+
+	def lowest_non_player_delay(self):
+		return self.current_level.turn_counter.lowest_non_player_delay()
+
 	def begin_wait(self, time):
 		self.execute_player_action(self.wait, None, time)
 
-	def wait(self, arg): #even though this method does nothing, it still seems to be necessary.
+	def wait(self, arg): #even though this method does nothing, it is still used to make the waiting process to work.
 		pass
 
 		# pick up items
@@ -88,7 +108,10 @@ class Player(Being):
 			self.send_event("You have no items to drop.")
 			return
 		if(multiple):
-			pass #TODO: case for dropping many items
+			item_list = self.inventory.item_select_list()
+			self.screen_manager.switch_to_select_list_screen(item_list, self, self.attempt_drop_item)
+			#self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_drop_item)
+			return #TODO: case for dropping many items. (should probably open a selectlist screen with the "multiple" flag on, and the action set to some drop method.)
 		else:
 			self.drop_item_prompt()
 
@@ -132,7 +155,7 @@ class Player(Being):
 	def wield_item_prompt(self):
 		self.send_event("Wield which item?")
 		item_list = self.inventory.item_select_list()
-		self.screen_manager.switch_to_select_list_controls(item_list, self, self.wield_item)
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.wield_item, False, False)
 
 	def wield_item(self, item):
 		if(item.wielded):
@@ -177,7 +200,7 @@ class Player(Being):
 	def equip_item_prompt(self):
 		self.send_event("Equip which item?")
 		equip_list = self.inventory.equippable_item_select_list() 
-		self.screen_manager.switch_to_select_list_controls(equip_list, self, self.equip_item)
+		self.screen_manager.switch_to_select_list_controls(equip_list, self, self.equip_item, False, False)
 
 	def equip_item(self, item):
 		if(item.equipped):
@@ -193,6 +216,7 @@ class Player(Being):
 		if(self.has_equipment_in_slot(slot)):
 			self.unequip_item_prompt(self.equipment_in_slot(slot), item)
 			return
+
 		# TODO: check for:
 		# attempting to remove chest armor while wearing a robe
 		# attemping to remove gloves while wielding a cursed item
@@ -223,10 +247,3 @@ class Player(Being):
 	def cancel_replace_equip(self, item):
 		self.send_event("Nevermind.")
 
-	def execute_player_action(self, action, arg, delay):
-		action(arg)
-		self.current_level.enqueue_player_delay(self, delay)
-		self.end_turn()
-
-	def lowest_non_player_delay(self):
-		return self.current_level.turn_counter.lowest_non_player_delay()

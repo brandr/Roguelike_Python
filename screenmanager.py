@@ -43,11 +43,15 @@ class ScreenManager:
 		dark = Surface((self.master_screen.get_width(), self.master_screen.get_height()))
 		self.master_screen.blit(dark, (0, 0))
 
-	def switch_to_select_list_screen(self, select_list, player, action): 
-		select_screen = SelectListScreen(select_list, player, action)
+	def switch_to_select_list_screen(self, select_list, player, action, multiple = True): 
+		controls = SelectListControls(select_list, player, action, False, multiple)
+		self.switch_controls(controls)
+		controls.open_expanded_select_list()
 
-	def switch_to_select_list_controls(self, select_list, player, action):
-		controls = SelectListControls(select_list, player, action)
+		#select_screen = SelectListScreen(select_list, player, action)
+
+	def switch_to_select_list_controls(self, select_list, player, action, multiple = False, expand_to_multiple = True):
+		controls = SelectListControls(select_list, player, action, multiple, expand_to_multiple)
 		self.switch_controls(controls)
 		list_message = select_list.list_message()
 		level = player.current_level

@@ -26,7 +26,10 @@ class SelectListPane(Pane):
 		for i in range(self.select_list.length()):
 			o = self.select_list.select_object_at_index(i)
 			name = o.display_name(True)
-			object_text = self.select_list.index_letter_string(i) + " " + name
+			object_text = self.select_list.index_toggle_string(i) + " " + self.select_list.index_letter_string(i) + " " + name
 			rendered_text = self.rendered_text(object_text)
-			select_info.blit(rendered_text, (8, SELECT_LIST_LINE_HEIGHT*i)) #TODO: multiple columns
+			select_info.blit(rendered_text, (8, SELECT_LIST_LINE_HEIGHT * i)) #TODO: multiple columns
 		Pane.update(self, select_info)
+
+	#def toggle_select(self, letter):
+	#	print(letter) #TODO

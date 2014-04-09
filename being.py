@@ -2,6 +2,7 @@
 """
 
 from tile import *
+from actionqueue import *
 
 DEFAULT_COLOR = Color("#FFFFFF")
 
@@ -13,6 +14,7 @@ class Being:
 	TODO: docstring
 	"""
 	def __init__(self, name):
+		self.action_queue = ActionQueue()
 		self.name = name
 		self.current_level = None
 		self.current_tile = None
@@ -51,7 +53,7 @@ class Being:
 	def drop_item(self, item):
 		self.inventory.remove_item(item)
 		self.current_tile.add_item(item)
-		self.send_event("Dropped " + item.display_name() + ".")
+		self.send_event(self.display_name() + " dropped " + item.display_name() + ".")
 
 	def confirm_wield_item(self, item):
 		if(self.equipment_set != None):

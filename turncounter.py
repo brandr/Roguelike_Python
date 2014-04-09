@@ -39,10 +39,11 @@ class TurnCounter:
 			if delay < lowest_delay:
 				lowest_actor = a
 				lowest_delay = delay
-		if lowest_actor == self.player: # case for the player's turn is nex
+		if lowest_actor == self.player: # case for the player's turn is next
 			self.increment_counter(lowest_delay)
 			self.decrement_player_turn_delay(lowest_delay) #TEMP (not sure this is right)
 			self.decrement_turn_delays(lowest_delay)
+			self.player.decide_next_turn()
 			return
 		else:				   			# case for a monster's turn is next
 			del self.turn_queue[lowest_actor]

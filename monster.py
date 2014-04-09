@@ -18,6 +18,7 @@ class Monster(Being):
 		return 'M'			#TODO: figure out how monster symbols will be derived
 
 	def decide_next_turn(self):	#TODO: monster AI-based decision-making goes here
+		#TODO: may check action queue here. not sure.
 		player = self.current_level.player
 		if player != None:
 			self.melee_pursue(player)
@@ -44,5 +45,6 @@ class Monster(Being):
 		else:		
 			self.execute_action(self.wait, None, 1)
 
+		#TEMP
 	def temp_monster_attempt_melee_attack(self, being):
 		self.execute_action(self.melee_attack, being, self.attack_delay)

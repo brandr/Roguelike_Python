@@ -3,6 +3,11 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
+* consider action queues specific to individual beings. This is especially important for the player, so that
+	one move many actions (like dropping multiple items) can have its actions occur in the proper order.
+	-by default, when a player/monster gets its next turn, it will automatically execute its next queued action, prompting a new delay.
+	-when it has no more actions queued, it makes a decision.
+	-these actions should probably be interruptible actions (ex: dropping a lot of items or equipping armor for a long time while being attacked)
 * Finish: 
 	-inventory screen
 	-item pickup
@@ -13,7 +18,6 @@ ROBERT:
 * consider giving the SelectListControls a quit/cancel option.
 	-currently escape does this, but it isn't really clear to the player that this is the case.
 	-maybe always clear the event pane when pressing esc? (could do this by calling the method to exit to main screen, instead of main controls.)
-
 
 NICK:
 
@@ -26,10 +30,8 @@ NICK:
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
         
 STAGE 1
-		Make it possible to drop items.
-		Finish wielding basics. Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
-			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
-			* Figure out how to relate dependent equipment like cloak and chest, shield and 2H weapon, etc. (be general)
+		Make it possible to drop multiple items. (capital D)
+			* Go to the begin_drop_item method in Player and expand on the case for multiple = True.
 
 STAGE 2
 		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
@@ -47,6 +49,10 @@ STAGE 3
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 
 STAGE 4
+		Finish wielding/equipping basics. (have to wait for Nick.)
+			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
+			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
+			* Figure out how to relate dependent equipment like cloak and chest, shield and 2H weapon, etc. (be general)
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
 		Graphics system (like arrow moving across screen)
 

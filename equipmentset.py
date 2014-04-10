@@ -12,7 +12,28 @@ class EquipmentSet:
 	def __init__(self, slots_key):
 		self.slots = None
 		if(slots_key in SLOTS_MAP):
-			self.slots = SLOTS_MAP[slots_key]
+			self.initialize_slots(SLOTS_MAP[slots_key])
+			
+	def initialize_slots(self, slots):
+		self.slots = {}
+		for key in slots:
+			self.slots[key] = slots[key]
+
+	def all_items(self):
+		items = []
+		for key in self.slots:
+			item = self.slots[key]
+			if item != None:
+				items.append(self.slots[key])
+		return items
+
+	def remove_all_equipment(self):
+		for key in self.slots:
+			item = self.slots[key]
+			if item != None:
+				item.unwield()
+				item.unequip()
+				self.slots[key] = None
 
 	def wield_item(self, item): #TODO: this may be structured very differently after the equipment flowchart is figured out
 		item.wield()

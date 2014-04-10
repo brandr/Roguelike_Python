@@ -78,6 +78,10 @@ class Tile:
 	def tile_item_select_list(self):
 		return self.tile_items.item_select_list()
 
+	def add_item_list(self, items):
+		self.tile_items.add_item_list(items)
+		self.update()
+
 	def add_item(self, item):
 		self.tile_items.add_item(item) #TODO: consider how this will affect the tile's appearance
 		self.update()

@@ -31,6 +31,11 @@ class Being:
 	def send_event(self, message):
 		self.current_level.send_event(message)
 
+	def set_start_equipment(self, equipment_set):
+		self.equipment_set = equipment_set
+		equipment = equipment_set.all_items()
+		self.inventory.add_item_list(equipment)
+
 	def obtain_item(self, item):
 		self.inventory.add_item(item) #TODO: checks for stuff like full inventory? (might take place before here)
 
@@ -85,10 +90,18 @@ class Being:
 		max_attack = int(1.2 * base_attack)
 		return random_in_range(min_attack, max_attack) #NOTE: this method is subject to a lot of change depending on all the factors that affect melee combat.
 
+	def drop_all_items(self, display = False, instant = True): #display tells whether the drop actions should be displayed in the event pane.
+		#TODO: consider either removing the args if this is never used for any case besides a monster dying, or actually using them if it is.
+		items = self.inventory.take_all_items()
+		self.current_tile.add_item_list(items)
+
 	def drop_item(self, item):
 		self.inventory.remove_item(item)
 		self.current_tile.add_item(item)
 		self.send_event(self.display_name() + " dropped " + item.display_name() + ".")
+
+	def remove_all_equipment(self): #not used as an ingame action, only for special cases like a monster dying.
+		self.equipment_set.remove_all_equipment()
 
 	def confirm_wield_item(self, item):
 		if(self.equipment_set != None):

@@ -26,8 +26,19 @@ class Inventory:
 				items.append(i)
 		return SelectList(Item, items)
 
+	def take_all_items(self):
+		items = []
+		count = self.item_count()
+		for i in range(count):
+			items.append(self.items.pop())
+		return items
+
 	def item_at_index(self, index):
 		return self.items[index]
+
+	def add_item_list(self, items):
+		for i in items:
+			self.add_item(i)
 
 	def add_item(self, item):
 		self.items.append(item)

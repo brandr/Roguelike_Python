@@ -39,15 +39,22 @@ class GameManager:
         gloves_1 = Armor("Leather Gloves", GLOVES_SLOT)
 
         monster_sword = MeleeWeapon("Deku stick")
+        monster_shield = Armor("Deku Shield", LEFT_HAND_SLOT)
 
         player_1 = Player("Link") 
-        player_1.obtain_item(sword_1)
-        player_1.obtain_item(shield_1)
-        player_1.obtain_item(hat_1)
-        player_1.obtain_item(gloves_1)
+        player_equipment = EquipmentSet(HUMANOID)
+        player_equipment.wield_item(sword_1)
+        player_equipment.equip_item(shield_1)
+        player_equipment.equip_item(hat_1)
+        player_equipment.equip_item(gloves_1)
+        player_1.set_start_equipment(player_equipment)
 
         monster_1 = Monster("Moblin")
-        monster_1.obtain_item(monster_sword)
+        monster_equipment = EquipmentSet(HUMANOID) #TODO: this is the long-term plan for starting monster/player equipment: make the equipmentset first, and then set it.
+        monster_equipment.wield_item(monster_sword)
+        monster_equipment.equip_item(monster_shield)
+        monster_1.set_start_equipment(monster_equipment)
+        #monster_1.obtain_item(monster_sword)
 
         monster_2 = Monster("Bokoblin")
 

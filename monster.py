@@ -19,6 +19,8 @@ class Monster(Being):
 
 	def die(self):
 		self.send_event(self.display_name() + " died!") #TEMP
+		self.remove_all_equipment()
+		self.drop_all_items()
 		#TODO: drop all owned items (and maybe corpse)
 		self.current_level.remove_monster(self)
 

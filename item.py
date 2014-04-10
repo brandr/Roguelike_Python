@@ -39,6 +39,12 @@ class Item:
 	def equip_slot(self):
 		return None
 
+	def equip(self): #not valid for anything but equipment
+		pass
+
+	def unequip(self): #not valid for anything but equipment
+		pass
+
 	def wield(self):
 		self.wielded = True
 		self.equipped = False

@@ -31,7 +31,7 @@ Things to do in order of precedence: (try to add things to the stage where they 
 
 STAGE 1
 		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
-		Test monster ability to hold/wield/drop items.
+		Test monster ability to hold/wield/equip/drop items.
 		Continue setting up general equipment system, with a focus on how equipment actually protects the player. 
 			*(plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
 		Dodging/blocking/armor mechanics

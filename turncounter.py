@@ -21,8 +21,13 @@ class TurnCounter:
 		self.player = None
 		self.player_delay = None
 
+	def remove_actor(self, actor):
+		del(self.turn_queue[actor])
+
 	def enqueue_delay(self, actor, delay):
-		self.turn_queue[actor] += delay
+		if(actor in self.turn_queue):
+			self.turn_queue[actor] += delay
+		self.turn_queue[actor] = delay
 
 	def enqueue_player_delay(self, player, delay):
 		if(player == self.player):

@@ -19,8 +19,9 @@ class Player(Being):
 		Being.__init__(self, name)
 		self.screen_manager = None #TODO: consider giving monsters an attribute for the screen, too
 		self.equipment_set = EquipmentSet(HUMANOID) #TODO: change this if the player can be a non-humanoid.
-		self.hit_points = (10, 10)
-		self.magic_points = (8, 8)
+		self.hit_points = [10, 10] #TEMP. (so are other attributes, until player creation is implented)
+		self.magic_points = [8, 8]
+
 		self.move_delay = 4
 		self.attack_delay = 3
 		self.event_pane = None
@@ -66,6 +67,8 @@ class Player(Being):
 
 	def lowest_non_player_delay(self):
 		return self.current_level.turn_counter.lowest_non_player_delay()
+
+		#TODO: consider trying to move a lot of stuff to Being if it helps.
 
 	def begin_wait(self, time):
 		self.execute_player_action(self.wait, None, time)

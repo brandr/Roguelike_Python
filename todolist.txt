@@ -3,11 +3,6 @@ CURRENT MAIN GOALS:
 
 ROBERT:
 
-* consider action queues specific to individual beings. This is especially important for the player, so that
-	one move many actions (like dropping multiple items) can have its actions occur in the proper order.
-	-by default, when a player/monster gets its next turn, it will automatically execute its next queued action, prompting a new delay.
-	-when it has no more actions queued, it makes a decision.
-	-these actions should probably be interruptible actions (ex: dropping a lot of items or equipping armor for a long time while being attacked)
 * Finish: 
 	-inventory screen
 	-item pickup
@@ -15,8 +10,13 @@ ROBERT:
 	-weapon wielding
 	-equipping
 	-etc.
+
+* figure out how to interrupt the player's action queue. 
+	-test case: a monster is attacking the player. This is a non-automatic interruption, meaning the player is prompted to stop dropping items.
+
 * consider giving the SelectListControls a quit/cancel option.
-	-currently escape does this, but it isn't really clear to the player that this is the case.
+	-currently escape does this, but it isn't really clear to the player that this is the case if there is no selectlistpane.
+
 	-maybe always clear the event pane when pressing esc? (could do this by calling the method to exit to main screen, instead of main controls.)
 
 NICK:
@@ -28,12 +28,8 @@ NICK:
 
 
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
-        
-STAGE 1
-		Make it possible to drop multiple items. (capital D)
-			* Go to the begin_drop_item method in Player and expand on the case for multiple = True.
 
-STAGE 2
+STAGE 1
 		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
 		Test monster ability to hold/wield/drop items.
 		Continue setting up general equipment system, with a focus on how equipment actually protects the player. 
@@ -43,12 +39,12 @@ STAGE 2
 		Make event pane scrollable
 		Item identification
 
-STAGE 3
+STAGE 2
 		Status effects (make sure they work with current turn system) (could make temporary potions)
 		Advanced control contexts (will have to flesh out control system a lot)
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 
-STAGE 4
+STAGE 3
 		Finish wielding/equipping basics. (have to wait for Nick.)
 			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
 			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
@@ -56,7 +52,7 @@ STAGE 4
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
 		Graphics system (like arrow moving across screen)
 
-STAGE 5
+STAGE 4
 		Typed damage like fire, ice, poison (may want to implement sooner)
 		Player attributes (STR, DEX, etc.) (this will change combat system a little.)
 		HP and MP regeneration
@@ -66,12 +62,12 @@ STAGE 5
 		Basic spell system (only need to make like 1 spell for testing purposes)
 		Expand graphics to accomodate spell; try to plan ahead and be extensible
 
-STAGE 6
+STAGE 5
 		Traps
 		"Searchable" tiles (hidden doors, traps, etc.)
 		Signs that the player can read
 
-STAGE 7
+STAGE 6
 		Stairs, multiple levels, have to create a dungeon class (might create the dungeon class before this)
 		Consider more tile types, like doors
 		Make it easier to create monsters for testing (maybe focus on an editor context)

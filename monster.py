@@ -10,12 +10,17 @@ class Monster(Being):
 	"""
 	def __init__(self, name): #TODO: args (first figure out how monsters will be built)
 		Being.__init__(self, name)
-		self.hit_points = (10, 10) #TEMP
+		self.hit_points = [10, 10] #TEMP
 		self.move_delay = 5
 		self.attack_delay = 3
 
 	def current_symbol(self):
 		return 'M'			#TODO: figure out how monster symbols will be derived
+
+	def die(self):
+		self.send_event(self.display_name() + " died!") #TEMP
+		#TODO: drop all owned items (and maybe corpse)
+		self.current_level.remove_monster(self)
 
 	def decide_next_turn(self):	#TODO: monster AI-based decision-making goes here
 		#TODO: may check action queue here. not sure.

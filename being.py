@@ -1,6 +1,7 @@
 """ A being is a more general version of a player or monster.
 """
 
+from xdx import *
 from tile import *
 from actionqueue import *
 
@@ -21,6 +22,8 @@ class Being:
 		self.melee_range = 1 #TEMP
 		self.inventory = Inventory()
 		self.equipment_set = None
+		self.hit_points = [0, 0]
+		self.magic_points = [0, 0]
 
 	def display_name(self, arg = None): #not sure what arg should be for being. currently it only means something for items.
 		return self.name
@@ -45,10 +48,42 @@ class Being:
 			self.current_tile.remove_being()
 			self.current_level.temp_place_being(self, dest_coords[0], dest_coords[1]) #TEMP method	
 
-	def melee_attack(self, being):
-		if(self.in_range(being, self.melee_range)):
-			self.send_event(self.display_name() + " attacked " + being.name + "!") #TEMPORARY. TODO: actually implement combat
+	def take_damage(self, damage):
+		current_hp = self.hit_points[0]
+		self.hit_points[0] = max(0, current_hp - damage)
+		#should death_check be called here? need flowchart
+
+	def death_check(self):
+		if(self.hit_points[0] <= 0):
+			self.die()
+			return True
+		return False
+
+	def die(self):	#TEMP
+		self.send_event(self.display_name() + " died!")
+		#TODO: other death stuff
+
+	def melee_attack(self, target):
+		if(self.in_range(target, self.melee_range)):
+			if(self.melee_hit_roll(target)):
+				damage = self.melee_damage_roll(target)
+				if(damage <= 0):
+					self.send_event(target.display_name() + " shurgged off the attack.")
+					return
+				target.take_damage(damage) #NOTE: should modifiers apply before here, or not? (probably should)
+				if(target.death_check()):
+					return
+				self.send_event(self.display_name() + " hit " + target.name + " for " + str(damage) + " damage!") #TEMPORARY. TODO: actually implement combat
 		#TODO: case for missing because the target moved out of the way.
+
+	def melee_hit_roll(self, target):
+		return True #TODO: calculate chance to miss a melee attack here.
+
+	def melee_damage_roll(self, target):
+		base_attack = 5 #TODO: get this properly once we figure out combat mechanics
+		min_attack = int(0.8 * base_attack)
+		max_attack = int(1.2 * base_attack)
+		return random_in_range(min_attack, max_attack) #NOTE: this method is subject to a lot of change depending on all the factors that affect melee combat.
 
 	def drop_item(self, item):
 		self.inventory.remove_item(item)

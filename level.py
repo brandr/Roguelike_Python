@@ -92,11 +92,22 @@ class Level:
 		self.monsters.append(monster)
 		self.add_being(monster, x, y)
 
+	def remove_monster(self, monster):
+		if(monster in self. monsters):
+			self.monsters.remove(monster)
+		self.remove_being(monster)
+
 	def add_being(self, being, x, y):
 		self.beings.append(being)
 		if(self.valid_tile(x, y)):
 			being.current_level = self
 			self.tiles[y][x].set_being(being)
+
+	def remove_being(self, being):
+		if(being in self.beings):
+			self.beings.remove(being)
+			self.turn_counter.remove_actor(being)
+			being.current_tile.remove_being()
 
 	def being_in_tile(self, x, y):
 		if(self.valid_tile(x, y)):

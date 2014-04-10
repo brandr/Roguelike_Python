@@ -45,6 +45,12 @@ class Tile:
 		symbol = self.symbol_image()
 		self.level.level_map.blit(symbol, (self.x * TILE_WIDTH, self.y * TILE_HEIGHT))
 
+	def remove_being(self):
+		if(self.current_being):
+			self.current_being.current_tile = None
+			self.current_being = None
+			self.update()
+
 	def passable(self):
 		return self.current_being == None #TODO: make this also return false for closed doors, solid walls, etc.
 

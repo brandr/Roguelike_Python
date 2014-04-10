@@ -56,7 +56,7 @@ class GameManager:
         test_level.add_wall(16, 15)
 
         test_level.add_player(player_1, 4, 4)
-        #test_level.add_monster(monster_1, 8, 8)
+        test_level.add_monster(monster_1, 8, 8)
         #test_level.add_monster(monster_2, 18, 16)
 
         map_pane = MapPane(player_1)                # TODO: turn these 4 lines into their own method somewhere in the screen/manager mess.

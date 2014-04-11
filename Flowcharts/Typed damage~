@@ -1,0 +1,5 @@
+Typed damage, resistances, and status effects:
+
+1) Damage is a quality that reduces hitpoints. If damage can be avoided by any means once inflicted, it is /typed/. 
+2) Typed damage is reduced once inflicted (by some math I haven't thought of yet) by the corresponding resistance.
+3) 

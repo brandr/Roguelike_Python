@@ -1,0 +1,7 @@
+Typed damage, resistances, saves, and status effects:
+
+1) Damage is a quality that reduces hitpoints. If damage can be avoided by any means once inflicted, it is /typed/. 
+2) Resistances prevent elemental (fire, ice, poison) types of damage from being inflicted, as well as lessening it when it is successfully done to you.  
+3) 
+4) Typed damage is reduced once inflicted (by some math I haven't thought of yet) by the corresponding resistance.
+5) 

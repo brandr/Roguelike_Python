@@ -1,0 +1,40 @@
+Combat system flowchart:
+
+We draw a primary distinction between a "swing" and a "full attack". Moving into a monster's square initiates a full attack, which is a decimal number of swings. Consecutive full attacks while standing in the same square (not necessarily against the same monster), perform the integer "floor" number of attacks and store the decimal remainder to be added to the next attack.
+
+If your full attack was, say, 1.75 swings:
+
+T1: You full attack and swing at the monster once. The remainder is .75.
+T2: You full attack (2.5) and swing at the monster twice. The remainder is .5.
+T3: You move one step.
+T4: You swing at the monster once, and your remainder is 1.75.
+Your swing delay is calculated by your weapon weight, whether or not you are twoweaponing, and various player stats. 
+
+Every swing, this stuff happens:
+    -Entity decides to swing.
+    -Number of swings calculated.
+    -For each swing:
+        -If the weapon is long (polearm, especially huge sword/club, meteor hammer), the user chooses a space in his immediate AoE (radius of 2-3) to attack. Some long weapons cannot attack the space next to you, but some can. These weapons make full swings against the selected space, rather than acting like other "ranged" weapons.
+        -Swinging at an empty square:
+            -Sometimes the player will want to attack an invisible monster that is not there, or a monster will move/teleport away from a player in the middle of his attack. If this happens, the player attack should "round down" and stop after the next scheduled attack, consuming the amount of turn delay scheduled for that attack (some fraction of the full attack).
+        -Dodge chance is calculated by function(aggregate skill of swinger,  aggregate dodge of target)
+        -Percentage chance is rolled.
+        -If hit: 
+            -Shield chance is calculated similar to dodge chance (if applicable)
+            -If hit:
+                -If the weapon is not suited for hitting things or is not a weapon (slapping someone with a bow, untrained fists, small rock, etc):
+                    -Max damage out at 1d2
+                    -Print a message about "Clumsily hitting the X with your X".
+                -Armor damage reduction is calculated solely on damage type and armor stat.
+                -Damage is done in this order:
+                    -Special effect (after armor, if applicable)
+                    -Mundane effect (after armor, if applicable)
+                    -If the status effect is immediate, in that it has to alter the options of the affected entity in the entity's next turn, it applies now (constriction, paralysis, mesmerization, stunning, amputation, etc) as do all status effects.
+            -If miss:
+                -"The X blocks you!"/"You block the X!"
+        -If miss:
+            -"You miss!"/"The X misses you!"
+
+
+Note that I don't have spaces for DOT and status effects during player turns, because I figure those will have their own quasi-turn structure where they tick down using the absolute game speed rather than the subjective player turn. If they affect the player's options or actions during that turn, just check whether or not they are currently in effect before the turn happens and then apply them.
+          

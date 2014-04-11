@@ -39,6 +39,7 @@ class GameManager:
         gloves_1 = Armor("Leather Gloves", GLOVES_SLOT)
         health_potion = HealingPotion()
         poison_potion = PoisonPotion()
+        ammo_1 = Ammo("Wooden Arrow", 20)
 
         monster_sword = MeleeWeapon("Deku stick")
         monster_shield = Armor("Deku Shield", LEFT_HAND_SLOT)
@@ -53,6 +54,7 @@ class GameManager:
         player_1.set_start_equipment(player_equipment)
         player_1.obtain_item(health_potion)
         player_1.obtain_item(poison_potion)
+        player_1.obtain_item(ammo_1)
 
         monster_1 = Monster("Moblin")
         monster_equipment = EquipmentSet(HUMANOID) #TODO: this is the long-term plan for starting monster/player equipment: make the equipmentset first, and then set it.

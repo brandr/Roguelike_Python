@@ -1,6 +1,7 @@
 """ A set of items held by a Being or a Tile.
 """
 
+from ammo import *
 from armor import *
 from meleeweapon import *
 from potion import *

@@ -4,8 +4,8 @@
 from math import *
 from status import *
 
-WEAPON, ARMOR, POTION = "Weapon", "Armor", "Potion"
-DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', WEAPON:')', POTION:'!'}
+AMMO, ARMOR, POTION, WEAPON = "Ammo", "Armor", "Potion", "Weapon"
+DEFAULT_ITEM_SYMBOLS = {AMMO:'(', ARMOR:'[', POTION:'!', WEAPON:')'}
 EQUIP_STRING = "[E]"
 WIELD_STRING = "[W]"
 DEFAULT_STACK_SIZE = 1
@@ -29,8 +29,10 @@ class Item:
 				return self.name + " " + WIELD_STRING
 		return self.name
 
+	def item_category(self):
+		return self.__class__.__name__
+
 	def current_symbol(self):
-		#class_name = self.__class__.__name__
 		category = self.item_category()
 		return DEFAULT_ITEM_SYMBOLS[category]
 

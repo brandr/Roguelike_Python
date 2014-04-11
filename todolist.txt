@@ -29,17 +29,28 @@ NICK:
 	- i.e., what is actually happening and how in translates into what the player sees.
 	- in the long run, this will include item identification, sounds, FOV, etc.
 
-Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
+Things to do in order of precedence: 
+(try to add things to the stage where they seem to fit in best)
 
 STAGE 1	
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
-		Implement item stacks (will affect pickup, dropping, etc.)
-			* some of the framework for this exists, but not enough to test yet.
-			* will have to define "stack equivalence" between items somehow
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 		Graphics system (like arrow moving across screen)
 
-STAGE 2	(have to wait for Nick for this stuff.)
+STAGE 2	(have to wait for Nick for this stuff and below.)
+		Implement item stacks (will affect pickup, dropping, etc.)
+			* some of the framework for this exists, but not enough to test yet.
+			* will have to define "stack equivalence" between items somehow
+			* Nick needs to tell me how mulitple-item stacks should be handled. Examples:
+				- should 18 arrows be shown as:
+					. 18 arrows
+					. arrows (18)
+					. arrows [18]
+					. etc
+				- how to drop multiple items? In crawl, this would be done by starting a "drop"
+					action, opening the inventory screen, typing in a number, pressing a letter
+					to select the item that the player wants to drop that amount of, and then
+					pressing Enter. Should we do this?
 		Finish wielding/equipping basics. 
 			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
 			* Be careful with some contexts (trying to equip over already-equipped item, etc.)

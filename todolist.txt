@@ -25,34 +25,37 @@ NICK:
 	-In other words, the list should cover many possible actions, but the delay values will be
 		very easy to change, so don't worry about making them exact.
 * Make more flowcharts revolving around the inventory system and dropping/picking up items.
-
+* need flowcharts about item identification/event/player knowledge 
+	- i.e., what is actually happening and how in translates into what the player sees.
+	- in the long run, this will include item identification, sounds, FOV, etc.
 
 Things to do in order of precedence: (try to add things to the stage where they seem to fit in best)
 
-STAGE 1
-		Basic systems for attack damage, hp, death, etc. (player death might just close the screen for now, or notify and prompt revive.)
-		Test monster ability to hold/wield/equip/drop items.
-		Continue setting up general equipment system, with a focus on how equipment actually protects the player. 
-			*(plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
-		Dodging/blocking/armor mechanics
-		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
-		Make event pane scrollable
-		Item identification
-
-STAGE 2
-		Status effects (make sure they work with current turn system) (could make temporary potions)
-		Advanced control contexts (will have to flesh out control system a lot)
+STAGE 1	
+		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
+		Implement item stacks (will affect pickup, dropping, etc.)
+			* some of the framework for this exists, but not enough to test yet.
+			* will have to define "stack equivalence" between items somehow
 		Some basic hazards (like lava) to help figure out player movement and control contexts
+		Graphics system (like arrow moving across screen)
 
-STAGE 3
-		Finish wielding/equipping basics. (have to wait for Nick.)
+STAGE 2	(have to wait for Nick for this stuff.)
+		Finish wielding/equipping basics. 
 			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
 			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
 			* Figure out how to relate dependent equipment like cloak and chest, shield and 2H weapon, etc. (be general)
-		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
-		Graphics system (like arrow moving across screen)
+		Continue setting up general equipment system, with a focus on how equipment actually affects its user. 
+			*(plan ahead. Focus on armor and shields, but allow for amulets/rings/etc)
+		Attacking/Dodging/blocking/armor mechanics
+		More advanced combat (how do weapons/equipment change combat? What values should we abstract until later?)
+		Make event pane scrollable
 
-STAGE 4
+STAGE 3
+		More complex Status effects 
+			* implemented on a basic level with poison potions
+			* need to develop into more complex cases, like stacking statuses
+				- ex: what happens with multiple poison potions?
+			* need to make statuses send messages when appropriate
 		Typed damage like fire, ice, poison (may want to implement sooner)
 		Player attributes (STR, DEX, etc.) (this will change combat system a little.)
 		HP and MP regeneration
@@ -62,23 +65,32 @@ STAGE 4
 		Basic spell system (only need to make like 1 spell for testing purposes)
 		Expand graphics to accomodate spell; try to plan ahead and be extensible
 
-STAGE 5
+STAGE 4
 		Traps
+		Item identification system 	
+			* begin the larger system of player view vs what is actually happening in the game.
+			* IDEA: make an "event" system so that when a player or being "sends" an event, it
+				is parsed based on the player's awareness.
+				- consider how various events might translate to various messages -- consider an actor and an object, etc.,
+					and remember that everything will be shown from the player's point of view.
+			* Later this will affect FOV and the system by which the player receives messages about events. 
+				-maybe they need to "reach" the player before they display, thereby channeling/filtering all events
+					through the player's point of view/knowledge?
 		"Searchable" tiles (hidden doors, traps, etc.)
 		Signs that the player can read
 
-STAGE 6
+STAGE 5
 		Stairs, multiple levels, have to create a dungeon class (might create the dungeon class before this)
 		Consider more tile types, like doors
 		Make it easier to create monsters for testing (maybe focus on an editor context)
 		Map editor (may benefit from some gui library)
+		Beatitude
+		Gold
 ... 
 
 STAGE M - 2
-		Beatitude
 		Food and hunger (expand upon monster corpses)
 		Wands
-		Gold
 		Branches
 		Fully implement potions (can still add more potions, but the general system should be set up)
 		Same for scrolls

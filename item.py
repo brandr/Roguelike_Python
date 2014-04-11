@@ -2,21 +2,24 @@
 """
 
 from math import *
+from status import *
 
-MELEE_WEAPON, ARMOR = "MeleeWeapon", "Armor"
-DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', MELEE_WEAPON:')'}
+WEAPON, ARMOR, POTION = "Weapon", "Armor", "Potion"
+DEFAULT_ITEM_SYMBOLS = {ARMOR:'[', WEAPON:')', POTION:'!'}
 EQUIP_STRING = "[E]"
 WIELD_STRING = "[W]"
+DEFAULT_STACK_SIZE = 1
 
 class Item:
 	""" Item( ... ) -> Item
 
 	TODO: docstring
 	"""
-	def __init__(self, name):
+	def __init__(self, name = None, quantity = [DEFAULT_STACK_SIZE, DEFAULT_STACK_SIZE]): #since name might be derivable from other attributes, it is optional sometimes.
 		self.name = name #TODO: set name differently once identification is implemented
 		self.wielded = False
 		self.equipped = False
+		self.quantity = quantity
 
 	def display_name(self, equip_check = False):
 		if(equip_check):
@@ -27,8 +30,15 @@ class Item:
 		return self.name
 
 	def current_symbol(self):
-		class_name = self.__class__.__name__
-		return DEFAULT_ITEM_SYMBOLS[class_name]
+		#class_name = self.__class__.__name__
+		category = self.item_category()
+		return DEFAULT_ITEM_SYMBOLS[category]
+
+	def current_quantity(self):
+		return self.quantity[0]
+
+	def decrement_quantity(self):
+		self.quantity[0] -= 1
 
 	def is_equippable(self):
 		return False

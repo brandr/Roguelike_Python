@@ -3,6 +3,7 @@
 
 from armor import *
 from meleeweapon import *
+from potion import *
 from selectlist import *
 
 class Inventory:
@@ -19,6 +20,13 @@ class Inventory:
 	def item_select_list(self):
 		return SelectList(Item, self.items)
 
+	def class_item_select_list(self, item_class):
+		items = []
+		for i in self.items:
+			if isinstance(i, item_class):
+				items.append(i)
+		return SelectList(Item, items) 
+
 	def equippable_item_select_list(self):
 		items = []
 		for i in self.items:
@@ -33,6 +41,11 @@ class Inventory:
 			items.append(self.items.pop())
 		return items
 
+	def decrement_item(self, item):
+		item.decrement_quantity()
+		if(item.current_quantity() <= 0):
+			self.remove_item(item)
+
 	def item_at_index(self, index):
 		return self.items[index]
 
@@ -45,6 +58,12 @@ class Inventory:
 
 	def remove_item(self, item):
 		self.items.remove(item)
+
+	def contains_item_class(self, item_class):
+		for i in self.items:
+			if(isinstance(i, item_class)):
+				return True
+		return False
 
 	def contains_equippables(self):
 		for i in self.items:

@@ -17,3 +17,5 @@ class Weapon(Item):
 	def __init__(self, name):
 		Item.__init__(self, name)
 		
+	def item_category(self):
+		return WEAPON

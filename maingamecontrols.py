@@ -54,12 +54,16 @@ class MainGameControls(Controls):
 	def equip_item(self, key):
 		self.player.begin_player_equip_item()
 
+	def quaff_item(self, key):
+		self.player.begin_player_quaff_item()
+
 drop_item = MainGameControls.drop_item
 drop_item_multiple = MainGameControls.drop_item_multiple
 equip_item = MainGameControls.equip_item
 move = MainGameControls.move_input
 open_player_inventory_screen = MainGameControls.open_player_inventory_screen
 pick_up_item = MainGameControls.pick_up_item
+quaff_item = MainGameControls.quaff_item
 wait = MainGameControls.wait
 wield_item = MainGameControls.wield_item
 
@@ -77,13 +81,17 @@ MAIN_GAME_CONTROL_MAP = {
 
 	'.':wait,
 
-	# item interaction inputs
+	# general item interaction inputs
 
 	',':pick_up_item,
 	'd':drop_item,
 	'D':drop_item_multiple,
 	'w':wield_item,
-	'W':equip_item
+	'W':equip_item,
+
+	# cosumables
+
+	'q':quaff_item
 }
 
 MAIN_GAME_DIRECTION_MAP = {

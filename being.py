@@ -4,6 +4,7 @@
 from xdx import *
 from tile import *
 from actionqueue import *
+from identifylist import *
 
 DEFAULT_COLOR = Color("#FFFFFF")
 
@@ -16,6 +17,9 @@ class Being:
 	"""
 	def __init__(self, name):
 		self.action_queue = ActionQueue()
+		self.identify_list = IdentifyList()
+		self.status_list = []
+
 		self.name = name
 		self.current_level = None
 		self.current_tile = None
@@ -28,13 +32,36 @@ class Being:
 	def display_name(self, arg = None): #not sure what arg should be for being. currently it only means something for items.
 		return self.name
 
-	def send_event(self, message):
+	def send_event(self, message): # IDEA: make an "Event" class whose contents are parsed and sent to the player (if he can see/hear the event).
 		self.current_level.send_event(message)
 
 	def set_start_equipment(self, equipment_set):
 		self.equipment_set = equipment_set
 		equipment = equipment_set.all_items()
 		self.inventory.add_item_list(equipment)
+
+	def restore_hp(self, amount):
+		self.hit_points[0] = min(self.hit_points[0] + amount, self.hit_points[1])
+
+	def take_damage(self, damage):
+		current_hp = self.hit_points[0]
+		self.hit_points[0] = max(0, current_hp - damage)
+		#should death_check be called here? need flowchart
+
+	def add_status(self, status):
+		status.target = self
+		self.current_level.enqueue_delay(status, status.delay)
+		self.status_list.append(status)
+
+	def remove_status(self, status):
+		self.status_list.remove(status)
+		self.current_level.remove_actor(status)
+		#TODO: figure out how status should send messages in the player's case
+
+	def take_status_effect(self, status):
+		if status in self.status_list:
+			status.take_effect()
+			self.current_level.enqueue_delay(status, status.delay)	#TODO: consider rolling a value for status delay based on some base delay.
 
 	def obtain_item(self, item):
 		self.inventory.add_item(item) #TODO: checks for stuff like full inventory? (might take place before here)
@@ -52,11 +79,6 @@ class Being:
 		if(self.current_level.open_tile(dest_coords[0], dest_coords[1])):
 			self.current_tile.remove_being()
 			self.current_level.temp_place_being(self, dest_coords[0], dest_coords[1]) #TEMP method	
-
-	def take_damage(self, damage):
-		current_hp = self.hit_points[0]
-		self.hit_points[0] = max(0, current_hp - damage)
-		#should death_check be called here? need flowchart
 
 	def death_check(self):
 		if(self.hit_points[0] <= 0):
@@ -89,6 +111,9 @@ class Being:
 		min_attack = int(0.8 * base_attack)
 		max_attack = int(1.2 * base_attack)
 		return random_in_range(min_attack, max_attack) #NOTE: this method is subject to a lot of change depending on all the factors that affect melee combat.
+
+	def decrement_item(self, item):
+		self.inventory.decrement_item(item)
 
 	def drop_all_items(self, display = False, instant = True): #display tells whether the drop actions should be displayed in the event pane.
 		#TODO: consider either removing the args if this is never used for any case besides a monster dying, or actually using them if it is.
@@ -137,6 +162,14 @@ class Being:
 	def equipment_in_slot(self, slot):
 		return self.equipment_set.get_item_in_slot(slot)
 
+	def confirm_quaff_item(self, item):
+		self.send_event(self.display_name() + " quaffed a " + item.display_name() + ".")
+		item.take_effect(self)
+		item.consume_dose()
+		if(item.no_doses):
+			self.decrement_item(item)
+		#TODO
+
 	def in_range(self, being, check_range):
 		offset = self.offset_from(being)
 		distance = (int)(sqrt(pow(offset[0], 2) + pow(offset[1], 2)))
@@ -180,7 +213,7 @@ class Being:
 
 	def execute_action(self, action, arg, delay):
 		action(arg)	
-		self.current_level.enqueue_delay(self, action, arg, delay)		
+		self.current_level.enqueue_delay(self, delay)		
 
 	def end_turn(self):
 		self.current_level.process_turns()

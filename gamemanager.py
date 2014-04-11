@@ -37,17 +37,22 @@ class GameManager:
         shield_1 = Armor("Hylian Shield", LEFT_HAND_SLOT)
         hat_1 = Armor("Fairy Hat", CHEST_SLOT)
         gloves_1 = Armor("Leather Gloves", GLOVES_SLOT)
+        health_potion = HealingPotion()
+        poison_potion = PoisonPotion()
 
         monster_sword = MeleeWeapon("Deku stick")
         monster_shield = Armor("Deku Shield", LEFT_HAND_SLOT)
 
         player_1 = Player("Link") 
+        #TODO: later, we should consider a better way to build equipmentsets from groups of equipment. Maybe read in and parse some file?
         player_equipment = EquipmentSet(HUMANOID)
         player_equipment.wield_item(sword_1)
         player_equipment.equip_item(shield_1)
         player_equipment.equip_item(hat_1)
         player_equipment.equip_item(gloves_1)
         player_1.set_start_equipment(player_equipment)
+        player_1.obtain_item(health_potion)
+        player_1.obtain_item(poison_potion)
 
         monster_1 = Monster("Moblin")
         monster_equipment = EquipmentSet(HUMANOID) #TODO: this is the long-term plan for starting monster/player equipment: make the equipmentset first, and then set it.
@@ -73,7 +78,7 @@ class GameManager:
 
         #inventory_item_pane = InventoryItemPane() #not putting args in yet, because this could apply to the player, tiles, or other stuff
 
-        test_level.plan_monster_turns()
+        test_level.plan_monster_turns()            #an initial requirement to set the turncounter in motion.
         game_controls = MainGameControls(player_1) #TODO: consider how controls may parse buttons differently for different screens.
         control_manager = ControlManager(game_controls)
         main_screen = GuiScreen(control_manager, main_screen_panes)

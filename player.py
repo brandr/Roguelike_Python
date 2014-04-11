@@ -113,8 +113,7 @@ class Player(Being):
 		if(multiple):
 			item_list = self.inventory.item_select_list()
 			self.screen_manager.switch_to_select_list_screen(item_list, self, self.attempt_drop_item)
-			#self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_drop_item)
-			return #TODO: case for dropping many items. (should probably open a selectlist screen with the "multiple" flag on, and the action set to some drop method.)
+			return 
 		else:
 			self.drop_item_prompt()
 
@@ -160,6 +159,7 @@ class Player(Being):
 		item_list = self.inventory.item_select_list()
 		self.screen_manager.switch_to_select_list_controls(item_list, self, self.wield_item, False, False)
 
+		# some of this might be moveable to Being, but not sure.
 	def wield_item(self, item):
 		if(item.wielded):
 			self.send_event("You are already wielding that!")
@@ -250,3 +250,19 @@ class Player(Being):
 	def cancel_replace_equip(self, item):
 		self.send_event("Nevermind.")
 
+	def begin_player_quaff_item(self):
+		if(not self.inventory.contains_item_class(Potion)):
+			self.send_event("Nothing to quaff.")
+			return
+		self.quaff_item_prompt()
+
+	def quaff_item_prompt(self):
+		self.send_event("Quaff what?")
+		item_list = self.inventory.class_item_select_list(Potion)
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.temp_player_quaff_item, False, False)
+
+	def temp_player_quaff_item(self, item):
+		#TODO: potion actually affects the player
+		#TODO: potion disappears
+		quaff_delay = item.consume_time
+		self.execute_player_action(self.confirm_quaff_item, item, quaff_delay)

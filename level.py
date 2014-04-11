@@ -63,8 +63,8 @@ class Level:
 	def process_turns(self):
 		self.turn_counter.process_turns()
 
-	def enqueue_delay(self, being, action, arg, delay):
-		self.turn_counter.enqueue_delay(being, delay)
+	def enqueue_delay(self, actor, delay):
+		self.turn_counter.enqueue_delay(actor, delay)
 
 	def enqueue_player_delay(self, player, delay):
 		self.turn_counter.enqueue_player_delay(player, delay)
@@ -106,8 +106,11 @@ class Level:
 	def remove_being(self, being):
 		if(being in self.beings):
 			self.beings.remove(being)
-			self.turn_counter.remove_actor(being)
+			self.remove_actor(being)
 			being.current_tile.remove_being()
+
+	def remove_actor(self, actor):
+		self.turn_counter.remove_actor(actor)
 
 	def being_in_tile(self, x, y):
 		if(self.valid_tile(x, y)):

@@ -41,12 +41,10 @@ class Controls:
 	def exit_to_main_game_controls(self, key):
 		self.control_manager.exit_to_main_game_controls(self.player)
 
-
+#might not use this or the map below. Keeping them just in case.
 LETTER_TO_KEY_MAP = {
 	'a':K_a, 'b':K_b, 'c':K_c, 'd':K_d, 'e':K_e, 'f':K_f, 'g':K_g, 'h':K_h, 'i':K_i, 'j':K_j, 'k':K_k, 'l':K_l, 'm':K_m,
 	'n':K_n, 'o':K_o, 'p':K_p, 'q':K_q, 'r':K_r, 's':K_s, 't':K_t, 'u':K_u, 'v':K_v, 'w':K_w, 'x':K_x, 'y':K_y, 'z':K_z #TODO: figure out how to handle captial letters.
-	#'A':K_A, 'B':K_B, 'C':K_C, 'D':K_D, 'E':K_E, 'F':K_F, 'G':K_G, 'H':K_H, 'I':K_I, 'J':K_J, 'K':K_K, 'L':K_L, 'M':K_M,
-	#'N':K_N, 'O':K_O, 'P':K_P, 'Q':K_Q, 'R':K_R, 'S':K_S, 'T':K_T, 'U':K_U, 'V':K_V, 'W':K_W, 'X':K_X, 'Y':K_Y, 'Z':K_Z
 } 
 
 KEY_TO_LETTER_MAP = {

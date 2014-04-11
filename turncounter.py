@@ -7,6 +7,7 @@ from monster import *
 from action import *
 
 MAX_DELAY = 99
+DEFAULT_DELAY = 1
 
 class TurnCounter:
 
@@ -22,7 +23,8 @@ class TurnCounter:
 		self.player_delay = None
 
 	def remove_actor(self, actor):
-		del(self.turn_queue[actor])
+		if actor in self.turn_queue:
+			del(self.turn_queue[actor])
 
 	def enqueue_delay(self, actor, delay):
 		if(actor in self.turn_queue):
@@ -64,6 +66,8 @@ class TurnCounter:
 			delay = self.turn_queue[a]
 			if delay < lowest_delay:
 				lowest_delay = delay
+		if lowest_delay == MAX_DELAY:
+			return 0
 		return lowest_delay
 
 	def decrement_turn_delays(self, dec_value):

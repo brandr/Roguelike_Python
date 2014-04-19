@@ -2,7 +2,7 @@
 """
 
 from tile import *
-from numpy import *
+#from numpy import *
 
 class Pane:
 	""" Pane ( int, int ) -> Pane

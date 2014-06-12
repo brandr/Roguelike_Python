@@ -2,10 +2,7 @@
 options to start the game, open the map editor, etc.
 """
 
-#from pygame import *
 from gamemanager import *
-
-# these are constants used by pygame. We may want to change where these are stored, or change their values.
 
 def runGame():
     """
@@ -16,7 +13,6 @@ def runGame():
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY, FLAGS, DEPTH)
     manager = GameManager()
-    #mainScreen.runGame(screen, dungeon) #may use a version more like this later on.
     manager.runGame(screen)
 
 if __name__ == "__main__":

@@ -17,8 +17,8 @@ class ActionQueue:
 	def dequeue_action(self):
 		return self.actions.pop()
 
-	def clear(self):
-		self.actions = []
+    def clear(self):
+        self.actions = 
 
 	def empty(self):
 		return len(self.actions) == 0

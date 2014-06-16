@@ -88,7 +88,7 @@ class Player(Being):
 		Being.take_damage(self, damage)
 		if(not self.action_queue.empty()):
 			self.send_event("Continue "+self.get_current_action()+" while under attack (y/n)?")
-			self.screen_manager.switch_to_ynq_controls(self.clear_action_queue, self.decide_next_turn,  self.decide_next_turn, None)
+			self.screen_manager.switch_to_ynq_controls(self.clear_action_queue(self), self.decide_next_turn(self, None), 	self.decide_next_action(self, None))
 
 	def begin_pick_up_item(self):
 		if(not self.current_tile.contains_items()):

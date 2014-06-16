@@ -7,6 +7,7 @@ from actionqueue import *
 from identifylist import *
 
 DEFAULT_COLOR = Color("#FFFFFF")
+#TAKING_USER_INPUT = "taking_user_input"
 
 class Being:
 	""" Being( ... ) -> Being
@@ -96,10 +97,11 @@ class Being:
 				if(damage <= 0):
 					self.send_event(target.display_name() + " shurgged off the attack.")
 					return
+				self.send_event(self.display_name() + " hit " + target.name + " for " + str(damage) + " damage!") #TEMPORARY. TODO: actually implement combat
 				target.take_damage(damage) #NOTE: should modifiers apply before here, or not? (probably should)
 				if(target.death_check()):
 					return
-				self.send_event(self.display_name() + " hit " + target.name + " for " + str(damage) + " damage!") #TEMPORARY. TODO: actually implement combat
+				
 		#TODO: case for missing because the target moved out of the way.
 
 	def melee_hit_roll(self, target):

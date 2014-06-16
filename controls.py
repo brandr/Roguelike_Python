@@ -36,9 +36,11 @@ class Controls:
 				action(self, event.key)
 
 	def exit_to_main_game_screen(self, key):
+		self.player.taking_input_flag = False
 		self.control_manager.exit_to_main_game_screen(self.player)
 
 	def exit_to_main_game_controls(self, key):
+		self.player.taking_input_flag = False
 		self.control_manager.exit_to_main_game_controls(self.player)
 
 #might not use this or the map below. Keeping them just in case.

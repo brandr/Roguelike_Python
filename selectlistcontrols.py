@@ -50,6 +50,7 @@ class SelectListControls(Controls):
 			self.select_list.toggle(letter)
 
 	def exit_to_main_game_controls(self, key = None):
+		self.player.taking_input_flag = False
 		if(not self.on_main_screen):
 			Controls.exit_to_main_game_screen(self, None)
 			return

@@ -51,6 +51,7 @@ class ScreenManager:
 		#select_screen = SelectListScreen(select_list, player, action)
 
 	def switch_to_select_list_controls(self, select_list, player, action, multiple = False, expand_to_multiple = True):
+		player.taking_input_flag = True
 		controls = SelectListControls(select_list, player, action, multiple, expand_to_multiple)
 		self.switch_controls(controls)
 		list_message = select_list.list_message()
@@ -58,5 +59,6 @@ class ScreenManager:
 		level.send_event(list_message)
 
 	def switch_to_ynq_controls(self, yes_action, no_action, quit_action, arg, player = None): #TODO: consider what may be necessary when there are multiple args. (tuplets maybe?)
+		player.taking_input_flag = True
 		controls = YNQControls(yes_action, no_action, quit_action, arg, player)
 		self.switch_controls(controls)

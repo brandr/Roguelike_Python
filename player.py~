@@ -3,7 +3,6 @@ dungeons deserve.
 """
 
 from being import *
-#from maingamecontrols import *
 
 PLAYER_SYMBOL = '@'
 PLAYER_COLOR = Color("#FF0000")
@@ -26,6 +25,7 @@ class Player(Being):
 		self.attack_delay = 3
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
+		self.taking_input_flag = False
 
 	def display_name(self): #TODO: change for different cases
 		return "You"
@@ -54,9 +54,8 @@ class Player(Being):
 	def mp_display(self):
 		return str(self.magic_points[0]) + "/" + str(self.magic_points[1])
 
-	def decide_next_turn(self):
-		empty = self.action_queue.empty()
-		if(empty):
+	def decide_next_turn(self, arg = None):
+		if(self.action_queue.empty() or self.taking_input_flag):
 			return
 		else:
 			action = self.action_queue.dequeue_action()
@@ -87,8 +86,8 @@ class Player(Being):
 	def take_damage(self, damage):
 		Being.take_damage(self, damage)
 		if(not self.action_queue.empty()):
-			self.send_event("Continue "+self.get_current_action()+" while under attack (y/n)?")
-			self.screen_manager.switch_to_ynq_controls(self.clear_action_queue(self), self.decide_next_turn(self, None), 	self.decide_next_action(self, None))
+			self.send_event("Continue " + self.get_current_action() + " while under attack (y/n/q)?")
+			self.screen_manager.switch_to_ynq_controls(self.decide_next_turn, self.clear_action_queue,  self.clear_action_queue, None, self)
 
 	def begin_pick_up_item(self):
 		if(not self.current_tile.contains_items()):
@@ -119,11 +118,11 @@ class Player(Being):
 		# drop items
 
 	def begin_drop_item(self, multiple = False):
+		self.set_current_action("dropping things")
 		if(self.inventory.empty()):
 			self.send_event("You have no items to drop.")
 			return
 		if(multiple):
-			self.set_current_action("dropping things")
 			item_list = self.inventory.item_select_list()
 			self.screen_manager.switch_to_select_list_screen(item_list, self, self.attempt_drop_item)
 			return 

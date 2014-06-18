@@ -26,8 +26,12 @@ class Being:
 		self.melee_range = 1 #TEMP
 		self.inventory = Inventory()
 		self.equipment_set = None
-		self.hit_points = [0, 0]
+		self.hit_points = [0, 0]	
 		self.magic_points = [0, 0]
+		self.attack_speed = 1.0 #TEMP = f(type of being, weapon, relevant weapon skill, relevant weapon stat)^1
+		self.attack_buffer = 0.0
+		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
+		self.resistances = {"fire":0, "ice":0,"acid":0,"lightning":0,"slashing":0,"piercing":0,"bludgeoning":0,"acid":0} #Dictionary mapping resistances to resistance levels. Gonna be pretty useful later, esp because vulnerability can just be minus.
 
 	def display_name(self, arg = None): #not sure what arg should be for being. currently it only means something for items.
 		return self.name
@@ -39,13 +43,35 @@ class Being:
 		self.equipment_set = equipment_set
 		equipment = equipment_set.all_items()
 		self.inventory.add_item_list(equipment)
+	
+	def set_attack_speed(self):
+		self.attack_speed = 1.0
 
 	def restore_hp(self, amount):
 		self.hit_points[0] = min(self.hit_points[0] + amount, self.hit_points[1])
 
-	def take_damage(self, damage):
+	def take_damage(self, damage): #Should damage be passed as a list? See footnote 3. Similar 
 		current_hp = self.hit_points[0]
 		self.hit_points[0] = max(0, current_hp - damage)
+	'''
+	if damage is passed as a list instead:
+			for i in damageList[1::]:
+				if reistances[i] == -3
+					damageList[0] *= 3
+				elif resistances[i] == -2
+					damageList[0] *= 2.5
+				elif resistances[i] == -1
+					damageList[0] *= 1.5			
+				elif resistances[i] == 0:
+					pass
+				elif resistances[i] == 1:
+					damageList[0] *= 2/3
+				elif resistances[i] == 2:
+					damageList[0] *= 2/5
+				else:
+					damageList[0] *= 1/3
+	then do the rest of the stuff and disregard polytyped attacks
+			'''
 		#should death_check be called here? need flowchart
 
 	def add_status(self, status):
@@ -91,16 +117,28 @@ class Being:
 		#TODO: other death stuff
 
 	def melee_attack(self, target):
-		if(self.in_range(target, self.melee_range)):
-			if(self.melee_hit_roll(target)):
-				damage = self.melee_damage_roll(target)
-				if(damage <= 0):
-					self.send_event(target.display_name() + " shurgged off the attack.")
-					return
-				self.send_event(self.display_name() + " hit " + target.name + " for " + str(damage) + " damage!") #TEMPORARY. TODO: actually implement combat
-				target.take_damage(damage) #NOTE: should modifiers apply before here, or not? (probably should)
-				if(target.death_check()):
-					return
+		if(self.in_range(target, self.melee_range)): #Attack speed basically works.			
+			if self.attack_buffer == 0:
+				attackCount = int(self.attack_speed)
+				self.attack_buffer = self.attack_speed-(int(self.attack_speed))
+			elif self.attack_buffer > 0: #Will be susceptible to weird floating-point shit, but might not be a problem.
+				attackCount = int(self.attack_speed + self.attack_buffer)
+				self.attack_buffer = (self.attack_speed + self.attack_buffer) - int(self.attack_speed + self.attack_buffer)
+			else:
+				print("Attack buffer shouldn't be negative and you have seriously blown it.")
+			print("\n"+self.name+"'s ATTACK COUNT = "+str(attackCount))			
+			while attackCount > 0:
+				if(self.melee_hit_roll(target)): 
+					damage = self.melee_damage_roll(target) #Damage typing should be implemented here^3
+					if(damage <= 0):
+						self.send_event(target.display_name() + " shrugged off the attack.")
+						break
+					self.send_event(self.display_name() + " hit " + target.name + " for " + str(damage) + " damage!") #TEMPORARY. TODO: actually implement combat
+					target.take_damage(damage) #NOTE: should modifiers apply before here, or not? (probably should)
+					if(target.death_check()):
+						break
+				attackCount -= 1
+			return
 				
 		#TODO: case for missing because the target moved out of the way.
 
@@ -229,3 +267,9 @@ class Being:
 	def direction_from_diff(diff):
 		if(diff == 0): return 0
 		return (int)(diff/abs(diff))
+
+'''
+1: Inheritance issue. The inheritance seems to go being --> player/monster --> player/monster inventory. Is it wrong to draw from lower down on the hierarchy to fill top spots in the hierarchy? Is this what the cool kids call spaghetti code? Will it make me trip over my cape and lose my pocket contents?
+2: Goku problem. A monster or player attacks a weak monster to build up attack buffer before attacking a stronger opponent, allowing a greater and unexpected amount of attacks (sudden increase in power level) in the first few hits on the next monster.
+3: Damage typing is a cold-hearted bastard because it makes you pass a list of mixed int and strings to determine what type(s) the damage is, and then makes all of the other functions that deal with taking damage or being swung at have to take that list as an argument and iterate over it to determine just the types and if the monster has corresp. resistances. So this dumb list has to be passed everywhere that the simple int would, and I'll try it out later.
+'''

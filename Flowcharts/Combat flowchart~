@@ -1,5 +1,8 @@
 Combat system flowchart:
 
+Let constant x with (0,5] stand for attack speed.
+
+
 We draw a primary distinction between a "swing" and a "full attack". Moving into a monster's square initiates a full attack, which is a decimal number of swings. Consecutive full attacks while standing in the same square (not necessarily against the same monster), perform the integer "floor" number of attacks and store the decimal remainder to be added to the next attack.
 
 If your full attack was, say, 1.75 swings:

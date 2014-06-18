@@ -18,7 +18,7 @@ class Player(Being):
 		Being.__init__(self, name)
 		self.screen_manager = None #TODO: consider giving monsters an attribute for the screen, too
 		self.equipment_set = EquipmentSet(HUMANOID) #TODO: change this if the player can be a non-humanoid.
-		self.hit_points = [10, 10] #TEMP. (so are other attributes, until player creation is implented)
+		self.hit_points = [20, 20] #TEMP. (so are other attributes, until player creation is implented)
 		self.magic_points = [8, 8]
 		self.current_action = "SURROUNDINGS"
 		self.move_delay = 4

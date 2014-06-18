@@ -28,6 +28,9 @@ class Being:
 		self.equipment_set = None
 		self.hit_points = [0, 0]	
 		self.magic_points = [0, 0]
+		self.weapon_skill_aggregate = 5
+		self.dodge_value = 0 #TEMP
+		self.block_value = 10 #TEMP dodge and block values for combat
 		self.attack_speed = 1.0 #TEMP = f(type of being, weapon, relevant weapon skill, relevant weapon stat)^1
 		self.attack_buffer = 0.0
 		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
@@ -70,8 +73,9 @@ class Being:
 					damageList[0] *= 2/5
 				else:
 					damageList[0] *= 1/3
-	then do the rest of the stuff and disregard polytyped attacks
+	then do the rest of the stuff and pretend not to notice the absurd potential of polytyped attacks
 			'''
+		#Armor needs to go here, somehow.
 		#should death_check be called here? need flowchart
 
 	def add_status(self, status):
@@ -117,7 +121,9 @@ class Being:
 		#TODO: other death stuff
 
 	def melee_attack(self, target):
-		if(self.in_range(target, self.melee_range)): #Attack speed basically works.			
+		if(self.in_range(target, self.melee_range)): #Attack speed basically works.
+			if not (self.attacked_last_turn):
+				self.attack_buffer = 0			
 			if self.attack_buffer == 0:
 				attackCount = int(self.attack_speed)
 				self.attack_buffer = self.attack_speed-(int(self.attack_speed))
@@ -126,7 +132,6 @@ class Being:
 				self.attack_buffer = (self.attack_speed + self.attack_buffer) - int(self.attack_speed + self.attack_buffer)
 			else:
 				print("Attack buffer shouldn't be negative and you have seriously blown it.")
-			print("\n"+self.name+"'s ATTACK COUNT = "+str(attackCount))			
 			while attackCount > 0:
 				if(self.melee_hit_roll(target)): 
 					damage = self.melee_damage_roll(target) #Damage typing should be implemented here^3
@@ -138,11 +143,22 @@ class Being:
 					if(target.death_check()):
 						break
 				attackCount -= 1
+			self.attacked_last_turn = True #I know how to /set/ the flag, but not how to unset it.
 			return
 				
 		#TODO: case for missing because the target moved out of the way.
 
 	def melee_hit_roll(self, target):
+		weaponRoll = xdx(1,20)+self.weapon_skill_aggregate
+		if(weaponRoll >= target.dodge_value):
+			if(weaponRoll >= target.shield_value):
+				return True
+			elif(weaponRoll < target.shield_value):
+				self.send_event(self.display_name() + " was blocked by " + target.name)
+				return False
+		elif(weaponRoll < target.dodge_value):
+				self.send_event(self.display_name() + " was evaded by a nimble " + target.name)
+				return False
 		return True #TODO: calculate chance to miss a melee attack here.
 
 	def melee_damage_roll(self, target):
@@ -272,4 +288,6 @@ class Being:
 1: Inheritance issue. The inheritance seems to go being --> player/monster --> player/monster inventory. Is it wrong to draw from lower down on the hierarchy to fill top spots in the hierarchy? Is this what the cool kids call spaghetti code? Will it make me trip over my cape and lose my pocket contents?
 2: Goku problem. A monster or player attacks a weak monster to build up attack buffer before attacking a stronger opponent, allowing a greater and unexpected amount of attacks (sudden increase in power level) in the first few hits on the next monster.
 3: Damage typing is a cold-hearted bastard because it makes you pass a list of mixed int and strings to determine what type(s) the damage is, and then makes all of the other functions that deal with taking damage or being swung at have to take that list as an argument and iterate over it to determine just the types and if the monster has corresp. resistances. So this dumb list has to be passed everywhere that the simple int would, and I'll try it out later.
+4: Or if max(f(randomness, aggregate weapon value), g(calculated dodge value)) == f.
+5: Having dodge-then-shield be calculated out rather some f(dodge, shield) is lower on obvious, meaningless math, but means that as far as game balance goes dodge and shield have to be pretty heavily mutually exclusive, or else even if both have diminishing marginal returns like we're good game designers and economists there'll be a sweet spot that's some ratio of both and getting in that spot will be obvious enough so that nobody will even have to whip out lagrange method or pretend to care.
 '''

@@ -7,10 +7,11 @@ from weapon import *
 class MeleeWeapon(Weapon):
 	""" MeleeWeapon( ... ) -> MeleeWeapon
 
-	TODO
+	A weapon specifically meant for melee, inherting
+	from more general weapons (which may be ranged or melee).
 
 	Attributes:
-	TODO
+	(all inherited from Weapon)
 	"""
 
 	def __init__(self, name):

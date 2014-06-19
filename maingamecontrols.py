@@ -20,28 +20,57 @@ class MainGameControls(Controls):
 		self.initialize_control_map(MAIN_GAME_CONTROL_MAP)
 
 	def move_input(self, key):
+		""" mgc.move_input( str ) -> None 
+		
+		Takes some input related to movement and translates it into a move action.
+		"""
 		if(key in MAIN_GAME_DIRECTION_MAP):
 			direction = MAIN_GAME_DIRECTION_MAP[key]
 			self.player.temp_move(direction)
 
 	def wait(self, key): #the key arg not necessary for this method, but just for program compilation.
+		""" mgc.wait( str ) -> None 
+		
+		The player does nothing until something happens around him.
+		Might want to change this if it causes an unacceptably long wait time.
+		"""
 		wait_time = self.player.lowest_non_player_delay() + 1
 		self.player.begin_wait(wait_time)
 
 	def pick_up_item(self, key):
+		""" mgc.pick_up_item( str ) -> None 
+		
+		Tell the player to pick up one or more things in the current tile.
+		"""
 		self.player.begin_pick_up_item()
 
 	def drop_item(self, key):
+		""" mgc.drop_item( str ) -> None 
+		
+		Tell the player to drop something in the current tile.
+		"""
 		self.player.begin_drop_item()
 
 	def drop_item_multiple(self, key):
+		""" mgc.drop_item_multiple( str ) -> None 
+		
+		Tell the player to drop multiple things in the current tile.
+		"""
 		self.player.begin_drop_item(True)
 
 	def open_player_inventory_screen(self, key):
+		""" mgc.open_player_inventory_screen( str ) -> None 
+		
+		Opens the player's inventory screen, closing the main screen temporarily.
+		"""
 		inventory_screen = self.inventory_screen(self.player.inventory)
 		self.control_manager.switch_screen(inventory_screen)
 
 	def inventory_screen(self, inventory):
+		""" mgc.inventory_screen( Inventory ) -> None 
+		
+		Builds an inventory screen from an inventory (the player's or a tile's, usually).
+		"""
 		item_pane = InventoryItemPane(inventory)
 		inventory_panes = [item_pane] #TODO: other inventory panes
 		inventory_controls = InventoryControls(self.player, self.player.inventory)
@@ -49,12 +78,24 @@ class MainGameControls(Controls):
 		return self.control_manager.build_screen(inventory_control_manager, inventory_panes)
 	
 	def wield_item(self, key):
+		""" mgc.wield_itemi( str ) -> None 
+		
+		Tells the player to try to wield some item.
+		"""
 		self.player.begin_player_wield_item()
 
 	def equip_item(self, key):
+		""" mgc.equip_item( str ) -> None 
+		
+		Tells the player to try to equip some item.
+		"""
 		self.player.begin_player_equip_item()
 
 	def quaff_item(self, key):
+		""" mgc.quaff_item( str ) -> None 
+		
+		Tells the player to try to quaff some item.
+		"""
 		self.player.begin_player_quaff_item()
 
 drop_item = MainGameControls.drop_item

@@ -14,13 +14,13 @@ MAP_PANE_WIDTH = 450
 MAP_PANE_HEIGHT = 450
 
 class MapPane(Pane):
-	""" MapPane ( ... ) -> MapPane
+	""" MapPane ( Player ) -> MapPane
 
-	TODO: describe a MapPane and what it does
+	A mappane is a GUI component showing the dungeon from the player's point of view (more or less).
 
 	Attributes:
 
-	TODO
+	player is the player that the map pane is usually centered around.
 
 	"""
 

@@ -12,9 +12,13 @@ INVENTORY_ITEM_PANE_HEIGHT = 450
 ITEM_LINE_HEIGHT = 16
 
 class InventoryItemPane(Pane):
-	""" InventoryItemPane( ... ) -> InventoryItemPane
+	""" InventoryItemPane( Inventory ) -> InventoryItemPane
 
-	#TODO
+	A pane used to view and interact with an inventory.
+
+	Attribtues:
+
+	inventory: The inventory being viewed through this pane.
 	"""
 
 	def __init__(self, inventory):
@@ -22,6 +26,10 @@ class InventoryItemPane(Pane):
 		self.inventory = inventory
 
 	def update(self):
+		""" iip.update( ) -> None
+
+		Updates the pane based on the inventory's contents.
+		"""
 		item_info = Surface((INVENTORY_ITEM_PANE_WIDTH, INVENTORY_ITEM_PANE_HEIGHT))
 		for i in range(self.inventory.item_count()):
 			item = self.inventory.item_at_index(i)

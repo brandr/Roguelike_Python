@@ -33,6 +33,8 @@ STAGE 1
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 		Graphics system (like arrow moving across screen)
+		Consider making inventories based on Dicts rather than lists, mapping letters to items.
+			* this will allow removing the first item without changing the order of the rest.
 
 STAGE 2	(have to wait for Nick for this stuff and below.)
 		Implement item stacks (will affect pickup, dropping, etc.)

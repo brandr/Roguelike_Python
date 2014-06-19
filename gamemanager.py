@@ -21,11 +21,13 @@ class GameManager:
         pass
 
     def runGame(self, master_screen):
-        """GM.runGame (...) -> None
+        """GM.runGame ( Surface ) -> None
 
         Run the game using a pygame screen.
 
-        (add more description later)
+        Currently uses a bunch of temporary elements for testing gameplay.
+        Will change depending on what we are currently testing.
+        Eventually, this should probably open up a title screen or something.
         """
         pygame.display.set_caption("DIS A ROGUELIKE")
         timer = pygame.time.Clock()
@@ -100,4 +102,8 @@ class GameManager:
             pygame.display.update()
 
     def draw_panes(self, screen_manager):
+        """ gm.draw_panes( ScreenManager ) -> None
+
+        Update the screen by making it draw all its current panes.
+        """
         screen_manager.draw_panes()

@@ -10,13 +10,14 @@ CHARACTER_PANE_WIDTH = 450
 CHARACTER_PANE_HEIGHT = 64
 
 class CharacterPane(Pane):
-	""" CharacterPane ( ... ) -> CharacterPane
+	""" CharacterPane ( Player ) -> CharacterPane
 
-	TODO: describe a CharacterPane and what it does
+	A pane which provides useful information about the player,
+	updating as the player acts and is acted upon.
 
 	Attributes:
 
-	TODO
+	player: The player that this pane describes.
 
 	"""
 
@@ -25,6 +26,10 @@ class CharacterPane(Pane):
 		self.player = player
 		
 	def update(self): 	#TODO: as this gets more complex, consider creating GUI methods in the Pane class to make text components easier to place.
+		""" cp.update( ) -> None
+
+		Update information about the player each time something happens.
+		"""
 		player_info = Surface((CHARACTER_PANE_WIDTH, CHARACTER_PANE_HEIGHT))
 
 		player_name_text = "Player: " + self.player.name

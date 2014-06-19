@@ -4,12 +4,13 @@
 from equipment import *
 
 class Armor(Equipment):
-	""" Armor( ... ) -> Armor
+	""" Armor( str, str ) -> Armor
 
 	An armor corresponds to a specific slot, which we will likely
 	keep track of using a dictionary.
 
-	Attributes: TODO
+	Attributes:
+	name, slot: Both inherited from Equipment.
 
 	"""
 
@@ -17,5 +18,9 @@ class Armor(Equipment):
 		Equipment.__init__(self, name, slot)
 
 	def item_category(self):
+		""" a.item_category( ) -> str
+
+		Through method overriding, some broader item type can be identified as armor this way.
+		"""
 		return ARMOR
 		

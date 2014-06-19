@@ -5,7 +5,7 @@
 from level import *
 
 class Controls:
-	""" Controls( ... ) -> Controls
+	""" Controls( ) -> Controls
 
 		An abstract class for translating key presses into actions.
 
@@ -15,17 +15,26 @@ class Controls:
 
 	"""
 
-	def __init__(self): #, player):
+	def __init__(self):
 		self.control_map = None #TODO: add things to this class that aren't specific to the maingamecontrols.
 		self.control_manager = None
 		self.player = None
 
 	def initialize_control_map(self, model_map):
+		""" c.initialize_control_map( {str:Method} ) -> None
+
+		Using a control dict of pygame key constants to methods, set which key
+		presses will have which effects for this control scheme.
+		"""
 		self.control_map = {}
 		for key in model_map:
 			self.control_map[key] = model_map[key]
 
 	def process_event(self, event): #abstract method, to be inherited from by subclasses
+		""" c.process_event( EVent ) -> None
+
+		Process a keyborad event and execute the associated action.
+		"""
 		if event.type == QUIT: raise(SystemExit)
 		if event.type == KEYDOWN:
 			if event.unicode in(self.control_map):
@@ -35,11 +44,19 @@ class Controls:
 				action = self.control_map[event.key]
 				action(self, event.key)
 
-	def exit_to_main_game_screen(self, key):
+	def exit_to_main_game_screen(self, key = None):
+		""" exit_to_main_game_screen( None ) -> None
+
+		Stop using the current control set and exit to the main game screen.
+		"""
 		self.player.taking_input_flag = False
 		self.control_manager.exit_to_main_game_screen(self.player)
 
-	def exit_to_main_game_controls(self, key):
+	def exit_to_main_game_controls(self, key = None):
+		""" exit_to_main_game_controls( None ) -> None
+
+		Change from this control set to the one used for the main game.
+		"""
 		self.player.taking_input_flag = False
 		self.control_manager.exit_to_main_game_controls(self.player)
 

@@ -7,7 +7,7 @@ AMMO_STACK_SIZE = 99
 
 class Ammo(Item):
 	""" Ammo( ... ) -> Ammo
-	TODO
+	TODO: once ammo actually does stuff, complete this docstring.
 	"""
 
 	def __init__(self, name = None, count = 1):

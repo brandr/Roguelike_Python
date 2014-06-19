@@ -11,9 +11,6 @@ ROBERT:
 	-equipping
 	-etc.
 
-* figure out how to interrupt the player's action queue. 
-	-test case: a monster is attacking the player. This is a non-automatic interruption, meaning the player is prompted to stop dropping items.
-
 * consider giving the SelectListControls a quit/cancel option.
 	-currently escape does this, but it isn't really clear to the player that this is the case if there is no selectlistpane.
 

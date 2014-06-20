@@ -27,7 +27,7 @@ class SelectListPane(Pane):
 	def update(self):
 		""" slp.update( ) -> None
 
-		Updates information about he selectable objects.
+		Updates information about the selectable objects.
 		"""
 		select_info = Surface((SELECT_LIST_PANE_WIDTH, SELECT_LIST_PANE_HEIGHT))
 		for i in range(self.select_list.length()):

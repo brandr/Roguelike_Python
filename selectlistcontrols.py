@@ -5,13 +5,22 @@ from inventorycontrols import *
 from selectlistpane import *
 
 class SelectListControls(Controls):
-	""" SelectListControls ( ... ) -> SelectListControls
+	""" SelectListControls ( SelectList, Player, Action, bool, bool, bool) -> SelectListControls
 
-	TODO
+	A control scheme associated with a SelectList, used to selecte one or
+	more of its contents to perform some action on.
 
 	Attributes:
 
-	TODO
+	select_list is the select_list that the associated player (player attribute) is choosing from.
+
+	action is the Action to be performed on whatever object(s) are selected.
+
+	multiple determines whether multiple objects can be selected.
+
+	expand_to_multiple determines whether opening the full selectlistscreen should change the selection mode to multiple.
+
+	on_main_screen determines whether the controls are open on the main screen or whether a special selectlistscreen is open.
 	"""
 	def __init__(self, select_list, player, action, multiple = False, expand_to_multiple = True, on_main_screen = True):
 		# TODO: make it possible to select multiple objects sometimes, but not always.
@@ -31,12 +40,21 @@ class SelectListControls(Controls):
 			self.control_map[letter] = SelectListControls.select_object
 		
 	def select_object(self, letter):
+		""" slc.select_object( char ) -> None
+
+		Selects an object corresponding to the given letter.
+		"""
 		if(not self.multiple):
 			self.select_object_single(letter)
 			return
 		self.select_object_multiple(letter)
 
 	def select_object_single(self, letter):
+		""" slc.select_object_single( char ) -> None
+
+		Selects an object corresponding to the given letter
+		and executes this SelectListControls's associated action upon it.
+		"""
 		if(letter in self.control_map):
 			select_object = self.select_list.select_object_from_letter(letter)
 			self.exit_to_main_game_controls() #TODO: not the case if selection should not prompt this.
@@ -44,12 +62,20 @@ class SelectListControls(Controls):
 			action(select_object)
 
 	def select_object_multiple(self, letter):
+		""" slc.select_object_multiple( char ) -> None
+
+		Adds the object corresponding to the given letter to the current selection.
+		"""
 		if(self.on_main_screen):
 			return #TEMP. Currently there is no case for multiple selections on main game screen.
 		if(letter in self.control_map):
 			self.select_list.toggle(letter)
 
 	def exit_to_main_game_controls(self, key = None):
+		""" slc.exit_to_main_game_controls( None ) -> None
+
+		Stop using these controls and resume the normal game controls.
+		"""
 		self.player.taking_input_flag = False
 		if(not self.on_main_screen):
 			Controls.exit_to_main_game_screen(self, None)
@@ -57,10 +83,18 @@ class SelectListControls(Controls):
 		Controls.exit_to_main_game_controls(self, None)
 
 	def open_expanded_select_list(self, key = None):
+		""" slc.open_expanded_select_list( None ) -> None
+
+		Expand the select list, opening a screen to view the objects.
+		"""
 		select_list_screen = self.select_list_screen(self.select_list)
 		self.control_manager.switch_screen(select_list_screen)
 
 	def confirm_selection(self, key = None):
+		""" slc.confirm_selection( None ) -> None
+
+		Apply the associated action to the currently selected object(s).
+		"""
 		self.exit_to_main_game_controls()
 
 		toggles = self.select_list.toggles
@@ -79,6 +113,10 @@ class SelectListControls(Controls):
 			self.player.decide_next_turn()			
 
 	def select_list_screen(self, select_list):
+		""" slc.select_list_screen( SelectList ) -> GuiScreen
+
+		Creates a selectlist screen associated with the given SelectList.
+		"""
 		list_pane = SelectListPane(select_list)
 		panes = [list_pane]
 		controls = SelectListControls(self.select_list, self.player, self.action, self.expand_to_multiple, False, False) 

@@ -8,7 +8,7 @@ POTION_STACK_SIZE = 99
 class Potion(Consumable):
 	""" Potion( ... ) -> Potion
 
-	TODO
+	TODO: once potions have been fully implemented, docstring them.
 	"""
 
 	def __init__(self, name = None, count = 1):	#might not use name unless there are unique potions. 

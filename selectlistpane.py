@@ -13,7 +13,10 @@ SELECT_LIST_LINE_HEIGHT = 16
 
 class SelectListPane(Pane):
 	""" SelectListPane( SelectList ) -> SelectListPane
-	TODO
+
+	A graphical pane associated with a SelectList, used to allow one or more of its contained objects
+	to be selected for some action.
+
 	Attributes:
 	select_list: the list of selectable objects.
 	"""
@@ -22,6 +25,10 @@ class SelectListPane(Pane):
 		self.select_list = select_list
 
 	def update(self):
+		""" slp.update( ) -> None
+
+		Updates information about he selectable objects.
+		"""
 		select_info = Surface((SELECT_LIST_PANE_WIDTH, SELECT_LIST_PANE_HEIGHT))
 		for i in range(self.select_list.length()):
 			o = self.select_list.select_object_at_index(i)

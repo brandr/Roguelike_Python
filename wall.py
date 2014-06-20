@@ -4,9 +4,9 @@
 from tile import *
 
 class Wall(Tile):
-	""" Wall( ... ) -> Wall
+	""" Wall( Level, int, int ) -> Wall
 
-	TODO: docstring
+	An impassable Tile object that cannot contain anything or allow anything to pass through it.
 	"""
 
 	def __init__(self, level, x, y):
@@ -14,4 +14,8 @@ class Wall(Tile):
 		self.empty_symbol = DEFAULT_WALL_SYMBOL
 
 	def passable(self):
+		""" w.passable( ) -> bool
+
+		A general Tile method overridden here, since most Tiles are passable but walls are not.
+		"""
 		return False

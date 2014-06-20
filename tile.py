@@ -19,15 +19,24 @@ GREEN = Color("#00FF00")
 BLUE = Color("#0000FF")
 
 class Tile:
-	""" Tile( ... ) -> Tile
+	""" Tile( Level, int, int) -> Tile
 
-	TODO: docstring
+	Tiles are the components that make up a level. A tile can contain at most
+	one Being and zero or more items.
 
 	Attributes:
 
-	level: the level on which the tile is found
+	empty_symbol: the symbol the tile appears as when nothing is in it.
+
+	empty_color: the color the tile appears as when nothing is in it.
+
+	current_being: the Being occupying the Tile.
+
+	level: the level on which the tile is found.
+
+	tile_items: the items contained in the tile
 	
-	x, y: the coordinates of the tile on that level
+	x, y: the coordinates of the tile on that level.
 	"""
 
 	def __init__(self, level, x, y): #TODO: args
@@ -42,19 +51,38 @@ class Tile:
 		# along with how to udpade the current symbol properly.
 
 	def update(self):
+		""" t.update( ) -> None
+
+		Updates the tile with whatever should appear on top of it.
+		"""
 		symbol = self.symbol_image()
 		self.level.level_map.blit(symbol, (self.x * TILE_WIDTH, self.y * TILE_HEIGHT))
 
 	def remove_being(self):
+		""" t.remove_being( ) -> None
+
+		Remove whatever Being is currently in the tile.
+		I believe this is called when a Being moves out of the tile to another tile,
+		or when it dies.
+		"""
 		if(self.current_being):
 			self.current_being.current_tile = None
 			self.current_being = None
 			self.update()
 
 	def passable(self):
+		""" t.passable( ) -> None
+
+		Tells whether something can move through this tile.
+		Later, we'll need to handle walls being impassable, water being passable only for hovering/flying stuff, etc. 
+		"""
 		return self.current_being == None #TODO: make this also return false for closed doors, solid walls, etc.
 
 	def current_symbol(self):
+		""" t.current_symbol( ) -> char
+
+		Returns the symbol that should represent the top of the tile.
+		"""
 		if(self.current_being != None):
 			return self.current_being.current_symbol()
 		if(self.contains_items()):
@@ -62,11 +90,19 @@ class Tile:
 		return self.empty_symbol
 
 	def current_color(self):
+		""" t.current_color( ) -> Color
+
+		Returns the color that should represent the top of the tile.
+		"""
 		if(self.current_being != None):
 			return self.current_being.color()
 		return WHITE
 
 	def symbol_image(self):
+		""" t.symbol_image( ) -> Surface
+
+		Returns an image representing this tile.
+		"""
 		symbol_char = self.current_symbol()
 		symbol_color = self.current_color()
 		font = pygame.font.Font("./fonts/FreeSansBold.ttf", 8) 	#TODO: consider making this a constant somewhere, or an arg.
@@ -76,38 +112,79 @@ class Tile:
 		return symbol_image
 
 	def tile_item_select_list(self):
+		""" t.tile_item_select_list( ) -> SelectList 
+
+		Returns a SelectList containing the items found in this tile.
+		Pretty sure this is only called when picking up items.
+		"""
 		return self.tile_items.item_select_list()
 
 	def add_item_list(self, items):
+		""" t.add_item_list( [Item] ) -> None
+
+		Adds a set of items to the tile.
+		"""
 		self.tile_items.add_item_list(items)
 		self.update()
 
 	def add_item(self, item):
+		""" t.add_item( Item ) -> None
+
+		Adds one item to the tile.
+		"""
 		self.tile_items.add_item(item) #TODO: consider how this will affect the tile's appearance
 		self.update()
 
 	def remove_item(self, item):
+		""" t.remove_item( Item ) -> None
+
+		Removes an item from the tile.
+		"""
 		self.tile_items.remove_item(item)
 		self.update()
 
 	def contains_items(self):
+		""" t.contains_items( Item ) -> bool
+
+		Checks whether there are any items in the tile.
+		"""
 		return not self.tile_items.empty()
 
 	def top_item(self):
+		""" t.top_item( ) -> Item
+
+		Return the item at the top of the tile.
+		"""
 		return self.tile_items.top_item()
 
 	def item_count(self):
+		""" t.item_count( Item ) -> int
+
+		Returns the number of items in this tile.	
+		"""
 		return self.tile_items.item_count()
 
 	def set_being(self, being):
+		""" t.set_being( Being ) -> None
+
+		Set the current being that occupies this tile.
+		"""
 		self.current_being = being
 		being.current_tile = self
 		self.update()
 
 	def remove_being(self):
+		""" t.remove_being( ) -> None
+
+		Remove the current being from this tile.
+		"""
 		self.current_being.current_tile = None
 		self.current_being = None
 		self.update()
 
 	def coordinates(self):
+		""" t.coordinates( ) -> (int, int)
+
+		Returns the coordinates of this tile on the level.
+		"""
 		return (self.x, self.y)

@@ -20,14 +20,26 @@ class YNQControls(Controls):
 		self.player = player
 
 	def yes_action(self, key):
+		""" ynqc.yes_action( str? ) -> None
+
+		Perform the action associated with selecting yes.
+		"""
 		self.exit_to_main_game_controls(self.player)
 		self.yes_action(self.arg)
 
 	def no_action(self, key):
+		""" ynqc.no_action( str? ) -> None
+
+		Perform the action associated with selecting no.
+		"""
 		self.exit_to_main_game_controls(self.player)
 		self.no_action(self.arg)
 
 	def quit_action(self, key):
+		""" ynqc.quit_action( str? ) -> None
+
+		Perform the action associated with selecting quit.
+		"""
 		self.exit_to_main_game_controls(self.player)
 		self.quit_action(self.arg)
 

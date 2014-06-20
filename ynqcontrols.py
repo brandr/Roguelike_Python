@@ -8,9 +8,9 @@ class YNQControls(Controls):
 
 	Used to allow the user to answer or cancel a yes/no question.
 
-	Attbributes:
-	yes_action: the action to peform if the user says yes.
-	no_action: the action to peform if the user says no.
+	Attributes:
+	yes_action: the action to perform if the user says yes.
+	no_action: the action to perform if the user says no.
 	arg: the argument to be used either way.
 	"""
 	def __init__(self, yes_action, no_action, quit_action, arg, player = None):

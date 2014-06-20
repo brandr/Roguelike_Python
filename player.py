@@ -216,8 +216,10 @@ class Player(Being):
 		Prompt the player to choose a target for a fired item.
 		"""
 		self.send_event("Choose a target.")
-		#self.screen_manager.switch_to_target_controls(args args args) #TODO
-		#TODO: swwitch to target controls
+		action_range = 10 		#TEMP. should be line of sight
+		target_style = "smite" 	#TEMP. figure out how to derive the constant
+		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
+		#TODO: make sure the above method works.
 
 		# pick up items
 

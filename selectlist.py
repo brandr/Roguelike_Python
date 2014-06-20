@@ -1,3 +1,4 @@
+# coding=utf-8
 """ A list from which one or more objects may be selected.
 These objects may be items, monsters, spells, etc.
 """

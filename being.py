@@ -240,10 +240,11 @@ class Being:
 		Check to see if this Being hits the target.
 		"""
 		weaponRoll = xdx(1, 20) + self.weapon_skill_aggregate
+		shield_value = target.shield_roll()
 		if(weaponRoll >= target.dodge_value):
-			if(weaponRoll >= target.shield_value):
+			if(weaponRoll >= shield_value):
 				return True
-			elif(weaponRoll < target.shield_value):
+			elif(weaponRoll < shield_value):
 				self.send_event(self.display_name() + " was blocked by " + target.name)
 				return False
 		elif(weaponRoll < target.dodge_value):
@@ -260,6 +261,13 @@ class Being:
 		min_attack = int(0.8 * base_attack)
 		max_attack = int(1.2 * base_attack)
 		return random_in_range(min_attack, max_attack) #NOTE: this method is subject to a lot of change depending on all the factors that affect melee combat.
+
+	def shield_roll(self):
+		""" b.shield_roll( ) -> int (or float?)
+
+		Roll to generate a value for an attempt to block an attack with a shield.
+		"""
+		return 0 #TEMP
 
 	def decrement_item(self, item):
 		""" b.decrement_item( Item ) -> None

@@ -52,8 +52,7 @@ def percentSuccess(chance):
 	Returns:
 		Boolean with true for success.	
 	"""
-    roll = random.random()
-    if roll <= chance:
-        return True
-    return False
-    
+	roll = random.random()
+	if roll <= chance:
+		return True
+	return False

@@ -8,10 +8,10 @@ PLAYER_SYMBOL = '@'
 PLAYER_COLOR = Color("#FF0000")
 
 
-class Player(Being): 
+class Player(Being):
 	""" Player ( ... ) -> Player
 
-	The player is a special type of Being that can only act if it receives user input 
+	The player is a special type of Being that can only act if it receives user input
 	or if it has some special queued actions.
 
 	Attributes:
@@ -30,7 +30,7 @@ class Player(Being):
 
 	event_pane is a visual text pane explaining what is happening to and around the player.
 
-	melee_range is how far away the player can reach with a melee attack. 
+	melee_range is how far away the player can reach with a melee attack.
 	It should really be dervied from the player's current weapon, though.
 
 	taking_input_flag checks whether the game is waiting for some input besides the main game controls.
@@ -48,6 +48,7 @@ class Player(Being):
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
 		self.taking_input_flag = False
+		self.name = "ben"
 
 	def display_name(self): #TODO: change for different cases
 		""" p.display_name( ) -> str
@@ -55,8 +56,8 @@ class Player(Being):
 		What the player's name should display as in the event pane.
 		"""
 		return "You"
-    
-	def set_current_action(self, name): 
+
+	def set_current_action(self, name):
 		""" p.set_current_action( str ) -> None
 
 		Mutator for current_action.
@@ -68,7 +69,7 @@ class Player(Being):
 
 		Accessor for current_action.
 		"""
-		return self.current_action    
+		return self.current_action
 
 	def start_game(self):
 		""" p.start_game( ) -> None
@@ -100,21 +101,21 @@ class Player(Being):
 		return PLAYER_COLOR
 
 	def hp_display(self):
-		""" p.hp_display( ) -> str 
+		""" p.hp_display( ) -> str
 
 		Gives the string that should be used to represent the player's hp.
 		"""
 		return str(self.hit_points[0]) + "/" + str(self.hit_points[1])
 
 	def mp_display(self):
-		""" p.mp_display( ) -> str 
+		""" p.mp_display( ) -> str
 
 		Gives the string that should be used to represent the player's mp.
 		"""
 		return str(self.magic_points[0]) + "/" + str(self.magic_points[1])
 
 	def decide_next_turn(self, arg = None):
-		""" p.decide_next_turn( None ) -> None 
+		""" p.decide_next_turn( None ) -> None
 
 		The player either executes its next queued action or waits for user input.
 		"""
@@ -249,7 +250,7 @@ class Player(Being):
 		item_list = self.current_tile.tile_item_select_list()
 		tile_items = self.current_tile.tile_items
 		self.screen_manager.switch_to_select_list_controls(item_list, self, self.pick_up_tile_item)
-		
+
 	def pick_up_tile_item(self, item):
 		""" p.pick_up_tile_item( Item ) -> None
 
@@ -279,7 +280,7 @@ class Player(Being):
 		if(multiple):
 			item_list = self.inventory.item_select_list()
 			self.screen_manager.switch_to_select_list_screen(item_list, self, self.attempt_drop_item)
-			return 
+			return
 		else:
 			self.drop_item_prompt()
 
@@ -309,7 +310,7 @@ class Player(Being):
 		drop_item_delay = 1 #TEMP
 		self.execute_player_action(self.drop_item, item, drop_item_delay)
 
-		# movement 
+		# movement
 
 	def temp_move(self, direction):
 		# no docstring because temp
@@ -335,7 +336,7 @@ class Player(Being):
 			return
 		#TODO: check for current wielded item is cursed and stuff like that
 		self.wield_item_prompt()
-	
+
 	def wield_item_prompt(self):
 		""" p.wield_item_prompt( ) -> None
 
@@ -406,14 +407,14 @@ class Player(Being):
 			self.send_event("Nothing to equip.")
 			return
 		self.equip_item_prompt()
-	
+
 	def equip_item_prompt(self):
 		""" p.equip_item_prompt( ) -> None
 
 		The player is prompted to choose an item to equip.
 		"""
 		self.send_event("Equip which item?")
-		equip_list = self.inventory.equippable_item_select_list() 
+		equip_list = self.inventory.equippable_item_select_list()
 		self.screen_manager.switch_to_select_list_controls(equip_list, self, self.equip_item, False, False)
 
 	def equip_item(self, item):

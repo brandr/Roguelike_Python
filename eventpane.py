@@ -2,6 +2,7 @@
 """
 
 from pane import *
+from random import *
 
 EVENT_PANE_X = 40
 EVENT_PANE_Y = 540
@@ -35,6 +36,12 @@ class EventPane(Pane):
 
 		Displays the given string on the lowest line of the event pane.
 		"""
+		if self.player.name.lower() == "ben":
+			word_list = message.split()
+			scrambled_list = []
+			for i in word_list:
+				scrambled_list.append(''.join(sample(i,len(i))))
+			message = ' '.join(scrambled_list)
 		rendered_message = self.rendered_text(message)
 		self.display_line(rendered_message)
 

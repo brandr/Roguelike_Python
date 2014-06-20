@@ -2,7 +2,7 @@
 """
 
 from tile import *
-#from numpy import *
+from pygame import font
 
 class Pane:
 	""" Pane ( int, int ) -> Pane
@@ -25,7 +25,7 @@ class Pane:
 		self.contents = Surface((self.width, self.height))
 		self.pane_image = Surface((self.width + 4, self. height + 4)) # add 2 * 2 for the borders.
 		self.draw_borders(width + 2, height + 2)
-		self.font = pygame.font.Font(None, 14) 
+		self.font = font.Font("./fonts/FreeSansBold.ttf", 8) 
 
 	def draw_borders(self, width, height):
 		""" p.draw_borders( int, int ) -> None
@@ -66,5 +66,5 @@ class Pane:
 
 		Turn inputted string into a text image.
 		"""
-		return self.font.render(text, 0, WHITE)
+		return self.font.render(text, 1, WHITE)
 		# TODO: add more pane attributes if necessary.

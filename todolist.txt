@@ -13,7 +13,6 @@ ROBERT:
 
 * consider giving the SelectListControls a quit/cancel option.
 	-currently escape does this, but it isn't really clear to the player that this is the case if there is no selectlistpane.
-
 	-maybe always clear the event pane when pressing esc? (could do this by calling the method to exit to main screen, instead of main controls.)
 
 NICK:
@@ -34,7 +33,7 @@ STAGE 1
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 		Graphics system (like arrow moving across screen)
 		Consider making inventories based on Dicts rather than lists, mapping letters to items.
-			* this will allow removing the first item without changing the order of the rest.
+			* this will allow removing the first item without changing the order of the rest.o
 
 STAGE 2	(have to wait for Nick for this stuff and below.)
 		Implement item stacks (will affect pickup, dropping, etc.)

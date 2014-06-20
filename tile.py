@@ -69,7 +69,7 @@ class Tile:
 	def symbol_image(self):
 		symbol_char = self.current_symbol()
 		symbol_color = self.current_color()
-		font = pygame.font.Font(None, 12) 	#TODO: consider making this a constant somewhere, or an arg.
+		font = pygame.font.Font("./fonts/FreeSansBold.ttf", 8) 	#TODO: consider making this a constant somewhere, or an arg.
 		symbol_text = font.render(symbol_char, 0, symbol_color)
 		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
 		symbol_image.blit(symbol_text, (0, 0))

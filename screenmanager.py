@@ -2,6 +2,7 @@
 """
 
 from guiscreen import *
+from targetcontrols import TargetControls
 
 class ScreenManager:
 	""" ScreenManager (...) -> ScreenManager

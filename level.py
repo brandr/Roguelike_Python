@@ -87,8 +87,9 @@ class Level:
 			self.player.send_event(message)
 
 	def add_effect(self, symbol, x, y, color = WHITE):
-		effect = Effect(symbol, x, y, color)
-		self.effects.append(effect)
+		pass #TODO
+		#effect = Effect(symbol, x, y, color)
+		#self.effects.append(effect)
 
 	def plan_monster_turns(self): #NOTE: might need to do more than this
 		""" l.plan_monster_turns( ) -> None

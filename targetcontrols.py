@@ -17,15 +17,16 @@ class TargetControls(Controls):
         player: The player who is doing the targeting.
 
     """
-    def __init__(self, action, action_range, target_style, player):
-        controls.__init__(self)
+    def __init__(self, action, action_range, target_style, player, arg):
+        Controls.__init__(self)
         self.initialize_control_map(TARGET_CONTROL_MAP)
         self.action = action
         self.action_range = action_range
         self.target_style = "smite"
         self.player = player
+        self.arg = arg
 
-    def action():
+    def action(self, key = None):
         self.player.send_event("Firing!")
         self.exit_to_main_game_controls()
 
@@ -47,8 +48,9 @@ class TargetControls(Controls):
                 action = self.control_map[event.key]
                 action(self, event.key)
             else:
-                self.exit_to_main_game_controls
                 self.player.send_event("I guess not.")
+                self.exit_to_main_game_controls()
+                
 
 
 exit = Controls.exit_to_main_game_screen

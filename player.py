@@ -221,6 +221,9 @@ class Player(Being):
 		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
 		#TODO: make sure the above method works.
 
+	def confirm_fire_item(self, item): #TODO add args
+		pass
+
 		# pick up items
 
 	def begin_pick_up_item(self):

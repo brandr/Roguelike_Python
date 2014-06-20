@@ -5,6 +5,8 @@
 from turncounter import *
 from wall import *
 
+WHITE = Color("#FFFFFF")
+
 class Level:
 	""" Level( int, int, int ) -> Level
 
@@ -43,6 +45,7 @@ class Level:
 		self.monsters = []
 		self.player = None
 		self.turn_counter = TurnCounter()
+		self.effects = []
 
 	def init_tiles(self):
 		""" l.init_tiles( ) -> None
@@ -82,6 +85,10 @@ class Level:
 		"""
 		if(self.player != None):
 			self.player.send_event(message)
+
+	def add_effect(self, symbol, x, y, color = WHITE):
+		effect = Effect(symbol, x, y, color)
+		self.effects.append(effect)
 
 	def plan_monster_turns(self): #NOTE: might need to do more than this
 		""" l.plan_monster_turns( ) -> None

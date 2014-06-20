@@ -164,8 +164,6 @@ class Player(Being):
 		"""
 		pass
 
-		# pick up items
-		
 	def take_damage(self, damage):
 		""" p.take_damage( int ) -> None
 
@@ -175,6 +173,55 @@ class Player(Being):
 		if(not self.action_queue.empty()):
 			self.send_event("Continue " + self.get_current_action() + " while under attack (y/n/q)?")
 			self.screen_manager.switch_to_ynq_controls(self.decide_next_turn, self.clear_action_queue,  self.clear_action_queue, None, self)
+
+		# throw or shoot items
+
+	def begin_player_fire_item(self):
+		""" p.begin_player_fire_item( ) -> None
+
+		The player attemps to throw or shoot something.
+		"""
+		if(self.inventory.empty()):
+			self.send_event("You have no items to throw.")
+			return
+		self.throw_item_prompt()
+
+	def throw_item_prompt(self):
+		""" p.throw_item_prompt( ) -> None
+
+		The player is prompted to throw or shoot something.
+		"""
+		self.send_event("Shoot or throw which item?")
+		item_list = self.inventory.item_select_list()
+		self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_fire_item)
+
+	def attempt_fire_item(self, item):
+		""" p.attempt_fire_item( Item ) -> None
+
+		The player attemps to throw or shoot the given item.
+		"""
+		if(item.equipped):
+			self.send_event("You must unequip that before throwing it.")
+			return
+		if(item.wielded):
+			unwield_delay = 1 #TEMP
+			self.execute_player_action(self.unwield_current_item, None, unwield_delay)
+			self.enqueue_player_action(self.attempt_fire_item, item, 0)
+			return
+		self.fire_item_target_prompt(item)
+
+	def fire_item_target_prompt(self, item):
+		""" p.fire_item_target_prompt( Item ) -> None
+
+		Prompt the player to choose a target for a fired item.
+		"""
+		self.send_event("Choose a target.")
+		action_range = 10 		#TEMP. should be line of sight
+		target_style = "smite" 	#TEMP. figure out how to derive the constant
+		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
+		#TODO: make sure the above method works.
+
+		# pick up items
 
 	def begin_pick_up_item(self):
 		""" p.begin_pick_up_item( ) -> None
@@ -253,6 +300,9 @@ class Player(Being):
 		if(item.wielded):
 			unwield_delay = 1 #TEMP
 			self.execute_player_action(self.unwield_current_item, None, unwield_delay)
+			drop_item_delay = 1 #TEMP
+			self.enqueue_player_action(self.drop_item, item, drop_item_delay)
+			return
 		drop_item_delay = 1 #TEMP
 		self.execute_player_action(self.drop_item, item, drop_item_delay)
 

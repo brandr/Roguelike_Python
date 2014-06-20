@@ -107,3 +107,12 @@ class ScreenManager:
 		player.taking_input_flag = True
 		controls = YNQControls(yes_action, no_action, quit_action, arg, player)
 		self.switch_controls(controls)
+
+	def switch_to_target_controls(self, action, action_range, target_style, player, arg):
+		""" sm.switch_to_target_controls( Action, int, str, ? ) -> None
+
+		Switch to a Controls that allows the player to choose a target for some action.
+		"""
+		player.taking_input_flag = True
+		controls = TargetControls(action, action_range, target_style, player, arg)
+		self.switch_controls(controls)

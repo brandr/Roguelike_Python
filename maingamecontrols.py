@@ -91,6 +91,13 @@ class MainGameControls(Controls):
 		"""
 		self.player.begin_player_equip_item()
 
+	def fire_item(self, key):
+		""" mgc.fire_item( str ) -> None 
+		
+		Tells the player to try to throw or shoot some item.
+		"""
+		self.player.begin_player_fire_item()	
+
 	def quaff_item(self, key):
 		""" mgc.quaff_item( str ) -> None
 
@@ -100,6 +107,7 @@ class MainGameControls(Controls):
 
 drop_item = MainGameControls.drop_item
 drop_item_multiple = MainGameControls.drop_item_multiple
+fire_item = MainGameControls.fire_item
 equip_item = MainGameControls.equip_item
 move = MainGameControls.move_input
 open_player_inventory_screen = MainGameControls.open_player_inventory_screen
@@ -129,8 +137,9 @@ MAIN_GAME_CONTROL_MAP = {
 	'D':drop_item_multiple,
 	'w':wield_item,
 	'W':equip_item,
+	'f':fire_item,
 
-	# cosumables
+	# consumables
 
 	'q':quaff_item
 }

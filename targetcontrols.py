@@ -1,4 +1,5 @@
 from controls import *
+from effect import Effect
 
 class TargetControls(Controls):
     """

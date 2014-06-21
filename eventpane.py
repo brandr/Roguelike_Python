@@ -40,10 +40,10 @@ class EventPane(Pane):
 			word_list = message.split() #A list of strings
 			next_word = [] 
 			message = ""
-			for i in word_list: #For each string in word_list
-				for j in i: #For each character of a string
+			for i in word_list: #Low priority TODO: Do this better.
+				for j in i: 
 					next_word.append(j)
-				message += scramble(next_word)+ " "
+				message += scramble(next_word)+ " " 
 				next_word = []
 		rendered_message = self.rendered_text(message)
 		self.display_line(rendered_message)

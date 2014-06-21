@@ -2,9 +2,8 @@
 """ A single space on a level in the dungeon.
 """
 
-import pygame
-from pygame import *
 from equipmentset import *
+from effect import *
 
 BLANK_SYMBOL = ' '
 EMPTY_TILE_FLOOR_SYMBOL = u'·'
@@ -46,7 +45,7 @@ class Tile:
 		self.x, self.y = x, y
 		self.level = level
 		self.tile_items = Inventory() #TODO: implement tile items
-
+		self.effect = None
 		# TODO: figure out how to handle a tile's contents, their order, and which symbol should appear on top,
 		# along with how to udpade the current symbol properly.
 
@@ -55,20 +54,12 @@ class Tile:
 
 		Updates the tile with whatever should appear on top of it.
 		"""
+
 		symbol = self.symbol_image()
 		self.level.level_map.blit(symbol, (self.x * TILE_WIDTH, self.y * TILE_HEIGHT))
 
-	def remove_being(self):
-		""" t.remove_being( ) -> None
-
-		Remove whatever Being is currently in the tile.
-		I believe this is called when a Being moves out of the tile to another tile,
-		or when it dies.
-		"""
-		if(self.current_being):
-			self.current_being.current_tile = None
-			self.current_being = None
-			self.update()
+	def set_effect(self, symbol, color):
+		self.effect = Effect(symbol, color)
 
 	def passable(self):
 		""" t.passable( ) -> None
@@ -103,8 +94,12 @@ class Tile:
 
 		Returns an image representing this tile.
 		"""
-		symbol_char = self.current_symbol()
-		symbol_color = self.current_color()
+		if self.effect:
+			symbol_char = self.effect.symbol
+			symbol_color = self.effect.color
+		else:
+			symbol_char = self.current_symbol()
+			symbol_color = self.current_color()
 		font = pygame.font.Font("./fonts/FreeSansBold.ttf", 8) 	#TODO: consider making this a constant somewhere, or an arg.
 		symbol_text = font.render(symbol_char, 0, symbol_color)
 		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
@@ -178,9 +173,10 @@ class Tile:
 
 		Remove the current being from this tile.
 		"""
-		self.current_being.current_tile = None
-		self.current_being = None
-		self.update()
+		if self.current_being:
+			self.current_being.current_tile = None
+			self.current_being = None
+			self.update()
 
 	def coordinates(self):
 		""" t.coordinates( ) -> (int, int)

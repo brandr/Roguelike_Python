@@ -48,7 +48,7 @@ class Player(Being):
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
 		self.taking_input_flag = False
-		self.name = "ben"
+		self.name = name
 
 	def display_name(self): #TODO: change for different cases
 		""" p.display_name( ) -> str
@@ -222,8 +222,9 @@ class Player(Being):
 		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
 		#TODO: make sure the above method works.
 
-	def confirm_fire_item(self, item): #TODO add args
-		pass
+	def confirm_fire_item(self, item, target_x, target_y): #TODO add args if necessary (and actual method)
+		print item
+		# TODO: switch to "no controls" and make the thrown object follow a line towards the given coordinates.
 
 		# pick up items
 

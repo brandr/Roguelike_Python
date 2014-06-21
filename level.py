@@ -86,10 +86,17 @@ class Level:
 		if(self.player != None):
 			self.player.send_event(message)
 
-	def add_effect(self, symbol, x, y, color = WHITE):
-		pass #TODO
+	#def add_effect(self, symbol, x, y, color = WHITE): #might not need a method like this. Hard to tell right now.
+	#	pass #TODO
 		#effect = Effect(symbol, x, y, color)
 		#self.effects.append(effect)
+
+	def clear_effects(self):
+		for row in self.tiles:
+			for t in row:
+				if t.effect:
+					t.effect = None
+					t.update()
 
 	def plan_monster_turns(self): #NOTE: might need to do more than this
 		""" l.plan_monster_turns( ) -> None

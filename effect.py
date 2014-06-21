@@ -1,7 +1,8 @@
 """ A graphical effect occupying a single tile.
 """
 
-#TODO imports
+import pygame
+from pygame import *
 
 class Effect:
 	""" Effect( char, Color ) -> Effect
@@ -15,4 +16,4 @@ class Effect:
 	color: the color representing this effect.
 	"""
 	def __init__(self, symbol, color):
-		self.symbol, self.color
+		self.symbol, self.color = symbol, color

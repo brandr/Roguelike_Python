@@ -1,6 +1,9 @@
 from controls import *
 from effect import Effect
 
+DEFAULT_TARGET_SYMBOL = '_'
+CYAN = Color("#00FFFF")
+
 class TargetControls(Controls):
     """
     TargetControls(Method, ?) -> TargetControls
@@ -23,40 +26,76 @@ class TargetControls(Controls):
         self.initialize_control_map(TARGET_CONTROL_MAP)
         self.action = action
         self.action_range = action_range
-        self.target_style = "smite"
+        self.target_style = target_style
         self.player = player
         self.arg = arg
+        self.target_tile = self.player.current_tile
 
-    def action(self, key = None):
+        self.draw_effects()
+
+    def fire_action(self, key = None):
         self.player.send_event("Firing!")
+        self.clear_effects()
+        coords = self.target_tile.coordinates()
+        self.action(self.arg, coords[0], coords[1])
         self.exit_to_main_game_controls()
 
+    def move_input(self, key):
+        if(key in TARGET_DIRECTION_MAP):
+            direction = TARGET_DIRECTION_MAP[key]
+            self.move_target(direction)
 
-    def process_event(self, event): #Overridden from the control class.
-        """ c.process_event( EVent ) -> None
+    def move_target(self, direction):
+        coords = self.target_tile.coordinates()
+        x, y = coords[0] + direction[0], coords[1] + direction[1]
+        level = self.player.current_level
+        if level.valid_tile(x, y):
+            self.clear_effects()
+            self.target_tile = level.tile_at(x, y)
+            self.draw_effects()
 
-        Process a keyboard event and execute the associated action.
-        In this context, cancels firing if the action isn't in the map.
-        Gun safety!
-        """
-        if event.type == QUIT:
-            raise(SystemExit)
-        if event.type == KEYDOWN:
-            if event.unicode in(self.control_map):
-                action = self.control_map[event.unicode]
-                action(self, event.unicode)
-            elif event.key in(self.control_map):
-                action = self.control_map[event.key]
-                action(self, event.key)
-            else:
-                self.player.send_event("I guess not.")
-                self.exit_to_main_game_controls()
-                
+    def clear_effects(self):
+        self.player.current_level.clear_effects()
 
+    def draw_effects(self):
+        if self.target_style in TARGET_STYLE_EFFECT_MAP:
+            effect_method = TARGET_STYLE_EFFECT_MAP[self.target_style]
+            effect_method(self)
+        self.draw_target_tile_effect()
 
-exit = Controls.exit_to_main_game_screen
-fire = TargetControls.action
+    def draw_target_tile_effect(self):
+        self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, CYAN)
+        self.target_tile.update()
+
+    def draw_smite_effect(self):
+        pass
+
+    def exit_to_main_game_controls(self, key = None):
+        self.clear_effects()
+        Controls.exit_to_main_game_controls(self)
+
+exit = TargetControls.exit_to_main_game_controls
+fire = TargetControls.fire_action
+move = TargetControls.move_input
 
 TARGET_CONTROL_MAP = {
-    ' ': fire, 'f': fire
+    K_UP:move, K_DOWN:move, K_LEFT:move, K_RIGHT:move,          # arrow keys
+
+    K_KP1:move, K_KP2:move, K_KP3:move, K_KP4:move, K_KP5:move, # numpad keys (might change 5 at some point)
+    K_KP6:move, K_KP7:move, K_KP8:move, K_KP9:move,
+
+    K_RETURN: fire, 'f': fire
+}
+
+TARGET_DIRECTION_MAP = {
+    K_UP:(0, -1), K_DOWN:(0, 1), K_LEFT:(-1, 0), K_RIGHT:(1,0),
+
+    K_KP1:(-1, 1), K_KP2:(0, 1), K_KP3:(1, 1), K_KP4:(-1, 0), K_KP5:(0, 0),
+    K_KP6:(1, 0), K_KP7:(-1, -1), K_KP8:(0, -1), K_KP9:(1, -1)
+}
+
+SMITE = "smite"
+
+TARGET_STYLE_EFFECT_MAP = {
+    SMITE:TargetControls.draw_smite_effect
 }

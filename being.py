@@ -386,13 +386,14 @@ class Being:
 			self.decrement_item(item)
 		#TODO
 
-	def in_range(self, being, check_range):
-		""" b.in_range(Being, int ) -> bool
+	def in_range(self, target, check_range):
+		""" b.in_range(Being/Tile, int ) -> bool
 
-		Check whether this being is in the given range of the given other being.
+		Check whether this being is in the given range of the given other being/tile.
 		"""
-		offset = self.offset_from(being)
-		distance = (int)(sqrt(pow(offset[0], 2) + pow(offset[1], 2)))
+		offset = self.offset_from(target)
+		#distance = (int)(sqrt(pow(offset[0], 2) + pow(offset[1], 2)))	# we may want this-- it calculates a circle rather than a square, which is not accurate for roguelike geometry but looks nicer.
+		distance = max(abs(offset[0]), abs(offset[1]))
 		return check_range >= distance
 
 	def enemy_in_tile(self, x, y):

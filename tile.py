@@ -60,6 +60,7 @@ class Tile:
 
 	def set_effect(self, symbol, color):
 		self.effect = Effect(symbol, color)
+		self.update()
 
 	def passable(self):
 		""" t.passable( ) -> None

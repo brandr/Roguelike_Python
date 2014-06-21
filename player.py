@@ -3,10 +3,13 @@ dungeons deserve.
 """
 
 from being import *
+#from targetcontrols import SMITE, LINE
 
 PLAYER_SYMBOL = '@'
 PLAYER_COLOR = Color("#FF0000")
 
+SMITE = "smite"
+LINE = "line"
 
 class Player(Being):
 	""" Player ( ... ) -> Player
@@ -218,7 +221,7 @@ class Player(Being):
 		"""
 		self.send_event("Choose a target.")
 		action_range = 10 		#TEMP. should be line of sight
-		target_style = "smite" 	#TEMP. figure out how to derive the constant
+		target_style = LINE 	#TEMP. figure out how to derive the constant
 		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
 		#TODO: make sure the above method works.
 

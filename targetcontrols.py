@@ -1,4 +1,5 @@
 from controls import *
+from pygame import Color
 from effect import Effect
 
 DEFAULT_TARGET_SYMBOL = '_'
@@ -50,9 +51,11 @@ class TargetControls(Controls):
         x, y = coords[0] + direction[0], coords[1] + direction[1]
         level = self.player.current_level
         if level.valid_tile(x, y):
-            self.clear_effects()
-            self.target_tile = level.tile_at(x, y)
-            self.draw_effects()
+            new_tile = level.tile_at(x, y)
+            if self.player.in_range(new_tile, self.action_range):
+                self.clear_effects()
+                self.target_tile = new_tile
+                self.draw_effects()
 
     def clear_effects(self):
         self.player.current_level.clear_effects()
@@ -69,6 +72,50 @@ class TargetControls(Controls):
 
     def draw_smite_effect(self):
         pass
+
+    def draw_line_effect(self):
+        if self.player.in_range(self.target_tile, 1):
+            return
+        
+        level = self.player.current_level
+        line_tiles = []
+        start_tile = self.player.current_tile
+        end_tile = self.target_tile
+
+        x_dist = end_tile.x - start_tile.x
+        y_dist = end_tile.y - start_tile.y
+
+        if abs(x_dist) > abs(y_dist): # x is the independent variable
+            slope = float( float(y_dist)/float(x_dist) )
+            min_x = min(start_tile.x, end_tile.x)
+            max_x = max(start_tile.x, end_tile.x)
+            current_x = min_x + 1
+            if start_tile.x < end_tile.x:
+                start_y = start_tile.y
+            else:
+                start_y = end_tile.y
+            while current_x < max_x:
+                x_off = current_x - min_x
+                current_y = int(x_off*slope + start_y)
+                line_tiles.append(level.tile_at(current_x, current_y))
+                current_x += 1      
+        else:                         # y is the independent variable
+            slope = float( float(x_dist)/float(y_dist) )
+            min_y = min(start_tile.y, end_tile.y)
+            max_y = max(start_tile.y, end_tile.y)
+            current_y = min_y + 1
+            if start_tile.y < end_tile.y:
+                start_x = start_tile.x
+            else:
+                start_x = end_tile.x
+            while current_y < max_y:
+                y_off = current_y - min_y
+                current_x = int(y_off*slope + start_x)
+                line_tiles.append(level.tile_at(current_x, current_y))
+                current_y += 1
+        # TODO
+        for t in line_tiles:
+            t.set_effect('*', CYAN)
 
     def exit_to_main_game_controls(self, key = None):
         self.clear_effects()
@@ -95,7 +142,9 @@ TARGET_DIRECTION_MAP = {
 }
 
 SMITE = "smite"
+LINE = "line"
 
 TARGET_STYLE_EFFECT_MAP = {
-    SMITE:TargetControls.draw_smite_effect
+    SMITE:TargetControls.draw_smite_effect,
+    LINE:TargetControls.draw_line_effect
 }

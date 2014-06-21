@@ -35,6 +35,10 @@ class TargetControls(Controls):
         self.draw_effects()
 
     def fire_action(self, key = None):
+        """ tc.fire_action(None) -> None
+
+        Perform the associated firing action upon the current target.
+        """
         self.player.send_event("Firing!")
         self.clear_effects()
         coords = self.target_tile.coordinates()
@@ -42,11 +46,22 @@ class TargetControls(Controls):
         self.exit_to_main_game_controls()
 
     def move_input(self, key):
+        """ tc.move_input( str ) -> None
+
+        Convert an inputted movement key (arrow keys or numpad) into a direction,
+        and then move the targeting reticule in that direction.
+        """
         if(key in TARGET_DIRECTION_MAP):
             direction = TARGET_DIRECTION_MAP[key]
             self.move_target(direction)
 
     def move_target(self, direction):
+        """ tc.move_target( ( int, int ) ) -> None
+
+        Move the targeting reticule in the given direction,
+        unless it cannot move in that direction either because it is outside the
+        possible range or because it is not in the level.
+        """
         coords = self.target_tile.coordinates()
         x, y = coords[0] + direction[0], coords[1] + direction[1]
         level = self.player.current_level
@@ -58,22 +73,42 @@ class TargetControls(Controls):
                 self.draw_effects()
 
     def clear_effects(self):
+        """ tc.clear_effects( ) -> None
+
+        Tell the level to clear its visual effects.
+        """
         self.player.current_level.clear_effects()
 
     def draw_effects(self):
+        """ tc.draw_effects( ) -> None
+
+        Draw the visual effects based on the targeting style for these TargetControls.
+        """
         if self.target_style in TARGET_STYLE_EFFECT_MAP:
             effect_method = TARGET_STYLE_EFFECT_MAP[self.target_style]
             effect_method(self)
         self.draw_target_tile_effect()
 
     def draw_target_tile_effect(self):
+        """ tc.draw_target_tile_effect( ) -> None
+
+        Draw a cyan underscore (subject to change) on the currently targeted tile.
+        """
         self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, CYAN)
         self.target_tile.update()
 
     def draw_smite_effect(self):
+        """ tc.draw_smite_effect( ) -> None
+
+        Does nothing for now, because smite targeting has no associated visual effects.
+        """
         pass
 
     def draw_line_effect(self):
+        """ tc.draw_line_effect( ) -> None
+
+        Draws a line between the player and the current target.
+        """
         if self.player.in_range(self.target_tile, 1):
             return
         
@@ -118,6 +153,10 @@ class TargetControls(Controls):
             t.set_effect('*', CYAN)
 
     def exit_to_main_game_controls(self, key = None):
+        """ tc.exit_to_main_game_controls( None ) -> None
+
+        Quit these targetining controls and resume the main game controls.
+        """
         self.clear_effects()
         Controls.exit_to_main_game_controls(self)
 

@@ -3,12 +3,15 @@
 
 from math import *
 from status import *
+from pygame import Color
 
 AMMO, ARMOR, POTION, WEAPON = "Ammo", "Armor", "Potion", "Weapon"
 DEFAULT_ITEM_SYMBOLS = {AMMO:'(', ARMOR:'[', POTION:'!', WEAPON:')'}
 EQUIP_STRING = "[E]"
 WIELD_STRING = "[W]"
 DEFAULT_STACK_SIZE = 1
+
+WHITE = Color("#FFFFFF")
 
 class Item:
 	""" Item( str, [int, int] ) -> Item
@@ -45,6 +48,7 @@ class Item:
 		""" i.item_category( ) -> str
 		
 		Returns the name of this item's class as a string.
+
 		"""
 		return self.__class__.__name__
 
@@ -55,6 +59,23 @@ class Item:
 		"""
 		category = self.item_category()
 		return DEFAULT_ITEM_SYMBOLS[category]
+
+	def current_color(self):
+		""" i.current_color( ) -> color
+
+		Returns the color that should be used to display this item onscreen.
+		"""
+		return WHITE #TEMP
+
+	def collide_with_tile(self, tile):
+		""" i.collide_with_tile( Tile ) -> None
+
+		Perform the proper collision with the given tile (and whatever's in it, if applicable).
+		"""
+		if tile.current_being:
+			#TODO: collide with the being in the tile.
+			return
+		tile.add_item(self)
 
 	def current_quantity(self):
 		""" i.current_quantity( ) -> int

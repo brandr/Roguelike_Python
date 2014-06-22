@@ -97,6 +97,7 @@ class GameManager:
 
             for e in pygame.event.get():
                 screen_manager.process_event(e)
+            screen_manager.update_objects()
             screen_manager.update_current_screen()
             self.draw_panes(screen_manager)
             pygame.display.update()

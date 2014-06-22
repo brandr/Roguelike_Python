@@ -46,6 +46,7 @@ class Level:
 		self.player = None
 		self.turn_counter = TurnCounter()
 		self.effects = []
+		self.active_projectiles = []
 
 	def init_tiles(self):
 		""" l.init_tiles( ) -> None
@@ -97,6 +98,36 @@ class Level:
 				if t.effect:
 					t.effect = None
 					t.update()
+
+	def update_objects(self):
+		""" l.update_objects( ) -> None
+
+		Updates certain objects that are not affected by user input, such as active projectiles.
+		"""
+		self.update_projectiles()
+
+	def update_projectiles(self):
+		""" l.update_projectiles( ) -> None
+
+		Updates all active (moving) projectiles.
+		"""
+		
+		for p in self.active_projectiles:
+			p.update()
+
+	def add_projectile(self, projectile):
+		""" l.add_projectile( Projectile ) -> None
+
+		Adds an active projectile to the level.
+		"""
+		self.active_projectiles.append(projectile)
+	
+	def remove_projectile(self, projectile):
+		""" l.remove_projectile( Projectile ) -> None
+
+		Removes an active projectile from the level.
+		"""
+		self.active_projectiles.remove(projectile)
 
 	def plan_monster_turns(self): #NOTE: might need to do more than this
 		""" l.plan_monster_turns( ) -> None
@@ -220,6 +251,46 @@ class Level:
 		if(self.valid_tile(x, y)):
 			return self.tile_at(x, y).current_being
 		return None
+
+		# TODO: get the order of the tiles correct
+	def tile_line(self, start_tile, end_tile):
+		""" l.tile_line( Tile, Tile ) -> [ Tile ]
+
+		Gives a list of tiles in a line between two tiles.
+		"""
+		if start_tile.in_range(end_tile, 1):
+			return [end_tile]
+		line_tiles = []
+
+		x_dist = end_tile.x - start_tile.x
+		y_dist = end_tile.y - start_tile.y
+
+		if abs(x_dist) > abs(y_dist): # x is the independent variable
+			slope = float( float(y_dist)/float(x_dist) )
+			increment = 1
+			if start_tile.x > end_tile.x:
+				increment = -1
+			current_x = start_tile.x + increment
+			start_y = start_tile.y
+			while current_x != end_tile.x:
+				x_off = current_x - start_tile.x
+				current_y = int(x_off*slope + start_y)
+				line_tiles.append(self.tile_at(current_x, current_y))
+				current_x += increment 
+		else:                         # y is the independent variable
+			slope = float( float(x_dist)/float(y_dist) )
+			increment = 1
+			if start_tile.y > end_tile.y:
+				increment = -1
+			current_y = start_tile.y + increment
+			start_x = start_tile.x
+			while current_y != end_tile.y:
+				y_off = current_y - start_tile.y
+				current_x = int(y_off*slope + start_x)
+				line_tiles.append(self.tile_at(current_x, current_y))
+				current_y += increment 
+		line_tiles.append(end_tile)
+		return line_tiles
 
 	def tile_at(self, x, y):
 		""" l.tile_at( int, int ) -> Tile

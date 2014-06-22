@@ -30,6 +30,10 @@ Things to do in order of precedence:
 
 STAGE 1	
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
+			* work on error checking for throwing
+				- currently a problem for self-targeting and 1-square away
+			* fix the problem where thrown objects stop 1 square short of the target
+			* make arrows decrement properly
 		Some basic hazards (like lava) to help figure out player movement and control contexts
 		Graphics system (like arrow moving across screen)
 		Consider making inventories based on Dicts rather than lists, mapping letters to items.

@@ -55,6 +55,13 @@ class GuiScreen:
 		"""
 		self.control_manager.switch_controls(controls)
 
+	def deactivate_controls(self):
+		""" gs.deactivate_controls( ) -> None
+
+		Turns off controls so no input will do anything.
+		"""
+		self.control_manager.deactivate_controls()
+
 	def build_screen(self, control_manager, panes):
 		""" gs.build_screen( ControlManager, [Pane] ) -> GuiScreen
 

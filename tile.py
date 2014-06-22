@@ -59,7 +59,19 @@ class Tile:
 		self.level.level_map.blit(symbol, (self.x * TILE_WIDTH, self.y * TILE_HEIGHT))
 
 	def set_effect(self, symbol, color):
+		""" t.set_effect( char, Color ) -> None
+
+		Adds a visual effect to this tile.
+		"""
 		self.effect = Effect(symbol, color)
+		self.update()
+
+	def clear_effect(self):
+		""" t.clear_effect( ) -> None
+
+		Removes the visual effect from this tile.
+		"""
+		self.effect = None
 		self.update()
 
 	def passable(self):
@@ -106,6 +118,38 @@ class Tile:
 		symbol_image = Surface((TILE_WIDTH, TILE_HEIGHT))
 		symbol_image.blit(symbol_text, (0, 0))
 		return symbol_image
+
+	def in_range(self, target, check_range):
+		""" t.in_range(Being/Tile, int ) -> bool
+
+		Check whether this Tile is in the given range of the given other being/tile.
+		"""
+		offset = self.offset_from(target)
+		#distance = (int)(sqrt(pow(offset[0], 2) + pow(offset[1], 2)))	# we may want this-- it calculates a circle rather than a square, which is not accurate for roguelike geometry but looks nicer.
+		distance = max(abs(offset[0]), abs(offset[1]))
+		return check_range >= distance
+
+	def direction_towards(self, target):
+		""" t.direction_towards( Being/Tile ) -> (int, int)
+
+		Returns the direction that the given target is in with respect to this Tile.
+		Uses the same directional notation as coords_in_direction.
+		"""
+		offset = self.offset_from(target)
+		x_dir = Tile.direction_from_diff(offset[0])
+		y_dir = Tile.direction_from_diff(offset[1])
+		return (x_dir, y_dir)
+
+	def offset_from(self, target): #signed offset from target being
+		""" t.offset_from( Being/Tile ) -> (int, int)
+
+		Like direction_towards(), but includes distance instead of just direction.
+		"""
+		current_coords = self.coordinates()
+		target_coords = target.coordinates()
+		x_diff = int(target_coords[0] - current_coords[0])
+		y_diff = int(target_coords[1] - current_coords[1])
+		return (x_diff, y_diff)
 
 	def tile_item_select_list(self):
 		""" t.tile_item_select_list( ) -> SelectList 
@@ -185,3 +229,13 @@ class Tile:
 		Returns the coordinates of this tile on the level.
 		"""
 		return (self.x, self.y)
+
+	@staticmethod
+	def direction_from_diff(diff):
+		""" direction_from_diff( int ) -> int
+
+		Take a number and return its sign multiplied by 1.
+		i.e., f(32) = 1, f(0) = 0, f(-32) = -1, f(1) = 1, etc.
+		"""
+		if(diff == 0): return 0
+		return (int)(diff/abs(diff))

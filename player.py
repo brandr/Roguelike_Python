@@ -3,6 +3,7 @@ dungeons deserve.
 """
 
 from being import *
+from projectile import *
 #from targetcontrols import SMITE, LINE
 
 PLAYER_SYMBOL = '@'
@@ -222,12 +223,31 @@ class Player(Being):
 		self.send_event("Choose a target.")
 		action_range = 10 		#TEMP. should be line of sight
 		target_style = LINE 	#TEMP. figure out how to derive the constant
-		self.screen_manager.switch_to_target_controls(self.confirm_fire_item, action_range, target_style, self, item)
+		self.screen_manager.switch_to_target_controls(self.final_fire_item_checks, action_range, target_style, self, item)
 		#TODO: make sure the above method works.
 
-	def confirm_fire_item(self, item, target_x, target_y): #TODO add args if necessary (and actual method)
-		print item
-		# TODO: switch to "no controls" and make the thrown object follow a line towards the given coordinates.
+	def final_fire_item_checks(self, item, target_x, target_y): 
+		""" p.final_fire_item_checks( Item, int, int ) -> None
+
+		Perform the final checks before firisng an item.
+		"""
+		projectile_path = self.current_level.tile_line(self.current_tile, self.current_level.tile_at(target_x, target_y))
+		#TODO: final checks go here (trying fire at self and that sort of thing)
+		fire_delay = 1 #TEMP. Figure out how long a throw should take somehow.
+		self.execute_player_action(self.confirm_fire_item, (item, projectile_path), fire_delay)
+		
+
+	def confirm_fire_item(self, (item, projectile_path)):
+		""" p.confirm_fire_item( (Item, [Tile] ) ) -> None
+
+		Throw or shoot some item at the target coordinates.
+		NOTE: it might be better to build the projectile path 
+		"""
+		self.screen_manager.deactivate_controls()
+		self.inventory.decrement_item(item)
+		projectile = Projectile(item, projectile_path, self)
+		self.current_level.add_projectile(projectile)
+		# TODO: make the thrown object follow the projectile path, stopping if it hits something.
 
 		# pick up items
 

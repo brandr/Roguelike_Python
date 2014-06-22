@@ -25,7 +25,8 @@ class ControlManager:
 
 		Process a python Event accordingly based on the current control scheme.
 		"""
-		self.current_controls.process_event(event)
+		if self.current_controls:
+			self.current_controls.process_event(event)
 
 	def switch_screen(self, screen):
 		""" cm.switch_screen( GuiScreen ) -> None
@@ -44,6 +45,13 @@ class ControlManager:
 		"""
 		controls.control_manager = self
 		self.current_controls = controls #not sure if this will work
+
+	def deactivate_controls(self):
+		""" cm.deactivate_controls( ) -> None
+
+		Turns off controls so no input will do anything.
+		"""
+		self.current_controls = None
 
 	def build_screen(self, control_manager, panes):
 		""" cm.build_screen( ControlManager, [Pane]) -> GuiScreen

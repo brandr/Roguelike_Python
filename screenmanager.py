@@ -24,6 +24,14 @@ class ScreenManager:
 		if(player != None):
 			player.screen_manager = self
 
+	def update_objects(self):
+		""" sm.update_objects( ) -> None
+
+		Updates objects in the game. This is important for certain things like projectiles,
+		which do not respond to any user input after they are fired.
+		"""
+		self.player.current_level.update_objects()
+
 	def set_current_screen(self, screen):
 		""" sm.set_current_screen( GuiScreen ) -> None
 
@@ -75,6 +83,22 @@ class ScreenManager:
 		"""
 		dark = Surface((self.master_screen.get_width(), self.master_screen.get_height()))
 		self.master_screen.blit(dark, (0, 0))
+
+	def deactivate_controls(self):
+		""" sm.deactivate_controls( ) -> None
+
+		Turns off controls so no input will do anything.
+		"""
+		self.current_screen.deactivate_controls()
+
+
+	def switch_to_main_game_controls(self, player):
+		""" sm.switch_to_main_game_controls( Player ) -> None
+
+		Resume main game controls.
+		"""
+		controls = MainGameControls(player)
+		self.switch_controls(controls)
 
 	def switch_to_select_list_screen(self, select_list, player, action, multiple = True): 
 		""" sm.switch_to_select_list_screen( SelectList, Player, Action, Bool ) -> None

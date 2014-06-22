@@ -42,8 +42,8 @@ class TargetControls(Controls):
         self.player.send_event("Firing!")
         self.clear_effects()
         coords = self.target_tile.coordinates()
-        self.action(self.arg, coords[0], coords[1])
         self.exit_to_main_game_controls()
+        self.action(self.arg, coords[0], coords[1])
 
     def move_input(self, key):
         """ tc.move_input( str ) -> None
@@ -104,53 +104,29 @@ class TargetControls(Controls):
         """
         pass
 
+        #TODO: move the algorithm in this method to level, alter it so that tiles are traversed in order from starttile to endtile,
+        #      and use the tile list it creates when making the fired projectile traverse the given path.
     def draw_line_effect(self):
         """ tc.draw_line_effect( ) -> None
 
         Draws a line between the player and the current target.
         """
+
         if self.player.in_range(self.target_tile, 1):
             return
         
         level = self.player.current_level
-        line_tiles = []
         start_tile = self.player.current_tile
         end_tile = self.target_tile
+        tile_line = level.tile_line(start_tile, end_tile)
 
-        x_dist = end_tile.x - start_tile.x
-        y_dist = end_tile.y - start_tile.y
-
-        if abs(x_dist) > abs(y_dist): # x is the independent variable
-            slope = float( float(y_dist)/float(x_dist) )
-            min_x = min(start_tile.x, end_tile.x)
-            max_x = max(start_tile.x, end_tile.x)
-            current_x = min_x + 1
-            if start_tile.x < end_tile.x:
-                start_y = start_tile.y
-            else:
-                start_y = end_tile.y
-            while current_x < max_x:
-                x_off = current_x - min_x
-                current_y = int(x_off*slope + start_y)
-                line_tiles.append(level.tile_at(current_x, current_y))
-                current_x += 1      
-        else:                         # y is the independent variable
-            slope = float( float(x_dist)/float(y_dist) )
-            min_y = min(start_tile.y, end_tile.y)
-            max_y = max(start_tile.y, end_tile.y)
-            current_y = min_y + 1
-            if start_tile.y < end_tile.y:
-                start_x = start_tile.x
-            else:
-                start_x = end_tile.x
-            while current_y < max_y:
-                y_off = current_y - min_y
-                current_x = int(y_off*slope + start_x)
-                line_tiles.append(level.tile_at(current_x, current_y))
-                current_y += 1
-        # TODO
-        for t in line_tiles:
+        for t in tile_line:
             t.set_effect('*', CYAN)
+        #self.draw_target_tile_effect()
+
+        #TEMP FOR TESTING
+        #tile_line[0].set_effect('$', Color("#FF0000"))
+        #TEMP FOR TESTING
 
     def exit_to_main_game_controls(self, key = None):
         """ tc.exit_to_main_game_controls( None ) -> None

@@ -52,7 +52,7 @@ class Player(Being):
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
 		self.taking_input_flag = False
-		self.name = name
+		self.name = "Ben"
 
 	def display_name(self): #TODO: change for different cases
 		""" p.display_name( ) -> str

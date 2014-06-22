@@ -1,7 +1,7 @@
 from random import *
 
 """
-Module with functions that simulate rolling dice.
+Module with functions that simulate rolling dice and other things depending on randomness.
 """
 
 def xdx(die_count, die_max):
@@ -56,3 +56,13 @@ def percentSuccess(chance):
 	if roll <= chance:
 		return True
 	return False
+
+def scramble(next_word):
+	if len(next_word) > 3:
+		first = next_word[0]
+		last = next_word[-1]
+		next_word = next_word[1:-1]
+		return first+''.join(sample(next_word,len(next_word)))+last
+	else:
+		return ''.join(next_word)
+

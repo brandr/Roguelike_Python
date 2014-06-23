@@ -34,6 +34,7 @@ class TargetControls(Controls):
         self.player = player
         self.arg = arg
         self.target_tile = self.player.current_tile
+        self.current_color = CYAN
 
         self.draw_effects()
 
@@ -90,14 +91,14 @@ class TargetControls(Controls):
         if self.target_style in TARGET_STYLE_EFFECT_MAP:
             effect_method = TARGET_STYLE_EFFECT_MAP[self.target_style]
             effect_method(self)
-        #self.draw_target_tile_effect()
+        self.draw_target_tile_effect()
 
-    def draw_target_tile_effect(self, color = CYAN):
+    def draw_target_tile_effect(self):
         """ tc.draw_target_tile_effect( ) -> None
 
         Draw a cyan underscore (subject to change) on the currently targeted tile.
         """
-        self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, color)
+        self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, self.current_color)
         self.target_tile.update()
 
     def draw_smite_effect(self):
@@ -122,14 +123,15 @@ class TargetControls(Controls):
         end_tile = self.target_tile
         tile_line = level.tile_line(start_tile, end_tile)
 
-        current_color = CYAN
+        self.current_color = CYAN
         for i in xrange(len(tile_line)):
             t = tile_line[i]
-            if t.solid and current_color != RED:
-                tile_line[i - 1].set_effect(DEFAULT_TARGET_SYMBOL, current_color)
-                current_color = RED
-            t.set_effect(DEFAULT_PATH_SYMBOL, current_color)
-        self.draw_target_tile_effect(current_color)
+            if t.solid and self.current_color != RED:
+                tile_line[i - 1].set_effect(DEFAULT_TARGET_SYMBOL, self.current_color)
+                self.current_color = RED
+            t.set_effect(DEFAULT_PATH_SYMBOL, self.current_color)
+        #tile_line[-1].set_effect(DEFAULT_TARGET_SYMBOL, current_color)
+        #self.draw_target_tile_effect(current_color)
 
         #TEMP FOR TESTING
         #tile_line[0].set_effect('$', Color("#FF0000"))

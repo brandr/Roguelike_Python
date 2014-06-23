@@ -20,6 +20,16 @@ class Potion(Consumable):
 	def item_category(self):
 		return POTION
 
+	def collide_with_tile(self, tile, player):
+		""" p.collide_with_tile( Tile, Player ) -> None
+
+		The potion shatters against a tile, applying some tile effect to it if necessary.
+		"""
+		player.send_event("The potion shatters against the ground!")
+		#TODO: the potion applies some effect to the tile.
+		# ex:  water turns a dry floor tile into a shallow water tile,
+		#	   polymorph tiles into other tiles with similar passability/solidity, etc.
+
 class InstantPotion(Potion):
 	""" TODO """
 

@@ -11,6 +11,7 @@ DEFAULT_WALL_SYMBOL = 'X'
 
 TILE_WIDTH = 14		#TEMP, might use font getters instead
 TILE_HEIGHT = 16
+
 WHITE = Color("#FFFFFF")
 BLACK = Color("#000000")
 RED = Color("#FF0000")
@@ -36,6 +37,8 @@ class Tile:
 	tile_items: the items contained in the tile
 	
 	x, y: the coordinates of the tile on that level.
+
+	solid: whether things should be unable to pass through the tile. False for deep water, lava, and other hazards, as well as tiles that have Beings in them.
 	"""
 
 	def __init__(self, level, x, y): #TODO: args

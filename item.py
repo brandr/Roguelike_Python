@@ -67,8 +67,8 @@ class Item:
 		"""
 		return WHITE #TEMP
 
-	def collide_with_tile(self, tile):
-		""" i.collide_with_tile( Tile ) -> None
+	def collide_with_tile(self, tile, player):
+		""" i.collide_with_tile( Tile, Player ) -> None
 
 		Perform the proper collision with the given tile (and whatever's in it, if applicable).
 		"""

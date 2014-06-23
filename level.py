@@ -93,6 +93,10 @@ class Level:
 		#self.effects.append(effect)
 
 	def clear_effects(self):
+		""" l.clear_effects( ) -> None
+
+		Clear all tile effects from all tiles.
+		"""
 		for row in self.tiles:
 			for t in row:
 				if t.effect:

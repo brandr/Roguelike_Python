@@ -4,12 +4,9 @@ CURRENT MAIN GOALS:
 ROBERT:
 
 * Finish: 
-	-inventory screen
-	-item pickup
-	-item dropping
-	-weapon wielding
-	-equipping
-	-etc.
+	- Ranged combat system
+		* how various objects collide with Beings
+		* make arrows stack and decrement properly (as well as display count properly)
 
 * consider giving the SelectListControls a quit/cancel option.
 	-currently escape does this, but it isn't really clear to the player that this is the case if there is no selectlistpane.
@@ -141,6 +138,6 @@ STAGE N - 1
      	Ability to save the game to a file, and load a game from that file.
 
 STAGE N 
-		Final context of game launch. This includes the title screen, level editor, etc.
-        Actual game: dungeon layout, unique levels/mosters/artifacts, setting up the values for gods/skills/monster spawing/level generation/item generation, etc.
+		Final context of game launch. This includes the title screen, the version of the level editor we will release, etc.
+        Actual game content: dungeon layout, unique levels/mosters/artifacts, setting up the values for gods/skills/monster spawing/level generation/item generation, etc.
 	    Final tweaks and adjustments-- now entering the pure game design phase (changing values for balance, significant playtesting, etc.)

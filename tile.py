@@ -46,6 +46,7 @@ class Tile:
 		self.level = level
 		self.tile_items = Inventory() #TODO: implement tile items
 		self.effect = None
+		self.solid = False
 		# TODO: figure out how to handle a tile's contents, their order, and which symbol should appear on top,
 		# along with how to udpade the current symbol properly.
 
@@ -80,7 +81,8 @@ class Tile:
 		Tells whether something can move through this tile.
 		Later, we'll need to handle walls being impassable, water being passable only for hovering/flying stuff, etc. 
 		"""
-		return self.current_being == None #TODO: make this also return false for closed doors, solid walls, etc.
+
+		return not self.solid and self.current_being == None #TODO: make this also return false for closed doors, solid walls, etc.
 
 	def current_symbol(self):
 		""" t.current_symbol( ) -> char

@@ -153,6 +153,13 @@ class Player(Being):
 		"""
 		return self.current_level.turn_counter.lowest_non_player_delay()
 
+	def cancel_action_message(self):
+		""" p.cancel_action_message( ) -> None
+
+		Tell the player that an action was cancelled.
+		"""
+		self.send_event("Nevermind")
+
 		#TODO: consider trying to move a lot of stuff to Being if it helps.
 
 	def begin_wait(self, time):
@@ -189,9 +196,9 @@ class Player(Being):
 		if(self.inventory.empty()):
 			self.send_event("You have no items to throw.")
 			return
-		self.throw_item_prompt()
+		self.fire_item_prompt()
 
-	def throw_item_prompt(self):
+	def fire_item_prompt(self):
 		""" p.throw_item_prompt( ) -> None
 
 		The player is prompted to throw or shoot something.
@@ -232,18 +239,34 @@ class Player(Being):
 		Perform the final checks before firisng an item.
 		"""
 		projectile_path = self.current_level.tile_line(self.current_tile, self.current_level.tile_at(target_x, target_y))
+		if projectile_path[-1] == self.current_tile:
+			self.fire_target_self_prompt(item, projectile_path)
+			return
 		#TODO: final checks go here (trying fire at self and that sort of thing)
-		fire_delay = 1 #TEMP. Figure out how long a throw should take somehow.
-		self.execute_player_action(self.confirm_fire_item, (item, projectile_path), fire_delay)
-		
+		self.confirm_fire_item((item, projectile_path))
 
+	def fire_target_self_prompt(self, item, projectile_path):
+		""" p.fire_target_self_prompt( Item, [Tile] ) -> None
+
+		The player is prompted to target himself with some target firing.
+		"""
+		self.send_event("Really target yourself? (y/n/q)")
+		self.screen_manager.switch_to_ynq_controls(self.confirm_fire_item, self.cancel_action_message, self.cancel_action_message, (item, projectile_path), self)
+		
 	def confirm_fire_item(self, (item, projectile_path)):
 		""" p.confirm_fire_item( (Item, [Tile] ) ) -> None
 
-		Throw or shoot some item at the target coordinates.
-		NOTE: it might be better to build the projectile path 
+		Confirm firing the item and calculate the proper delay.
 		"""
 		self.screen_manager.deactivate_controls()
+		fire_delay = 1 #TEMP. Figure out how long a throw should take somehow.
+		self.execute_player_action(self.fire_item, (item, projectile_path), fire_delay)
+
+	def fire_item(self, (item, projectile_path)):
+		""" p.fire_item( ( Item, [Tile] ) ) -> None
+
+		Throw or shoot some item at the target coordinates.
+		""" 
 		self.inventory.decrement_item(item)
 		projectile = Projectile(item, projectile_path, self)
 		self.current_level.add_projectile(projectile)
@@ -400,7 +423,7 @@ class Player(Being):
 		"""
 		self.send_event("Do you want to unwield " + wielded_item.display_name()
 			+ " and wield " + prompt_item.display_name() + "? (y/n/q)")
-		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_replace_wield, self.cancel_replace_wield, prompt_item, self)
+		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_action_message, self.cancel_action_message, prompt_item, self)
 
 	def confirm_replace_wield(self, item):
 		""" p.confirm_replace_wield( Item ) -> None
@@ -476,7 +499,7 @@ class Player(Being):
 		"""
 		self.send_event("Do you want to unequip " + equipped_item.display_name()
 			+ " and equip " + prompt_item.display_name() + "? (y/n/q)")
-		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_equip, self.cancel_replace_equip, self.cancel_replace_equip, prompt_item, self)
+		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_equip, self.cancel_action_message, self.cancel_action_message, prompt_item, self)
 
 		#this and confirm_unequip might belong in the Being class.
 	def confirm_replace_equip(self, item):

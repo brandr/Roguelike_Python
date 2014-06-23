@@ -38,6 +38,12 @@ class Projectile:
 		"""
 		#TODO: deal with walls here if necessary
 		tile_index = self.projectile_index/PROJECTILE_SPEED_CONSTANT
+		if self.tile_path[tile_index].solid:	#TODO: make sure this is a robust way to handle wall collisions.
+			self.collide_with_tile(self.tile_path[tile_index - 1])
+			self.player.current_level.remove_projectile(self)
+			return
+		# TODO: check for hitting a Being in the current tile here. If the projectile misses and keeps moving (or pierces through a Being), the 
+		# 		collision check takes place and sends a message, but does not cause projectile to stop updating.
 		if(tile_index >= len(self.tile_path)):
 			self.collide_with_tile(self.tile_path[-1])
 			self.player.current_level.remove_projectile(self)
@@ -57,3 +63,10 @@ class Projectile:
 		tile.clear_effect()
 		self.held_object.collide_with_tile(tile)
 		self.player.screen_manager.switch_to_main_game_controls(self.player)
+
+	def collide_with_being(self, being):
+		""" p.collide_with_being( Being ) -> None
+
+		Perform the proper collision with this being.
+		"""
+		pass #TODO

@@ -3,6 +3,9 @@ from pygame import Color
 from effect import Effect
 
 DEFAULT_TARGET_SYMBOL = '_'
+DEFAULT_PATH_SYMBOL = '*'
+
+RED = Color ("#FF0000")
 CYAN = Color("#00FFFF")
 
 class TargetControls(Controls):
@@ -87,14 +90,14 @@ class TargetControls(Controls):
         if self.target_style in TARGET_STYLE_EFFECT_MAP:
             effect_method = TARGET_STYLE_EFFECT_MAP[self.target_style]
             effect_method(self)
-        self.draw_target_tile_effect()
+        #self.draw_target_tile_effect()
 
-    def draw_target_tile_effect(self):
+    def draw_target_tile_effect(self, color = CYAN):
         """ tc.draw_target_tile_effect( ) -> None
 
         Draw a cyan underscore (subject to change) on the currently targeted tile.
         """
-        self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, CYAN)
+        self.target_tile.set_effect(DEFAULT_TARGET_SYMBOL, color)
         self.target_tile.update()
 
     def draw_smite_effect(self):
@@ -104,8 +107,7 @@ class TargetControls(Controls):
         """
         pass
 
-        #TODO: move the algorithm in this method to level, alter it so that tiles are traversed in order from starttile to endtile,
-        #      and use the tile list it creates when making the fired projectile traverse the given path.
+        #TODO: if we implemented line-targeted actions that can pass through walls, change this method accordingly.
     def draw_line_effect(self):
         """ tc.draw_line_effect( ) -> None
 
@@ -120,9 +122,14 @@ class TargetControls(Controls):
         end_tile = self.target_tile
         tile_line = level.tile_line(start_tile, end_tile)
 
-        for t in tile_line:
-            t.set_effect('*', CYAN)
-        #self.draw_target_tile_effect()
+        current_color = CYAN
+        for i in xrange(len(tile_line)):
+            t = tile_line[i]
+            if t.solid and current_color != RED:
+                tile_line[i - 1].set_effect(DEFAULT_TARGET_SYMBOL, current_color)
+                current_color = RED
+            t.set_effect(DEFAULT_PATH_SYMBOL, current_color)
+        self.draw_target_tile_effect(current_color)
 
         #TEMP FOR TESTING
         #tile_line[0].set_effect('$', Color("#FF0000"))

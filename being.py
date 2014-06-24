@@ -49,14 +49,10 @@ class Being:
 		self.current_tile = None
 		self.inventory = Inventory()
 		self.equipment_set = EquipmentSet(HUMANOID)
-		#self.wielded = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)			
-		#self.melee_range = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT).weapon_range
 		self.hit_points = [0, 0]	
 		self.magic_points = [0, 0]
-		#self.weapon_skill_aggregate = 0 #self.wielded.weapon_damage
 		self.dodge_value = 0 #TEMP
 		self.block_value = 10 #TEMP dodge and block values for combat
-		#self.attack_speed = self.wielded.weapon_speed 
 		self.attack_buffer = 0.0
 		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
 		self.resistances = {"fire":0, "ice":0,"acid":0,"lightning":0,"slashing":0,"piercing":0,"bludgeoning":0,"acid":0} 
@@ -281,13 +277,20 @@ class Being:
 	def attack_speed(self):
 		""" b.attack_speed( ) -> double
 
-
+		A measure of how fast an attack from this being is, given the currently wielded weapon.
 		"""
 		weapon = self.wielded_item()
 		if weapon:
 			return weapon.weapon_speed
-		return 0
+		return 5 #TEMP
 
+	def melee_attack_delay(self):
+		""" b.melee_attack_delay( ) -> int
+
+		The number of units of time it takes for this Being to execute one melee attack action.
+		"""
+		attack_speed = self.attack_speed() #TODO: consider making this specifically grab melee attack speed.
+		return 1 + 10/attack_speed #TEMP formula
 
 	def shield_roll(self):
 		""" b.shield_roll( ) -> int (or float?)

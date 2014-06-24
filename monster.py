@@ -22,7 +22,7 @@ class Monster(Being):
 		Being.__init__(self, name)
 		self.hit_points = [10, 10] #TEMP
 		self.move_delay = 5
-		self.attack_delay = 3
+		#self.attack_delay = 3
 
 	def current_symbol(self):
 		""" m.current_symbol( ) -> char
@@ -88,4 +88,4 @@ class Monster(Being):
 		#TEMP
 	def temp_monster_attempt_melee_attack(self, being):
 		# no docstring because temporary
-		self.execute_action(self.melee_attack, being, self.attack_delay)
+		self.execute_action(self.melee_attack, being, self.melee_attack_delay())

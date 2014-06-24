@@ -49,7 +49,7 @@ class Player(Being):
 		self.magic_points = [8, 8]
 		self.current_action = "SURROUNDINGS"
 		self.move_delay = 4
-		self.attack_delay = 3
+		#self.attack_delay = 3
 		self.event_pane = None
 		self.taking_input_flag = False
 		self.name = "Link"
@@ -369,7 +369,7 @@ class Player(Being):
 			self.execute_player_action(self.move_to, dest_coords, self.move_delay)
 
 	def temp_attempt_melee_attack(self, being):
-		self.execute_player_action(self.melee_attack, being, self.attack_delay)
+		self.execute_player_action(self.melee_attack, being, self.melee_attack_delay())
 
 		# item/weapon wielding: (not equipping)
 

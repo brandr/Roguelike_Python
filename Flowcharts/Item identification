@@ -1,0 +1,24 @@
+Item identification and player knowledge:
+
+
+
+This one probably doesn't need a flowchart at all. We should probably do a few sources of item identification. 
+
+All player characters begin the game familiar with:
+	-All types of weapon (unID'd dagger does not show up as "weird, long knife")
+	-All categories of item (unID'd spellbook does not show up as "flappy paper thing")
+
+1) Equip-ID:
+	Works on equipment, of course. Equipping an item identifies its cursed status (if applicable), armor value, material, stat buffs/debuffs, and not really anything else. If the equipped item is an artifact, it immediately self-identifies all of its traits. Wielding an un-ID'd weapon for a long period of time will reveal its toHit and damage buffs. Jewelry almost never self-ID's because it usually has resistances/actives rather than AC values, etc.
+
+2) Use-ID:
+	Instantly identifies potions, scrolls, and wands. Does not reveal how many charges are in a wand. Reading a spellbook reveals what spellbook it is.
+
+4) Altar-ID:
+	Dropping an item on an altar reveals its B/U/C status.
+
+5) Magic-ID:
+	Scrolls of identify reveal everything about an item.
+
+6) View-Use-ID:
+	Watching a monster use an item reveals things about an item. This one is pretty complicated so we should probably do it after we have both monster AI and facets of player perception down, given that monsters need to be able to use items, and the player to see them do so for this to be useful.

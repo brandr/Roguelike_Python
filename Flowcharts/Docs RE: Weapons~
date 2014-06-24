@@ -1,0 +1,68 @@
+Very long list of actions and delay values: 
+	1) This is going to be pretty rough, but I'm basically going to classify stuff as either being VAR (variable), 0 (instant or near-instantaneous), 1 (short 0-6 second action), 2 (medium 6-12 second action), or 3 (long 12-24 second action). Actions that are ongoing, such as getting damaged by poison, healing a wound, or learning a spell remain uncategorized.
+
+	2) This is also first and foremost a list of possible game actions, because it sort of betrays my terrible grip on how the queue delay system works even though its been explained to me about 3 times. I'll try to go exhaustive rather than accurate.
+
+	3) I'll try and order these into categories and do my best to tab-seperate my fields, so that if we have to we can easily paste it into an empty .txt file and write a script to sort it any which way. 
+
+ACTION			TIME	
+(item)
+Drink potion		1
+Read scroll			2
+Read spellbook		2
+Evoke wand			2
+Evoke weapon		1
+Use tool			3
+Examine item		0
+Drop/get item		1 per
+Drop/get stack		1 per stack
+
+
+(equipment)
+(un)wield weapon	1
+(un)equip body		3	
+(un)equip other		2
+(un)equip jewelry	1
+Evoke equipment 	0
+Cont. item effect	0
+
+(combat)
+Melee attack		1
+Ranged attack		1
+Stance alter		0
+Special attack		VAR
+
+(wizardry)
+Cast spell			VAR
+Stance alter		1
+Special ability		VAR
+Examine spell		0
+
+(navigation)
+Close/Open door		1
+Unlock door			2
+Kick door			1
+(un)climb stairs	2
+Move (default)		1
+Move (deep w.)		3
+Move (shallow w.)	2
+Trigger trap		0
+Set trap			3
+Scramble			2
+Examine area		0
+
+(religion)
+Pray				0
+Invoke ability		1
+Sacrifice item		1
+Sacrifice corpse	2
+Sacrifice living	1
+Bargain				3
+
+(commerce)
+Sell item			1
+Buy item			1
+
+
+
+

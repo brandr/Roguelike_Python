@@ -8,8 +8,9 @@ AXE = "axe"
 SWORD = "sword"
 STR = "strength"
 DEX = "dexterity"
+SLASH = "slashing"
 
-WEAPON_DICT = {AXE: [STR,[2,6],1.2, 1]}
+WEAPON_DICT = {AXE: [STR,[2,6],1.2, 1, SLASH]}
 
 class MeleeWeapon(Weapon):
 	""" MeleeWeapon( ... ) -> MeleeWeapon
@@ -24,6 +25,7 @@ class MeleeWeapon(Weapon):
 	weapon_damage (int): The base damage for this weapon.
 	weapon_speed (float): The base speed for this weapon.
 	weapon_range (int): Max hit range for this weapon.
+	weapon_damage_type (string): Damage type for this weapon. 
 	weapon_enchant_numbers (list): [To hit bonus, damage bonus]
 	weapon_enchant_brand (string): Other effects
 
@@ -37,4 +39,5 @@ class MeleeWeapon(Weapon):
 		self.weapon_damage = 500
 		self.weapon_speed = 5
 		self.weapon_range = weapon_info[3]
+		#self.weapon_damage_type = weapon_info[4] Should go in after we figure typed damage out, but oughta be stored here.
 

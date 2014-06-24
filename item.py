@@ -24,14 +24,16 @@ class Item:
 	wielded: whether the item is currently wielded by someone.
 	equipped: whether the item is currently equipped by someone.
 	quantity: how many of this item are is this Item object and how many there can be at maximum.
-	material: what this item is made of
+	material: what this item is made of. Determines damage/protection (if weapon or armor), and what it is damaged by/characteristics of damage if anything else.
+	is_artifact: Boolean indicating artifactness. Has to do with brands that can be generated, if its destructible by common means, how valuable it is, etc.
 	"""
 	def __init__(self, name = None, quantity = [DEFAULT_STACK_SIZE, DEFAULT_STACK_SIZE]): #since name might be derivable from other attributes, it is optional sometimes.
 		self.name = name #TODO: set name differently once identification is implemented
 		self.wielded = False
 		self.equipped = False
 		self.quantity = quantity
-		self.material = None
+		self.material = None #Unused field for material
+		self.is_artifact = False #Unused field for artifactness
 
 	def display_name(self, equip_check = False):
 		""" i.display_name( bool ) -> str

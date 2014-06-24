@@ -24,12 +24,14 @@ class Item:
 	wielded: whether the item is currently wielded by someone.
 	equipped: whether the item is currently equipped by someone.
 	quantity: how many of this item are is this Item object and how many there can be at maximum.
+	material: what this item is made of
 	"""
 	def __init__(self, name = None, quantity = [DEFAULT_STACK_SIZE, DEFAULT_STACK_SIZE]): #since name might be derivable from other attributes, it is optional sometimes.
 		self.name = name #TODO: set name differently once identification is implemented
 		self.wielded = False
 		self.equipped = False
 		self.quantity = quantity
+		self.material = None
 
 	def display_name(self, equip_check = False):
 		""" i.display_name( bool ) -> str
@@ -46,7 +48,7 @@ class Item:
 
 	def item_category(self):
 		""" i.item_category( ) -> str
-		
+
 		Returns the name of this item's class as a string.
 
 		"""
@@ -154,4 +156,3 @@ SLOTS_MAP = {
 	HUMANOID:HUMANOID_SLOTS
 }
 
-		

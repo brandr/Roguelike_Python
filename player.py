@@ -51,7 +51,6 @@ class Player(Being):
 		self.move_delay = 4
 		self.attack_delay = 3
 		self.event_pane = None
-		self.melee_range = 1 #TEMP
 		self.taking_input_flag = False
 		self.name = "Link"
 

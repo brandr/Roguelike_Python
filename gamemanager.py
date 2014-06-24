@@ -43,7 +43,7 @@ class GameManager:
         poison_potion = PoisonPotion()
         ammo_1 = Ammo("Wooden Arrow", 20)
 
-        monster_sword = MeleeWeapon("Deku stick", AXE)
+        monster_sword = MeleeWeapon("Deku axe", AXE)
         monster_shield = Armor("Deku Shield", LEFT_HAND_SLOT)
 
         player_1 = Player("Link") 

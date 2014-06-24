@@ -49,14 +49,14 @@ class Being:
 		self.current_tile = None
 		self.inventory = Inventory()
 		self.equipment_set = EquipmentSet(HUMANOID)
-		self.wielded = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)			
-		self.melee_range = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT).weapon_range
+		#self.wielded = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)			
+		#self.melee_range = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT).weapon_range
 		self.hit_points = [0, 0]	
 		self.magic_points = [0, 0]
-		self.weapon_skill_aggregate = self.wielded.weapon_damage
+		#self.weapon_skill_aggregate = 0 #self.wielded.weapon_damage
 		self.dodge_value = 0 #TEMP
 		self.block_value = 10 #TEMP dodge and block values for combat
-		self.attack_speed = self.wielded.weapon_speed 
+		#self.attack_speed = self.wielded.weapon_speed 
 		self.attack_buffer = 0.0
 		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
 		self.resistances = {"fire":0, "ice":0,"acid":0,"lightning":0,"slashing":0,"piercing":0,"bludgeoning":0,"acid":0} 
@@ -87,12 +87,6 @@ class Being:
 		equipment = equipment_set.all_items()
 		self.inventory.add_item_list(equipment)
 	
-	def set_attack_speed(self, attack_speed = 1.0):
-		""" b.set_attack_speed(Float) -> None
-
-		Set the Being's attack speed to the inputted value.
-		"""
-		self.attack_speed = attack_speed
 
 	def restore_hp(self, amount):
 		self.hit_points[0] = min(self.hit_points[0] + amount, self.hit_points[1])
@@ -208,15 +202,16 @@ class Being:
 		Strike a target that is in melee range.
 		TODO: go into more detail if necessary.
 		"""
-		if(self.in_range(target, self.melee_range)): #Attack speed basically works.
+		if(self.in_range(target, self.melee_range())): #Attack speed basically works.
+			attack_speed = self.attack_speed()
 			if not (self.attacked_last_turn):
 				self.attack_buffer = 0			
 			if self.attack_buffer == 0:
-				attackCount = int(self.attack_speed)
-				self.attack_buffer = self.attack_speed-(int(self.attack_speed))
+				attackCount = int(attack_speed)
+				self.attack_buffer = attack_speed - (int(attack_speed))
 			elif self.attack_buffer > 0: #Will be susceptible to weird floating-point shit, but might not be a problem.
-				attackCount = int(self.attack_speed + self.attack_buffer)
-				self.attack_buffer = (self.attack_speed + self.attack_buffer) - int(self.attack_speed + self.attack_buffer)
+				attackCount = int(attack_speed + attack_buffer)
+				self.attack_buffer = (attack_speed + self.attack_buffer) - int(attack_speed + attack_buffer)
 			else:
 				print("Attack buffer shouldn't be negative and you have seriously blown it.")
 			while attackCount > 0:
@@ -240,7 +235,7 @@ class Being:
 
 		Check to see if this Being hits the target.
 		"""
-		weaponRoll = xdx(1, 20) + self.weapon_skill_aggregate
+		weaponRoll = xdx(1, 20) + self.weapon_skill_aggregate()
 		shield_value = target.shield_roll()
 		if(weaponRoll >= target.dodge_value):
 			if(weaponRoll >= shield_value):
@@ -262,6 +257,37 @@ class Being:
 		min_attack = int(0.8 * base_attack)
 		max_attack = int(1.2 * base_attack)
 		return random_in_range(min_attack, max_attack) #NOTE: this method is subject to a lot of change depending on all the factors that affect melee combat.
+
+	def melee_range(self):
+		""" b.melee_range( ) -> int
+
+		How many squares away this Being can strike with a melee attack.
+		"""
+		weapon = self.wielded_item()
+		if weapon:
+			return weapon.weapon_range #TODO: make sure this works for item. Might want getter w/ override
+		return 1
+
+	def weapon_skill_aggregate(self):
+		""" b.weapon_skill_aggregate( ) -> int ?
+
+		? (not sure what this will be in final verison)
+		"""
+		weapon = self.wielded_item()
+		if weapon:
+			return weapon.weapon_damage
+		return 0
+
+	def attack_speed(self):
+		""" b.attack_speed( ) -> double
+
+
+		"""
+		weapon = self.wielded_item()
+		if weapon:
+			return weapon.weapon_speed
+		return 0
+
 
 	def shield_roll(self):
 		""" b.shield_roll( ) -> int (or float?)

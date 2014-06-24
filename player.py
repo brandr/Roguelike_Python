@@ -4,6 +4,7 @@ dungeons deserve.
 
 from being import *
 from projectile import *
+from equipmentset import EquipmentSet
 #from targetcontrols import SMITE, LINE
 
 PLAYER_SYMBOL = '@'
@@ -52,7 +53,7 @@ class Player(Being):
 		self.event_pane = None
 		self.melee_range = 1 #TEMP
 		self.taking_input_flag = False
-		self.name = "Ben"
+		self.name = "Link"
 
 	def display_name(self): #TODO: change for different cases
 		""" p.display_name( ) -> str

@@ -35,7 +35,7 @@ class GameManager:
         #TEMP for testing vvv
         # comment and uncomment to change what is on the level.
 
-        sword_1 = MeleeWeapon("Master Sword")
+        sword_1 = MeleeWeapon("Master Axe", AXE)
         shield_1 = Armor("Hylian Shield", LEFT_HAND_SLOT)
         hat_1 = Armor("Fairy Hat", CHEST_SLOT)
         gloves_1 = Armor("Leather Gloves", GLOVES_SLOT)
@@ -43,7 +43,7 @@ class GameManager:
         poison_potion = PoisonPotion()
         ammo_1 = Ammo("Wooden Arrow", 20)
 
-        monster_sword = MeleeWeapon("Deku stick")
+        monster_sword = MeleeWeapon("Deku stick", AXE)
         monster_shield = Armor("Deku Shield", LEFT_HAND_SLOT)
 
         player_1 = Player("Link") 

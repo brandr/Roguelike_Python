@@ -47,15 +47,16 @@ class Being:
 		self.name = name
 		self.current_level = None
 		self.current_tile = None
-		self.melee_range = 1 #TEMP
 		self.inventory = Inventory()
-		self.equipment_set = None
+		self.equipment_set = EquipmentSet(HUMANOID)
+		self.wielded = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT)			
+		self.melee_range = self.equipment_set.get_item_in_slot(RIGHT_HAND_SLOT).weapon_range
 		self.hit_points = [0, 0]	
 		self.magic_points = [0, 0]
-		self.weapon_skill_aggregate = 5
+		self.weapon_skill_aggregate = self.wielded.weapon_damage
 		self.dodge_value = 0 #TEMP
 		self.block_value = 10 #TEMP dodge and block values for combat
-		self.attack_speed = 1.0 #TEMP = 
+		self.attack_speed = self.wielded.weapon_speed 
 		self.attack_buffer = 0.0
 		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
 		self.resistances = {"fire":0, "ice":0,"acid":0,"lightning":0,"slashing":0,"piercing":0,"bludgeoning":0,"acid":0} 

@@ -34,7 +34,7 @@ class MeleeWeapon(Weapon):
 		weapon_type = type
 		weapon_info = WEAPON_DICT[type]
 		weapon_stat = weapon_info[0]
-		weapon_damage = weapon_info[1]
-		weapon_speed = weapon_info[2]
+		weapon_damage = 500
+		weapon_speed = 5
 		weapon_range = weapon_info[3]
 

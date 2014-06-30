@@ -104,15 +104,18 @@ class EquipmentSet:
 			self.slots[key] = None
 
 	def blocking_equipment(self, key):
-		""" es.equipment_blocked ( str ) -> Item
+		""" es.equipment_blocked ( str ) -> [ Item ]
 		
 		Check whether this equipment is blocked by another piece of equipment, returning it if so.
 		"""
 		#TODO: figure out how to make this work for mulitple dependecies for a single key
+		blocking_equipment = []
 		if self.dependencies_map and key in self.dependencies_map:
-			blocking_key = self.dependencies_map[key]
-			if blocking_key in self.slots:
-				return self.slots[blocking_key]
+			blocking_keys = self.dependencies_map[key]
+			for k in blocking_keys:
+				if k in self.slots:
+					blocking_equipment.append(self.slots[k])
+			return blocking_equipment
 		return None 
 
 	def item_is_in_slot(self, key):

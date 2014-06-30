@@ -475,13 +475,29 @@ class Player(Being):
 			equipment = item
 			slot = equipment.equip_slot()
 			blocking_equipment = self.equipment_set.blocking_equipment(slot)
-			while blocking_equipment:
-				unequip_delay = 1 #TEMP
-				self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
-				equipment = blocking_equipment	#1: equimpnent is now second slot
-				slot = equipment.equip_slot()	#1: slot is now second slot
-				blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
+			for b in blocking_equipment:
+				if b:
+					unequip_delay = 1 #TEMP
+					self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
+					equipment = b	#1: equimpnent is now second slot
+					slot = equipment.equip_slot()	#1: slot is now second slot
+					next_blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
+					if next_blocking_equipment:
+						for next_item in next_blocking_equipment:
+							blocking_equipment.append(next_item)
 			self.unequip_item(equipment)
+					
+					
+			"""
+			while blocking_equipment:
+				for b in blocking_equipment:
+					unequip_delay = 1 #TEMP
+					self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
+					equipment = blocking_equipment	#1: equimpnent is now second slot
+					slot = equipment.equip_slot()	#1: slot is now second slot
+					blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
+					self.unequip_item(equipment)
+			"""
 			return
 		if(item.wielded):
 			self.send_event("You are wielding that.")

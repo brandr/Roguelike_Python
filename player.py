@@ -129,6 +129,7 @@ class Player(Being):
 			action = self.action_queue.dequeue_action()
 			action.method(action.arg)
 			self.current_level.enqueue_player_delay(self, action.delay)
+			self.end_turn()
 
 	def enqueue_player_action(self, method, arg, delay):
 		""" p.enqueue_player_action( Method, ?, int ) -> None
@@ -145,6 +146,16 @@ class Player(Being):
 		"""
 		method(arg)
 		self.current_level.enqueue_player_delay(self, delay)
+		self.end_turn()
+
+	def execute_first_queued_action(self):
+		""" p.execute_first_queued_action( ) -> None
+
+		Executes the next action in the player's action queue.
+		"""
+		action = self.action_queue.dequeue_action()
+		action.method(action.arg)
+		self.current_level.enqueue_player_delay(self, action.delay)
 		self.end_turn()
 
 	def lowest_non_player_delay(self):
@@ -500,13 +511,14 @@ class Player(Being):
 		equip_delay = 1 #TODO: if equip delay should be something else (it probably should), change this.
 		self.execute_player_action(self.confirm_equip_item, item, equip_delay)
 
-	def unequip_blocked_item(self, equipment, slot, blocking_equipment):
+	def unequip_blocked_item(self, target_equipment, slot, blocking_equipment):
 		unequip_queue = []
+		equipment = None
 		for b in blocking_equipment:
 			if b:
+				equipment = b	
 				unequip_delay = 1 #TEMP
 				unequip_queue.append(equipment)
-				equipment = b	
 				slot = equipment.equip_slot()	
 				next_blocking_equipment = self.equipment_set.blocking_equipment(slot)
 				if next_blocking_equipment:
@@ -516,6 +528,7 @@ class Player(Being):
 		wielded_items = []
 		for u in reversed(unequip_queue):
 			slot = u.equip_slot()
+			#print slot
 			if u.wielded:
 				wielded_items.append(u)
 				unwield_delay = 1 #TEMP
@@ -523,9 +536,11 @@ class Player(Being):
 			else:
 				unequip_delay = 1 #TEMP
 				self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+		target_unequip_delay = 1 #TEMP
+		self.enqueue_player_action(self.unequip_item_in_slot, target_equipment.equip_slot(), target_unequip_delay)
 		# queue reequippming the blocking equipment.
 		# the first element of unequip queue is the original item we wanted to unequip, so we make no plans to reequip it.
-		del unequip_queue[0]
+		#del unequip_queue[0]
 		for u in unequip_queue:
 			slot = u.equip_slot()
 			if u in wielded_items:
@@ -534,11 +549,9 @@ class Player(Being):
 			else:
 				reequip_delay = 1 #TEMP
 				self.enqueue_player_action(self.confirm_equip_item, u, reequip_delay)
-		last_reequip_delay = 1
-		self.enqueue_player_action(self.confirm_equip_item, equipment, last_reequip_delay)
 		unequip_delay = 1 #TEMP
-		self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
-
+		#self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+		self.execute_first_queued_action()
 
 	def unequip_item_prompt(self, equipped_item, prompt_item):
 		""" p.unequip_item_prompt( Item, Item ) -> None

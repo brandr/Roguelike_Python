@@ -54,7 +54,7 @@ class Being:
 		self.dodge_value = 0 #TEMP
 		self.block_value = 10 #TEMP dodge and block values for combat
 		self.attack_buffer = 0.0
-		self.attacked_last_turn = True #TEMP attack_buffer should be 0 if false, but it's hard to set, leading to a Goku Problem^2"
+		self.attacked_last_turn = True #Fixed attack buffer issue.
 		self.resistances = {"fire":0, "ice":0,"acid":0,"lightning":0,"slashing":0,"piercing":0,"bludgeoning":0,"acid":0} 
 
 	def display_name(self, arg = None): 
@@ -96,20 +96,12 @@ class Being:
 		"""
 		if damage is passed as a list instead:
 			for i in damageList[1::]:
-				if reistances[i] == -3
-					damageList[0] *= 3
-				elif resistances[i] == -2
-					damageList[0] *= 2.5
-				elif resistances[i] == -1
-					damageList[0] *= 1.5			
-				elif resistances[i] == 0:
-					pass
-				elif resistances[i] == 1:
-					damageList[0] *= 2/3
-				elif resistances[i] == 2:
-					damageList[0] *= 2/5
-				else:
-					damageList[0] *= 1/3
+                if resistances[i] < 0:
+                    damageList[0]*=abs(resistances[i])
+                else if resistances[i] < 0:
+                    damageList[0]/= resistances[i]
+
+
 		then do the rest of the stuff and pretend not to notice the absurd potential of polytyped attacks
 		"""
 		#Armor needs to go here, somehow.
@@ -220,7 +212,7 @@ class Being:
 					if(target.death_check()):
 						break
 				attackCount -= 1
-			self.attacked_last_turn = True #I know how to /set/ the flag, but not how to unset it.
+			self.attacked_last_turn = True 
 			return
 				
 		#TODO: case for missing because the target moved out of the way.
@@ -509,6 +501,8 @@ class Being:
 		how long that action takes to complete, and prevents the Being from doing anything until the delay
 		has passed.
 		"""
+		if action != self.melee_attack:
+			self.attacked_last_turn = True
 		action(arg)	
 		self.current_level.enqueue_delay(self, delay)		
 
@@ -538,8 +532,7 @@ class Being:
 		return (int)(diff/abs(diff))
 
 '''
-1: Inheritance issue. The inheritance seems to go being --> player/monster --> player/monster inventory. Is it wrong to draw from lower down on the hierarchy to fill top spots in the hierarchy? Is this what the cool kids call spaghetti code? Will it make me trip over my cape and lose my pocket contents?
-2: Goku problem. A monster or player attacks a weak monster to build up attack buffer before attacking a stronger opponent, allowing a greater and unexpected amount of attacks (sudden increase in power level) in the first few hits on the next monster.
+1: Inheritance issue. The inheritance seems to go being --> player/monster --> player/monster inventory. Is it wrong to draw from lower down on the hierarchy to fill top spots in the hierarchy? Is this what the cool kids call spaghetti code? Will it make me trip over my cape?
 3: Damage typing is a cold-hearted bastard because it makes you pass a list of mixed int and strings to determine what type(s) the damage is, and then makes all of the other functions that deal with taking damage or being swung at have to take that list as an argument and iterate over it to determine just the types and if the monster has corresp. resistances. So this dumb list has to be passed everywhere that the simple int would, and I'll try it out later.
 4: Or if max(f(randomness, aggregate weapon value), g(calculated dodge value)) == f.
 5: Having dodge-then-shield be calculated out rather some f(dodge, shield) is lower on obvious, meaningless math, but means that as far as game balance goes dodge and shield have to be pretty heavily mutually exclusive, or else even if both have diminishing marginal returns like we're good game designers and economists there'll be a sweet spot that's some ratio of both and getting in that spot will be obvious enough so that nobody will even have to whip out lagrange method or pretend to care.

@@ -1,0 +1,18 @@
+Coming documentation on player knowledge. Concerns probably revolve around:
+
+-Senses?
+	-Should the player have distinct sight/hearing/touch?
+	-Is there even a use for a potion of deafness/scroll of silence/scroll of tastebuds not working?
+	-Leads to basically a bunch of combinations for each distinct sense.
+	-I'd probably just recommend really good, variable implementations of sight and hearing. It's cool to have a dogman race that hears really good (in a way that's really useful) and only sees in B+W rather than a really ill-conceived "YOU <SMELL|HEAR|TASTE> AN OGRE AROUND THAT CORNER OVER THERE", where all the implementations basically do identical things.
+	-Effectiveness for sight, hearing, and other senses should be 80% racial and 20% statistical. The most perceptive human can't see as well as a dogman, etc. 
+	-Sight would probably just expand the size of your FOV linearly with effectiveness, and have various modifier flags such as darkvison (sees even in the dark, can be blinded by torches), B+W, or blurry (fills in FOV incompletely until you get close?)
+	-Hearing would give you a rough estimate of room danger (you hear motion on the other side of that door *marks motion*) and give you more frequent alerts as to what's going on in the dungeon itself (you hear someone cursing shoplifters). There probably should be tags for hearing as well. These wouldn't necessarily be things that are even subsets of hearing, but act like it in the code. I suggest things like tremorsense (reveals all ground motion within 2-3 squares of your character?), telepathy (reveals current location of intelligent monsters on-level), and greed (occasionally reveals gold on-level). 
+	-Of course all of thse exotic tags are mainly fun stuff to do after all of the basics are over.
+	
+
+-Monsters?
+	-How would monster perception work seperately from player perception?
+	-We'd probably run into something silly and dwarf-fortress related if we made monster perception act like player perception (drawing lines from each point of the map to every other point and chewing up a ton of computer juice)
+	-But perceptive monsters would be a really important piece of game flavor. Consider crawl. It's got a really cool, well-implemented stealth skill. Monsters are either active and hostile, wandering, or asleep, (with increasing benefits to hitting them in that state). If you go invisible, they will be harder to bring out of wandering state, and when they do they will either (depending on monster intelligence), swing at random to adjacent squares like a dumbass or try and deduce where you are.
+	-

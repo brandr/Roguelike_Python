@@ -77,10 +77,7 @@ class SelectListControls(Controls):
 		Stop using these controls and resume the normal game controls.
 		"""
 		self.player.taking_input_flag = False
-		if(not self.on_main_screen):
-			Controls.exit_to_main_game_screen(self, None)
-			return
-		Controls.exit_to_main_game_controls(self, None)
+		Controls.exit_to_main_game_screen(self, None)
 
 	def open_expanded_select_list(self, key = None):
 		""" slc.open_expanded_select_list( None ) -> None
@@ -122,7 +119,7 @@ class SelectListControls(Controls):
 		controls = SelectListControls(self.select_list, self.player, self.action, self.expand_to_multiple, False, False) 
 		control_manager = self.control_manager.build_control_manager(controls)
 		return self.control_manager.build_screen(control_manager, panes)
-		 #TODO: open an expanded list like for forgetting spells/picking up tile items in crawl.
+
 
 confirm_selection = SelectListControls.confirm_selection
 exit = SelectListControls.exit_to_main_game_controls
@@ -130,6 +127,7 @@ open_exanded_select_list = SelectListControls.open_expanded_select_list
 
 SELECT_LIST_CONTROL_MAP = {
 	K_ESCAPE:exit,
+	K_SPACE: exit,
 	'?':open_exanded_select_list,
 	K_RETURN:confirm_selection
 }

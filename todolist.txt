@@ -8,9 +8,9 @@ ROBERT:
 		* how various objects collide with Beings
 		* make arrows stack and decrement properly (as well as display count properly)
 
-* consider giving the SelectListControls a quit/cancel option.
-	-currently escape does this, but it isn't really clear to the player that this is the case if there is no selectlistpane.
-	-maybe always clear the event pane when pressing esc? (could do this by calling the method to exit to main screen, instead of main controls.)
+	- Select list pane
+		-if there is no selectlist pane, item inventory doesn't wrap around the event pane.
+
 
 NICK:
 
@@ -30,7 +30,9 @@ STAGE 1
 			* work on special cases for throwing
 				- still need to make collision with monsters/players work
 			* make arrows decrement properly
-		Some basic hazards (like lava) to help figure out player movement and control contexts
+		Some basic hazards (like lava) to help figure out player movement and control contexts.
+			* Consider adding other navigable features like walls and doors, as well as messages on-collision.
+		
 		Graphics system (like arrow moving across screen)
 		Consider making inventories based on Dicts rather than lists, mapping letters to items.
 			* this will allow removing the first item without changing the order of the rest.o
@@ -40,15 +42,15 @@ STAGE 2	(have to wait for Nick for this stuff and below.)
 			* some of the framework for this exists, but not enough to test yet.
 			* will have to define "stack equivalence" between items somehow
 			* Nick needs to tell me how mulitple-item stacks should be handled. Examples:
-				- should 18 arrows be shown as:
-					. 18 arrows
-					. arrows (18)
+				- Arrows should be shown as:
 					. arrows [18]
-					. etc
 				- how to drop multiple items? In crawl, this would be done by starting a "drop"
 					action, opening the inventory screen, typing in a number, pressing a letter
 					to select the item that the player wants to drop that amount of, and then
 					pressing Enter. Should we do this?
+					- No. We oughta start a drop action, open the inventory screen, and typing in a letter.
+						If that letter has multiple items associated with it, it should prompt for a number,
+						and drop that amount of items when the number is given.
 		Finish wielding/equipping basics. 
 			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
 			* Be careful with some contexts (trying to equip over already-equipped item, etc.)

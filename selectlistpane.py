@@ -36,6 +36,7 @@ class SelectListPane(Pane):
 			object_text = self.select_list.index_toggle_string(i) + " " + self.select_list.index_letter_string(i) + " " + name
 			rendered_text = self.rendered_text(object_text)
 			select_info.blit(rendered_text, (8, SELECT_LIST_LINE_HEIGHT * i)) #TODO: multiple columns
+		select_info.blit(self.rendered_text("Press escape or the spacebar to cancel."),(8, SELECT_LIST_PANE_HEIGHT-SELECT_LIST_LINE_HEIGHT)) #Tells the player how to escape the pane.
 		Pane.update(self, select_info)
 
 	#def toggle_select(self, letter):

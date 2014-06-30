@@ -1,5 +1,4 @@
 from random import *
-from decimal import *
 '''
 An independent module that lets us test level generation ideas on a 2x2 array.
 '''
@@ -59,5 +58,5 @@ def iround(x):
     Round a number to the nearest integer."""
     return int(round(x) - .5) + (x > 0)
 
-circle(level_array, 6, 7, 2)
+circle(level_array, 6, 7, 7)
 printLevel(level_array)

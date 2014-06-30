@@ -40,6 +40,8 @@ class GameManager:
         hat_1 = Armor("Fairy Hat", HEAD_SLOT)
         chest_1 = Armor("Kokiri Tunic", CHEST_SLOT)
         gloves_1 = Armor("Leather Gloves", GLOVES_SLOT)
+        ring_1 = Armor("Fire Ring", RING1_SLOT)
+        ring_2 = Armor("Ice Ring", RING2_SLOT)
         cloak_1 = Armor("Zora Cloak", CLOAK_SLOT)
 
         health_potion = HealingPotion()
@@ -57,6 +59,8 @@ class GameManager:
         player_equipment.equip_item(hat_1)
         player_equipment.equip_item(chest_1)
         player_equipment.equip_item(gloves_1)
+        player_equipment.equip_item(ring_1)
+        player_equipment.equip_item(ring_2)
         player_equipment.equip_item(cloak_1)
 
         player_1.set_start_equipment(player_equipment)

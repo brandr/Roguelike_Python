@@ -472,32 +472,51 @@ class Player(Being):
 		"""
 		if(item.equipped):
 			#TODO: check for item is cursed here.
+			unequip_queue = []
+
 			equipment = item
 			slot = equipment.equip_slot()
 			blocking_equipment = self.equipment_set.blocking_equipment(slot)
+			if not blocking_equipment:
+				unequip_delay = 1 #TEMP
+				self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+				return
 			for b in blocking_equipment:
 				if b:
 					unequip_delay = 1 #TEMP
-					self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
-					equipment = b	#1: equimpnent is now second slot
-					slot = equipment.equip_slot()	#1: slot is now second slot
-					next_blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
+					unequip_queue.append(equipment)
+					equipment = b	
+					slot = equipment.equip_slot()	
+					next_blocking_equipment = self.equipment_set.blocking_equipment(slot)
 					if next_blocking_equipment:
 						for next_item in next_blocking_equipment:
 							blocking_equipment.append(next_item)
-			self.unequip_item(equipment)
-					
-					
-			"""
-			while blocking_equipment:
-				for b in blocking_equipment:
+			# go through the blocking equipment and queue unequipping it all.
+			wielded_items = []
+			for u in reversed(unequip_queue):
+				slot = u.equip_slot()
+				if u.wielded:
+					wielded_items.append(u)
+					unwield_delay = 1 #TEMP
+					self.enqueue_player_action(self.unwield_current_item, None, unwield_delay)
+				else:
 					unequip_delay = 1 #TEMP
-					self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
-					equipment = blocking_equipment	#1: equimpnent is now second slot
-					slot = equipment.equip_slot()	#1: slot is now second slot
-					blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
-					self.unequip_item(equipment)
-			"""
+					self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+			# queue reequippming the blocking equipment.
+			# the first element of unequip queue is the original item we wanted to unequip, so we make no plans to reequip it.
+			del unequip_queue[0]
+			for u in unequip_queue:
+				slot = u.equip_slot()
+				if u in wielded_items:
+					rewield_delay = 1 #TEMP
+					self.enqueue_player_action(self.confirm_wield_item, u, rewield_delay)
+				else:
+					reequip_delay = 1 #TEMP
+					self.enqueue_player_action(self.confirm_equip_item, u, reequip_delay)
+			last_reequip_delay = 1
+			self.enqueue_player_action(self.confirm_equip_item, equipment, last_reequip_delay)
+			unequip_delay = 1 #TEMP
+			self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
 			return
 		if(item.wielded):
 			self.send_event("You are wielding that.")

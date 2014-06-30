@@ -115,8 +115,7 @@ class EquipmentSet:
 			for k in blocking_keys:
 				if k in self.slots:
 					blocking_equipment.append(self.slots[k])
-			return blocking_equipment
-		return None 
+		return blocking_equipment
 
 	def item_is_in_slot(self, key):
 		""" es.item_is_in_slot( str ) -> bool

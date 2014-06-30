@@ -154,10 +154,10 @@ FEET_SLOT = "feet_slot"
 
 HUMANOID = "humanoid"
 HUMANOID_SLOTS = {
-	HEAD_SLOT:None, CHEST_SLOT:None, CLOAK_SLOT:None, LEFT_HAND_SLOT:None, RIGHT_HAND_SLOT:None, GLOVES_SLOT:None, FEET_SLOT:None
+	HEAD_SLOT:None, CHEST_SLOT:None, CLOAK_SLOT:None, RING1_SLOT:None, RING2_SLOT:None, LEFT_HAND_SLOT:None, RIGHT_HAND_SLOT:None, GLOVES_SLOT:None, FEET_SLOT:None
 }
 HUMANOID_DEPENDENCIES = {
-	CHEST_SLOT:[CLOAK_SLOT], RING1_SLOT:[GLOVES_SLOT], RING2_SLOT:[GLOVES_SLOT], GLOVES_SLOT:[RIGHT_HAND_SLOT, LEFT_HAND_SLOT]  #TODO: other dependencies go here (not sure how to handle 1-handed to 2-handed dependencies)
+	CHEST_SLOT:[CLOAK_SLOT], GLOVES_SLOT:[RIGHT_HAND_SLOT, LEFT_HAND_SLOT, RING1_SLOT, RING2_SLOT]  #TODO: other dependencies go here (not sure how to handle 1-handed to 2-handed dependencies)
 }
 
 SLOTS_MAP = {

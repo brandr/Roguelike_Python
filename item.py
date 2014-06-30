@@ -151,8 +151,13 @@ HUMANOID = "humanoid"
 HUMANOID_SLOTS = {
 	HEAD_SLOT:None, CHEST_SLOT:None, CLOAK_SLOT:None, LEFT_HAND_SLOT:None, RIGHT_HAND_SLOT:None, GLOVES_SLOT:None, FEET_SLOT:None
 }
+HUMANOID_DEPENDENCIES = {
+	CHEST_SLOT:CLOAK_SLOT #TODO: other dependencies go here (not sure how to handle 1-handed to 2-handed dependencies)
+}
 
 SLOTS_MAP = {
 	HUMANOID:HUMANOID_SLOTS
 }
-
+DEPENDENCIES_MAP = {
+	HUMANOID:HUMANOID_DEPENDENCIES
+}

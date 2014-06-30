@@ -82,7 +82,6 @@ class Being:
 		self.equipment_set = equipment_set
 		equipment = equipment_set.all_items()
 		self.inventory.add_item_list(equipment)
-	
 
 	def restore_hp(self, amount):
 		self.hit_points[0] = min(self.hit_points[0] + amount, self.hit_points[1])

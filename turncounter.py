@@ -80,8 +80,11 @@ class TurnCounter:
 			self.increment_counter(lowest_delay)
 			self.decrement_player_turn_delay(lowest_delay) #TEMP (not sure this is right)
 			self.decrement_turn_delays(lowest_delay)
-			self.player.decide_next_turn()
-			return
+			if self.player.action_queue.empty() or self.player.taking_input_flag:
+				return
+			else:
+				self.player.decide_next_turn()
+				self.process_turns()
 		else:				   			# case for a monster's turn is next
 			del self.turn_queue[lowest_actor]
 			self.increment_counter(lowest_delay)

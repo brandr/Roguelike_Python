@@ -128,6 +128,7 @@ class Player(Being):
 		else:
 			action = self.action_queue.dequeue_action()
 			action.method(action.arg)
+			self.current_level.enqueue_player_delay(self, action.delay)
 
 	def enqueue_player_action(self, method, arg, delay):
 		""" p.enqueue_player_action( Method, ?, int ) -> None
@@ -471,7 +472,16 @@ class Player(Being):
 		"""
 		if(item.equipped):
 			#TODO: check for item is cursed here.
-			self.confirm_unequip(item)
+			equipment = item
+			slot = equipment.equip_slot()
+			blocking_equipment = self.equipment_set.blocking_equipment(slot)
+			while blocking_equipment:
+				unequip_delay = 1 #TEMP
+				self.enqueue_player_action(self.unequip_item_in_slot, slot, unequip_delay) #1: first slot
+				equipment = blocking_equipment	#1: equimpnent is now second slot
+				slot = equipment.equip_slot()	#1: slot is now second slot
+				blocking_equipment = self.equipment_set.blocking_equipment(slot) #1: blocking equipment is now 3rd slot
+			self.unequip_item(equipment)
 			return
 		if(item.wielded):
 			self.send_event("You are wielding that.")
@@ -514,8 +524,8 @@ class Player(Being):
 		#NOTE: enqueue version has not been tested.
 		self.enqueue_player_action(self.confirm_equip_item, item, equip_delay)
 
-	def confirm_unequip(self, item):
-		""" p.confirm_unequip( Item ) -> None
+	def unequip_item(self, item):
+		""" p.unequip( Item ) -> None
 
 		The player unequips the given item.
 		"""

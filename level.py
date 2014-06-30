@@ -262,6 +262,10 @@ class Level:
 
 		Gives a list of tiles in a line between two tiles.
 		"""
+		def iround(x):
+			"""iround(number) -> integer
+			Round a number to the nearest integer."""
+			return int(round(x) - .5) + (x > 0)
 		if start_tile.in_range(end_tile, 1):
 			return [end_tile]
 		line_tiles = []
@@ -278,7 +282,7 @@ class Level:
 			start_y = start_tile.y
 			while current_x != end_tile.x:
 				x_off = current_x - start_tile.x
-				current_y = int(x_off*slope + start_y)
+				current_y = iround(float(x_off)*slope) + start_y
 				line_tiles.append(self.tile_at(current_x, current_y))
 				current_x += increment 
 		else:                         # y is the independent variable
@@ -290,7 +294,8 @@ class Level:
 			start_x = start_tile.x
 			while current_y != end_tile.y:
 				y_off = current_y - start_tile.y
-				current_x = int(y_off*slope + start_x)
+
+				current_x = iround(float(y_off)*slope) + start_x
 				line_tiles.append(self.tile_at(current_x, current_y))
 				current_y += increment 
 		line_tiles.append(end_tile)

@@ -16,8 +16,11 @@ class EquipmentSet:
 	"""
 	def __init__(self, slots_key):
 		self.slots = None
+		self.dependencies_map = None
 		if(slots_key in SLOTS_MAP):
 			self.initialize_slots(SLOTS_MAP[slots_key])
+		if(slots_key in DEPENDENCIES_MAP):
+			self.dependencies_map = DEPENDENCIES_MAP[slots_key]
 			
 	def initialize_slots(self, slots):
 		""" es.initialize_slots( {str:Item} ) -> None
@@ -91,16 +94,30 @@ class EquipmentSet:
 
 	def unequip_item_in_slot(self, key):
 		""" es.unequip_item_in_slot( str ) -> None
+		
 		Unequip the item in the selected slot.
-		THis is similar to unwield_item_in_slot.
+		This is similar to unwield_item_in_slot.
 		"""
 		if key in self.slots:
 			equipment = self.slots[key]
 			equipment.unequip()
 			self.slots[key] = None
 
+	def blocking_equipment(self, key):
+		""" es.equipment_blocked ( str ) -> Item
+		
+		Check whether this equipment is blocked by another piece of equipment, returning it if so.
+		"""
+		#TODO: figure out how to make this work for mulitple dependecies for a single key
+		if self.dependencies_map and key in self.dependencies_map:
+			blocking_key = self.dependencies_map[key]
+			if blocking_key in self.slots:
+				return self.slots[blocking_key]
+		return None 
+
 	def item_is_in_slot(self, key):
 		""" es.item_is_in_slot( str ) -> bool
+		
 		Check whether there is any item in the selected slot.
 		"""
 		return key in self.slots and self.slots[key] != None

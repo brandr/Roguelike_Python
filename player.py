@@ -508,7 +508,7 @@ class Player(Being):
 		# attemping to remove gloves while wielding a cursed item
 		# attemping to wield a shield with a two-handed weapon
 		# other unusal cases
-		
+
 		equipment = item
 		slot = equipment.equip_slot()
 		blocking_equipment = self.equipment_set.blocking_equipment(slot)
@@ -519,7 +519,7 @@ class Player(Being):
 		self.change_equip_blocked_item(equipment, slot, blocking_equipment, False)
 		
 
-	def change_equip_blocked_item(self, target_equipment, slot, blocking_equipment, unequip):
+	def change_equip_blocked_item(self, target_equipment, slot, blocking_equipment, unequip, replace_item = None):
 		#TODO: make this more general so that it can also apply to equipping a blocked item
 		unequip_queue = []
 		equipment = None
@@ -548,6 +548,9 @@ class Player(Being):
 		if unequip:
 			target_unequip_delay = 1 #TEMP
 			self.enqueue_player_action(self.unequip_item_in_slot, target_equipment.equip_slot(), target_unequip_delay)
+			if replace_item:
+				replace_delay = 1 #TEMP
+				self.enqueue_player_action(self.equip_item, replace_item, replace_delay)
 		else:
 			target_equip_delay = 1 #TEMP
 			self.enqueue_player_action(self.confirm_equip_item, target_equipment, target_equip_delay)
@@ -579,12 +582,15 @@ class Player(Being):
 
 		The player unequips one item and plans to equip another.
 		"""
-		unequip_delay = 1 	#TODO: change these to be based on the equipment itself
-		equip_delay = 1
 		slot = item.equip_slot()
-		self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
-		#NOTE: enqueue version has not been tested.
-		self.enqueue_player_action(self.confirm_equip_item, item, equip_delay)
+		blocking_equipment = self.equipment_set.blocking_equipment(slot)
+		if not blocking_equipment:
+			unequip_delay = 1 	#TODO: change these to be based on the equipment itself
+			equip_delay = 1
+			self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
+			self.enqueue_player_action(self.confirm_equip_item, item, equip_delay)
+			return
+		self.change_equip_blocked_item(self.equipment_set.get_item_in_slot(slot), slot, blocking_equipment, True, item) #untested
 
 	def unequip_item(self, item):
 		""" p.unequip( Item ) -> None

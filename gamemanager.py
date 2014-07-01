@@ -78,7 +78,6 @@ class GameManager:
         monster_equipment.wield_item(monster_sword)
         monster_equipment.equip_item(monster_shield)
         monster_1.set_start_equipment(monster_equipment)
-        #monster_1.obtain_item(monster_sword)
 
         monster_2 = Monster("Bokoblin")
 

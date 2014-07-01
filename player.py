@@ -449,9 +449,12 @@ class Player(Being):
 		"""
 		unwield_delay = 1
 		wield_delay = 1
-		self.execute_player_action(self.unwield_current_item, None, unwield_delay)
-		# NOTE: the version where the next action is enqueued has not been tested.
+		if item.two_handed and self.equipment_set.item_is_in_slot(LEFT_HAND_SLOT):
+			unequip_delay = 1
+			self.enqueue_player_action(self.unequip_item_in_slot, LEFT_HAND_SLOT, unequip_delay)
 		self.enqueue_player_action(self.confirm_wield_item, item, wield_delay)
+		self.execute_player_action(self.unwield_current_item, None, unwield_delay)
+
 
 	def cancel_replace_wield(self, item):
 		""" p.cancel_replace_wield( Item ) -> None

@@ -40,13 +40,13 @@ class MeleeWeapon(Weapon):
 	"""
 
 	def __init__(self, name, weapon_type, two_handed = False):
-		Weapon.__init__(self, name)
+		Weapon.__init__(self, name, two_handed)
 		self.weapon_type = weapon_type
 		weapon_info = WEAPON_DICT[weapon_type]
 		self.weapon_stat = weapon_info[0]
 		self.weapon_damage = 500
 		self.weapon_speed = 5
 		self.weapon_range = weapon_info[3]
-		
+
 		#self.weapon_damage_type = weapon_info[4] Should go in after we figure typed damage out, but oughta be stored here.
 

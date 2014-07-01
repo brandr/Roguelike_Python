@@ -34,7 +34,7 @@ class Item:
 		self.quantity = quantity
 		self.material = None #Unused field for material
 		self.is_artifact = False #Unused field for artifactness
-		self.two_handed = two_handed # TEMP
+		self.two_handed = False
 
 	def display_name(self, equip_check = False):
 		""" i.display_name( bool ) -> str

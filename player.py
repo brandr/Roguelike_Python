@@ -129,7 +129,6 @@ class Player(Being):
 			action = self.action_queue.dequeue_action()
 			action.method(action.arg)
 			self.current_level.enqueue_player_delay(self, action.delay)
-			self.end_turn()
 
 	def enqueue_player_action(self, method, arg, delay):
 		""" p.enqueue_player_action( Method, ?, int ) -> None
@@ -595,8 +594,8 @@ class Player(Being):
 		if not blocking_equipment:
 			unequip_delay = 1 	#TODO: change these to be based on the equipment itself
 			equip_delay = 1
-			self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
 			self.enqueue_player_action(self.confirm_equip_item, item, equip_delay)
+			self.execute_player_action(self.unequip_item_in_slot, slot, unequip_delay)
 			return
 		self.change_equip_blocked_item(self.equipment_set.get_item_in_slot(slot), slot, blocking_equipment, True, item) #untested
 

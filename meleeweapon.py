@@ -5,12 +5,20 @@
 from weapon import *
 
 AXE = "axe"
-SWORD = "sword"
+SHORT_BLADE = "short_blade"
+LONG_BLADE = "long_blade"
+
 STR = "strength"
 DEX = "dexterity"
-SLASH = "slashing"
 
-WEAPON_DICT = {AXE: [STR,[2,6],1.2, 1, SLASH]}
+SLASH = "slashing"
+STAB = "stabbing"
+
+WEAPON_DICT = {
+	AXE: [STR, [2, 6], 1.2, 1, SLASH],
+	SHORT_BLADE: [DEX, [1, 4], 1.6, 1, STAB],
+	LONG_BLADE: [STR, [2, 5], 1.4, 1, STAB]
+}
 
 class MeleeWeapon(Weapon):
 	""" MeleeWeapon( ... ) -> MeleeWeapon
@@ -31,7 +39,7 @@ class MeleeWeapon(Weapon):
 
 	"""
 
-	def __init__(self, name, weapon_type):
+	def __init__(self, name, weapon_type, two_handed = False):
 		Weapon.__init__(self, name)
 		self.weapon_type = weapon_type
 		weapon_info = WEAPON_DICT[weapon_type]
@@ -39,5 +47,6 @@ class MeleeWeapon(Weapon):
 		self.weapon_damage = 500
 		self.weapon_speed = 5
 		self.weapon_range = weapon_info[3]
+		
 		#self.weapon_damage_type = weapon_info[4] Should go in after we figure typed damage out, but oughta be stored here.
 

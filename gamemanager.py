@@ -32,10 +32,14 @@ class GameManager:
         pygame.display.set_caption("DIS A ROGUELIKE")
         timer = pygame.time.Clock()
 
-        #TEMP for testing vvv
+        # TEMP for testing vvv
         # comment and uncomment to change what is on the level.
 
-        sword_1 = MeleeWeapon("Master Axe", AXE)
+        # weapons
+        sword_1 = MeleeWeapon("Master Sword", AXE)
+        sword_2 = MeleeWeapon("Biggoron's Axe", LONG_BLADE, True) #TODO: implement 2H weapons
+
+        # armor
         shield_1 = Armor("Hylian Shield", LEFT_HAND_SLOT)
         hat_1 = Armor("Fairy Hat", HEAD_SLOT)
         chest_1 = Armor("Kokiri Tunic", CHEST_SLOT)
@@ -67,6 +71,7 @@ class GameManager:
         player_1.obtain_item(health_potion)
         player_1.obtain_item(poison_potion)
         player_1.obtain_item(ammo_1)
+        player_1.obtain_item(sword_2)
 
         monster_1 = Monster("Moblin")
         monster_equipment = EquipmentSet(HUMANOID) #TODO: this is the long-term plan for starting monster/player equipment: make the equipmentset first, and then set it.

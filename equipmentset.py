@@ -66,6 +66,8 @@ class EquipmentSet:
 		"""
 		item.wield()
 		self.slots[RIGHT_HAND_SLOT] = item #TODO: may have to change this for non-humanoids that can still wield items.
+		if item.two_handed:
+			self.slots[LEFT_HAND_SLOT] = item
 
 	def equip_item(self, item):
 		""" es.equip_item( Equipment ) -> None
@@ -91,6 +93,10 @@ class EquipmentSet:
 			item = self.slots[key]
 			item.unwield()
 			self.slots[key] = None
+			if item.two_handed:
+				off_item = self.slots[LEFT_HAND_SLOT] #NOTE: won't work for non-humaniods.
+				off_item.unequip()
+				self.slots[LEFT_HAND_SLOT] = None
 
 	def unequip_item_in_slot(self, key):
 		""" es.unequip_item_in_slot( str ) -> None

@@ -425,6 +425,12 @@ class Player(Being):
 		# attempting to wield a two-handed weapon with a shield
 		# attempting to wield known cursed item
 		# other unusual cases
+		if item.two_handed and self.equipment_set.item_is_in_slot(LEFT_HAND_SLOT): # case for attempting to wield a two-handed weapon with a shield. NOTE: this won't work for non-humanoids.
+			wield_delay = 1
+			self.enqueue_player_action(self.confirm_wield_item, item, wield_delay)
+			unequip_delay = 1
+			self.execute_player_action(self.unequip_item_in_slot, LEFT_HAND_SLOT, unequip_delay)
+			return
 		wield_delay = 1 #TODO: if wield delay should be something else,  change this.
 		self.execute_player_action(self.confirm_wield_item, item, wield_delay)
 
@@ -433,8 +439,7 @@ class Player(Being):
 
 		The player is prompted to unwield its current item in favor of another one.
 		"""
-		self.send_event("Do you want to unwield " + wielded_item.display_name()
-			+ " and wield " + prompt_item.display_name() + "? (y/n/q)")
+		self.send_event("Do you want to unwield " + wielded_item.display_name() + " and wield " + prompt_item.display_name() + "? (y/n/q)")
 		self.screen_manager.switch_to_ynq_controls(self.confirm_replace_wield, self.cancel_action_message, self.cancel_action_message, prompt_item, self)
 
 	def confirm_replace_wield(self, item):

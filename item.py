@@ -42,12 +42,15 @@ class Item:
 		The name of this item as it should be displayed for some context.
 		The context will affect what equip_check should be set to.
 		"""
+		display_string = self.name
 		if(equip_check):
 			if(self.equipped):
-				return self.name + " " + EQUIP_STRING
-			if(self.wielded):
-				return self.name + " " + WIELD_STRING
-		return self.name
+				display_string += " " + EQUIP_STRING
+			elif(self.wielded):
+				display_string += " " + WIELD_STRING
+		if self.quantity[0] > 1:
+			display_string += " " + "(" + str(self.quantity[0]) + ")"
+		return display_string
 
 	def item_category(self):
 		""" i.item_category( ) -> str

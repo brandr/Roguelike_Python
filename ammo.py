@@ -3,7 +3,7 @@
 
 from item import *
 
-AMMO_STACK_SIZE = 99
+MAX_AMMO_STACK_SIZE = 99
 
 class Ammo(Item):
 	""" Ammo( ... ) -> Ammo
@@ -11,4 +11,4 @@ class Ammo(Item):
 	"""
 
 	def __init__(self, name = None, count = 1):
-		Item.__init__(self, name, [count, AMMO_STACK_SIZE])
+		Item.__init__(self, name, [count, MAX_AMMO_STACK_SIZE])

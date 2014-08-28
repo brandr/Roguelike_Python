@@ -48,5 +48,13 @@ class MeleeWeapon(Weapon):
 		self.weapon_speed = 5
 		self.weapon_range = weapon_info[3]
 
+	def create_copy(self, amount = None):
+		""" a.create_copy( int ) -> Ammo
+
+		Returns a new ammo that is a copy of this one with the given amount.
+		"""
+		if not amount: amount = self.current_quantity()
+		return MeleeWeapon(self.name, self.weapon_type, self.two_handed)
+
 		#self.weapon_damage_type = weapon_info[4] Should go in after we figure typed damage out, but oughta be stored here.
 

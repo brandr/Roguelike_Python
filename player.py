@@ -322,7 +322,7 @@ class Player(Being):
 		# no docstring because temp (at least I think it's temp)
 		self.current_tile.remove_item(item)
 		self.obtain_item(item)
-		self.send_event("Picked up " + item.name + ".")
+		self.send_event("Picked up " + item.display_name() + ".")
 
 		# drop items
 
@@ -351,11 +351,13 @@ class Player(Being):
 		item_list = self.inventory.item_select_list()
 		self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_drop_item)
 
-	def attempt_drop_item(self, item):
-		""" p.attempt_drop_item( Item ) -> None
+	def attempt_drop_item(self, item_stack):
+		""" p.attempt_drop_item( ( Item, int ) ) -> None
 
 		The player attemps to drop the given item.
 		"""
+		item = item_stack[0]
+		quantity = item_stack[1]
 		if(item.equipped):
 			self.send_event("You must unequip that before dropping it.")
 			return
@@ -363,10 +365,10 @@ class Player(Being):
 			unwield_delay = 1 #TEMP
 			self.execute_player_action(self.unwield_current_item, None, unwield_delay)
 			drop_item_delay = 1 #TEMP
-			self.enqueue_player_action(self.drop_item, item, drop_item_delay)
+			self.enqueue_player_action(self.drop_item, (item, quantity), drop_item_delay)
 			return
 		drop_item_delay = 1 #TEMP
-		self.execute_player_action(self.drop_item, item, drop_item_delay)
+		self.execute_player_action(self.drop_item, (item, quantity), drop_item_delay)
 
 		# movement
 

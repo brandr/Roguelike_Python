@@ -309,14 +309,16 @@ class Being:
 		items = self.inventory.take_all_items()
 		self.current_tile.add_item_list(items)
 
-	def drop_item(self, item):
-		""" b.drop_item( Item ) -> None
+	def drop_item(self, (item, quantity)):
+		""" b.drop_item( ( Item, int ) ) -> None
 
-		The being dropbs the item on the ground like a filthy mongrel.
+		The being drops the item on the ground like a filthy mongrel.
 		"""
-		self.inventory.remove_item(item)
-		self.current_tile.add_item(item)
-		self.send_event(self.display_name() + " dropped " + item.display_name() + ".")
+		dropped_quantity = min(item.current_quantity(), quantity)
+		drop_item = item.create_copy(dropped_quantity)
+		self.inventory.decrement_item(item, dropped_quantity)
+		self.current_tile.add_item(drop_item)
+		self.send_event(self.display_name() + " dropped " + drop_item.display_name() + ".")
 
 	def remove_all_equipment(self): 
 		""" b.remove_all_equipment( ) -> None

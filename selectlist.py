@@ -3,6 +3,8 @@
 These objects may be items, monsters, spells, etc.
 """
 
+from item import Item
+
 class SelectList:
 	""" SelectList( Class, List ) -> SelectList
 
@@ -21,6 +23,7 @@ class SelectList:
 		self.list_class = list_class
 		self.object_list = object_list
 		self.toggles = []
+		self.quantities = []
 		self.initialize_toggles()
 
 	def initialize_toggles(self):
@@ -30,6 +33,7 @@ class SelectList:
 		"""
 		for i in range(len(self.object_list)):
 			self.toggles.append(False)
+			self.quantities.append(1)
 
 	def list_message(self):
 		""" sl.list_message( ) -> str 
@@ -46,24 +50,27 @@ class SelectList:
 		return message
 
 	def toggled_objects(self):
-		""" sl.toggled_objects( ) -> [Object]
+		""" sl.toggled_objects( ) -> [ Object ]
 
 		Gives a list of all currently selected objects.
 		"""
 		objects = []
 		for i in range(len(self.object_list)):
 			if(self.toggles[i]):
-				objects.append(self.select_object_at_index(i))
+				next_object = (self.object_list[i], self.quantities[i])
+				objects.append(next_object)
 		return objects
 
-	def toggle(self, letter):
-		""" sl.toggle( char ) -> None
+	def toggle(self, letter, quantity = None):
+		""" sl.toggle( char, int ) -> None
 
 		Select the object corresponding to the given letter.
 		"""
+		#print quantity
 		index = ALPHABET.index(letter)
 		current = self.toggles[index]
 		self.toggles[index] = not current
+		self.quantities[index] = quantity
 
 	def none_toggled(self):
 		""" sl.none_toggled( ) -> bool
@@ -110,7 +117,8 @@ class SelectList:
 		"""
 		toggled = self.toggles[index]
 		if(toggled):
-			return "+"
+			if self.quantities[index]: return "#"
+			else: return "+"
 		return u"·"
 
 	def index_letter(self, index):

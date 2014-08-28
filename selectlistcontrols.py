@@ -31,6 +31,7 @@ class SelectListControls(Controls):
 		self.action = action
 		self.multiple = multiple
 		self.expand_to_multiple = expand_to_multiple
+		self.active_quantity = None
 		self.on_main_screen = on_main_screen
 		self.control_map = {}
 		self.initialize_control_map(SELECT_LIST_CONTROL_MAP)
@@ -38,6 +39,8 @@ class SelectListControls(Controls):
 		for i in range(length):
 			letter = self.select_list.index_letter(i)	 #TODO: figure out how to handle captial letters.
 			self.control_map[letter] = SelectListControls.select_object
+		for i in xrange(10):
+			self.control_map[str(i)] = SelectListControls.input_number
 		
 	def select_object(self, letter):
 		""" slc.select_object( char ) -> None
@@ -56,10 +59,12 @@ class SelectListControls(Controls):
 		and executes this SelectListControls's associated action upon it.
 		"""
 		if(letter in self.control_map):
-			select_object = self.select_list.select_object_from_letter(letter)
+			select_object = self.select_list.select_object_from_letter(letter) 
+			#TODO: use quantity if appopriate
 			self.exit_to_main_game_controls() #TODO: not the case if selection should not prompt this.
 			action = self.action
-			action(select_object)
+			action((select_object, None))	# TODO: make sure everything can take this sort of argument.
+											# TODO: make lowercase [d]rop the same as uppercase [D]rop.
 
 	def select_object_multiple(self, letter):
 		""" slc.select_object_multiple( char ) -> None
@@ -67,9 +72,26 @@ class SelectListControls(Controls):
 		Adds the object corresponding to the given letter to the current selection.
 		"""
 		if(self.on_main_screen):
-			return #TEMP. Currently there is no case for multiple selections on main game screen.
+			return # TEMP. Currently there is no case for multiple selections on main game screen.
 		if(letter in self.control_map):
-			self.select_list.toggle(letter)
+			if self.active_quantity:
+				self.select_list.toggle(letter, int(self.active_quantity))
+			else:
+				self.select_list.toggle(letter)
+			self.active_quantity = None
+
+	def input_number(self, number):
+		""" slc.input_number( str ) -> None
+
+		Input a number (as a string) to be used for some action, like picking up/dropping that quantity of some item.
+		"""
+		if self.select_list.list_class != Item: return
+		if self.active_quantity == None: 
+			if number == '0': return
+			self.active_quantity = number
+			return
+		if len(self.active_quantity) < 6: #NOTE: this refers to the length of the string, NOT the quantity size.
+			self.active_quantity += number
 
 	def exit_to_main_game_controls(self, key = None):
 		""" slc.exit_to_main_game_controls( None ) -> None

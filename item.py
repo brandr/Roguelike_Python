@@ -27,7 +27,7 @@ class Item:
 	material: what this item is made of. Determines damage/protection (if weapon or armor), and what it is damaged by/characteristics of damage if anything else.
 	is_artifact: Boolean indicating artifactness. Has to do with brands that can be generated, if its destructible by common means, how valuable it is, etc.
 	"""
-	def __init__(self, name = None, quantity = [DEFAULT_STACK_SIZE, DEFAULT_STACK_SIZE]): #since name might be derivable from other attributes, it is optional sometimes.
+	def __init__(self, name = None, quantity = [DEFAULT_STACK_SIZE, DEFAULT_STACK_SIZE]): # since name might be derivable from other attributes, it is optional sometimes.
 		self.name = name #TODO: set name differently once identification is implemented
 		self.wielded = False
 		self.equipped = False
@@ -51,6 +51,14 @@ class Item:
 		if self.quantity[0] > 1:
 			display_string += " " + "(" + str(self.quantity[0]) + ")"
 		return display_string
+
+	def create_copy(self, amount = None):
+		""" i.create_copy( int ) -> Item
+
+		Returns a new item that is a copy of this one with the given quantity.
+		"""
+		if not amount: amount = self.current_quantity()
+		return Item(self.name, [amount, DEFAULT_STACK_SIZE])
 
 	def item_category(self):
 		""" i.item_category( ) -> str
@@ -92,12 +100,12 @@ class Item:
 		"""
 		return self.quantity[0]
 
-	def decrement_quantity(self):
+	def decrement_quantity(self, quantity = 1):
 		""" i.decrement_quantity( ) -> None
 
-		Reduces the quantity of this item by 1.
+		Reduces the quantity of this item by the given amount.
 		"""
-		self.quantity[0] -= 1
+		self.quantity[0] -= quantity
 
 	def is_equippable(self):
 		""" i.is_equippable( ) -> None

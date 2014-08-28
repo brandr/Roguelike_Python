@@ -64,12 +64,13 @@ class Inventory:
 			items.append(self.items.pop())
 		return items
 
-	def decrement_item(self, item):
-		""" i.decrement_item( Item ) -> None
+	def decrement_item(self, item, quantity = None):
+		""" i.decrement_item( Item, int ) -> None
 
-		Decrease the quanitiy of the given item in this inventory by 1.
+		Decrease the quantity of the given item in this inventory by the given amount, or all if it is none.
 		"""
-		item.decrement_quantity()
+		if not quantity: quantity = item.current_quantity()
+		item.decrement_quantity(quantity)
 		if(item.current_quantity() <= 0):
 			self.remove_item(item)
 

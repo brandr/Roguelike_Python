@@ -26,31 +26,23 @@ Things to do in order of precedence:
 (try to add things to the stage where they seem to fit in best)
 
 STAGE 1	
+		Implement item stacks (will affect pickup, dropping, etc.)
+			* test for issues created by the changes in selectlists
+			* will have to define "stack equivalence" between items somehow and make items stack with each other
+			* Make it possible to pick up multiple items/have items stack with each other (figure out what Nick wants)
 		Throwing, Ammo and ranged weapons (this will change the combat system somewhat)
-			* work on special cases for throwing
+			* work on special cases for throwing-- worry about bows/slings after throming works
 				- still need to make collision with monsters/players work
-			* make arrows decrement properly
+			* make arrows decrement properly (this might already happen, not sure)
 		Some basic hazards (like lava) to help figure out player movement and control contexts.
 			* Consider adding other navigable features like walls and doors, as well as messages on-collision.
 		
 		Graphics system (like arrow moving across screen)
 		Consider making inventories based on Dicts rather than lists, mapping letters to items.
-			* this will allow removing the first item without changing the order of the rest.o
+			* this will allow removing the first item without changing the order of the rest.
 
 STAGE 2	(have to wait for Nick for this stuff and below.)
-		Implement item stacks (will affect pickup, dropping, etc.)
-			* some of the framework for this exists, but not enough to test yet.
-			* will have to define "stack equivalence" between items somehow
-			* Nick needs to tell me how mulitple-item stacks should be handled. Examples:
-				- Arrows should be shown as:
-					. arrows [18]
-				- how to drop multiple items? In crawl, this would be done by starting a "drop"
-					action, opening the inventory screen, typing in a number, pressing a letter
-					to select the item that the player wants to drop that amount of, and then
-					pressing Enter. Should we do this?
-					- No. We oughta start a drop action, open the inventory screen, and typing in a letter.
-						If that letter has multiple items associated with it, it should prompt for a number,
-						and drop that amount of items when the number is given.
+		
 		Finish wielding/equipping basics. 
 			* Remember that with the current system, equippables can also be wielded, but no item can be wielded and equipped at the same time.
 			* Be careful with some contexts (trying to equip over already-equipped item, etc.)
@@ -102,7 +94,7 @@ STAGE 5
 STAGE M - 2
 		Food and hunger (expand upon monster corpses)
 		Wands
-		Branches
+		Dungeon Branches
 		Fully implement potions (can still add more potions, but the general system should be set up)
 		Same for scrolls
 
@@ -129,7 +121,7 @@ STAGE N - 2
 		Monster generation
 		Fully flesh out magic systems (how magic damage works, etc.)
         Final version of character creation (player stats can simply be hardcoded up to this point)
-        Tertiary environmental attributes, like steam, wells, 
+        Tertiary environmental attributes, like steam, wells, etc.
 
 STAGE N - 1
 		Sounds and monster awareness

@@ -219,19 +219,20 @@ class Player(Being):
 		self.screen_manager.switch_to_select_list_controls(item_list, self, self.attempt_fire_item)
 
 	def attempt_fire_item(self, item):
-		""" p.attempt_fire_item( Item ) -> None
+		""" p.attempt_fire_item( ( Item, int ) ) -> None
 
 		The player attemps to throw or shoot the given item.
 		"""
-		if(item.equipped):
+		throw_item = item[0]
+		if(throw_item.equipped):
 			self.send_event("You must unequip that before throwing it.")
 			return
-		if(item.wielded):
+		if(throw_item.wielded):
 			unwield_delay = 1 #TEMP
 			self.execute_player_action(self.unwield_current_item, None, unwield_delay)
-			self.enqueue_player_action(self.attempt_fire_item, item, 0)
+			self.enqueue_player_action(self.attempt_fire_item, throw_item, 0)
 			return
-		self.fire_item_target_prompt(item)
+		self.fire_item_target_prompt(throw_item)
 
 	def fire_item_target_prompt(self, item):
 		""" p.fire_item_target_prompt( Item ) -> None
@@ -278,11 +279,11 @@ class Player(Being):
 
 		Throw or shoot some item at the target coordinates.
 		""" 
-		self.inventory.decrement_item(item)
-		projectile = Projectile(item, projectile_path, self)
+		self.inventory.decrement_item(item, 1)
+		fired_item = item.create_copy(1)
+		projectile = Projectile(fired_item, projectile_path, self)
 		self.current_level.add_projectile(projectile)
-		# TODO: make the thrown object follow the projectile path, stopping if it hits something.
-
+		
 		# pick up items
 
 	def begin_pick_up_item(self):

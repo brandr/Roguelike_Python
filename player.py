@@ -296,7 +296,7 @@ class Player(Being):
 			return
 		if(self.current_tile.item_count() == 1):
 			item = self.current_tile.top_item()
-			self.pick_up_tile_item(item)
+			self.pick_up_tile_item((item, None))
 			return
 		self.pick_up_prompt()
 
@@ -316,14 +316,19 @@ class Player(Being):
 		The player picks up the given item from the current tile.
 		"""
 		pick_up_delay = 1 #TODO: derive this from something if it should vary based on the situation.
-		self.execute_player_action(self.temp_pick_up_item, item, pick_up_delay)
+		self.execute_player_action(self.pick_up_item, item, pick_up_delay)
 
 		#might not be temp anymore. Also, might want to move to Being class.
-	def temp_pick_up_item(self, item):
-		# no docstring because temp (at least I think it's temp)
-		self.current_tile.remove_item(item)
-		self.obtain_item(item)
-		self.send_event("Picked up " + item.display_name() + ".")
+	def pick_up_item(self, (item, quantity)):
+		""" p.pick_up_item( ( Item, int ) ) -> None
+
+		Picks up the given amount of the given item from the given tile.
+		"""
+		pickup_quantity = min(item.current_quantity(), quantity)
+		pickup_item = item.create_copy(pickup_quantity)
+		self.inventory.add_item(pickup_item)
+		self.current_tile.tile_items.decrement_item(item, pickup_quantity)
+		self.send_event(self.display_name() + " picked up " + pickup_item.display_name() + ".")
 
 		# drop items
 

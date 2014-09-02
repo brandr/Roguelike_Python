@@ -94,6 +94,7 @@ class Inventory:
 
 		Add an item to this inventory at the end of its list.
 		"""
+		#TODO: handle stacking here if the item is already in the inventory.
 		self.items.append(item)
 
 	def remove_item(self, item):
